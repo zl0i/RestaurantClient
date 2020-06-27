@@ -8,7 +8,9 @@ Item {
     property real iconWidth: width/2
     property real iconHeight: height/2
     property string icon
-    property alias pressed: _mouseArea.pressed
+    readonly property alias pressed: _mouseArea.pressed
+
+    property bool selected: false
 
     property color pressedColor: "#5AD166"
     property color releasedColor: "#000000"
@@ -20,7 +22,7 @@ Item {
         width: _item.iconWidth
         height: _item.iconHeight
         source: _item.icon
-        layer.enabled: _item.pressed
+        layer.enabled: _item.pressed || _item.selected
         layer.effect: ColorOverlay {
             color: _item.pressedColor
         }
@@ -30,7 +32,7 @@ Item {
         y: parent.height-contentHeight
         width: parent.width
         horizontalAlignment: Text.AlignHCenter
-        color: _item.pressed ? _item.pressedColor : _item.releasedColor
+        color: (_item.pressed || _item.selected) ? _item.pressedColor : _item.releasedColor
         font.pixelSize: 20
         text: _item.text
     }

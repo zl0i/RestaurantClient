@@ -4,6 +4,8 @@ import QtGraphicalEffects 1.0
 
 import AziaData 1.0
 
+import Components 1.0
+
 Item {
     id: _menuPage
     Rectangle {
@@ -15,6 +17,19 @@ Item {
             color: "#80000000"
             verticalOffset: 4
         }
+
+        SearchItem {
+            x: 20; y: 10
+            width: parent.width-40; height: 30
+            onTextChanged: {
+                if(text)
+                    fillModel(Data.filterMenuByName(text))
+                else
+                    fillModel(Data.menu)
+            }
+        }
+
+
         ListView {
             id: _categoriesView
             x: 10; y: parent.height-height
@@ -28,7 +43,7 @@ Item {
                 Rectangle {
                     id: _highlightItem
                     y: parent.height
-                    width: _categoriesView.currentItem.width; height: 4
+                    width:parent.width; height: 4
                     color: "#5AD166"
                     layer.enabled: true
                     layer.effect: DropShadow {
@@ -54,21 +69,7 @@ Item {
                 MouseArea {
                     width: parent.width; height: parent.height
                     onClicked: {
-                        _categoriesView.currentIndex = index
-                        //console.log(modelData, Data.findIndexMenuByCategory(modelData))
-                        var indexMenu = Data.findIndexMenuByCategory(modelData)
-
-                        //_menuView.currentIndex = indexMenu
-
-
-                        //var item = _menuView.itemAtIndex(indexMenu)
-                        //_anim.to = item.xy
-                        //_anim.start()
-
-                        //var item = _menuView.itemAtIndex(Data.findIndexMenuByCategory(modelData))
-                        //console.log(item.x, item.y)
-                        //_anim.to = y-50
-                        //_anim.start()
+                        _categoriesView.currentIndex = index                        
                         _menuView.positionViewAtIndex(Data.findIndexMenuByCategory(modelData), ListView.Beginning)
                     }
                 }
@@ -78,19 +79,20 @@ Item {
 
 
     ListModel {
-        id: _model
-        Component.onCompleted: fillModel()
+        id: _menuModel
+        Component.onCompleted: fillModel(Data.menu)
     }
 
-    function fillModel() {
-        Object.keys(Data.menu).forEach(function (categories) {
-
-            Data.menu[categories].forEach(function (item) {
-                _model.append({
+    function fillModel(menu) {
+        _menuModel.clear()
+        menu.forEach(function (item) {
+            _menuModel.append({
                                   "name": item.name,
-                                  "category": categories
+                                  "cost": item.cost,
+                                  "image": item.img,
+                                  "description": item.description,
+                                  "category": item.category
                               })
-            })
         })
     }
 
@@ -100,14 +102,7 @@ Item {
         width: parent.width - 40
         height: parent.height - y
         clip: true
-        model: _model
-        SmoothedAnimation {
-            id: _anim
-            target: _menuView
-            property: "contentY"
-            velocity: 1000
-            to: 0
-        }
+        model: _menuModel
         section.property: "category"
         section.criteria: ViewSection.FullString
         section.delegate: Label {
@@ -120,8 +115,19 @@ Item {
         delegate: MenuDelegate {
             width: _menuView.width; height: 80
             name: model.name
+            image: "qrc:/icons/burger-black.svg"
+            onClicked: {
+                _menuInfo.name = model.name
+                _menuInfo.image = "qrc:/icons/burger-black.svg"//model.image
+                _menuInfo.info = model.description
+                _menuInfo.open()
+            }
         }
 
-        onCurrentSectionChanged: _categoriesView.currentIndex = Object.keys(Data.menu).indexOf(currentSection)
+        onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
+    }
+
+    MenuInfoDrawer {
+        id: _menuInfo
     }
 }

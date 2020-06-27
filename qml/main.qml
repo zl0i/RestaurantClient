@@ -3,6 +3,8 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 import QtGraphicalEffects 1.0
 
+import Components 1.0
+
 Window {
     visible: true
     width: 420
@@ -12,7 +14,6 @@ Window {
     SwipeView {
         id: _swipeView
         width: parent.width; height: parent.height-75
-        //interactive: false
         MenuPage {
 
         }
@@ -50,6 +51,7 @@ Window {
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Меню")
                 icon: "qrc:/icons/burger-black.svg"
+                selected: _swipeView.currentIndex === 0
                 onClicked: _swipeView.currentIndex = 0
             }
             NavigationDelegate {
@@ -57,6 +59,7 @@ Window {
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Корзина")
                 icon: "qrc:/icons/shopping-black.svg"
+                selected: _swipeView.currentIndex === 1
                 onClicked: _swipeView.currentIndex = 1
             }
             NavigationDelegate {
@@ -64,6 +67,7 @@ Window {
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Акции")
                 icon: "qrc:/icons/stock-black.svg"
+                selected: _swipeView.currentIndex === 2
                 onClicked: _swipeView.currentIndex = 2
             }
             NavigationDelegate {
@@ -71,15 +75,13 @@ Window {
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Профиль")
                 icon: "qrc:/icons/profile-black.svg"
+                selected: _swipeView.currentIndex === 3
                 onClicked: _swipeView.currentIndex = 3
             }
         }
-
-
-
     }
 
-
-
-
+    AuthDrawer {
+        visible: true
+    }
 }
