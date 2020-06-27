@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/main.qml</file>
+        <file>qml/MenuPage.qml</file>
+        <file>qml/BasketPage.qml</file>
+        <file>qml/MenuDelegate.qml</file>
+        <file>qml/Data/Data.qml</file>
+        <file>qml/Data/qmldir</file>
+        <file>qml/NavigationDelegate.qml</file>
+        <file>qml/EventPage.qml</file>
+        <file>qml/ProfilePage.qml</file>
+        <file>qml/BasketDelegate.qml</file>
+    </qresource>
+</RCC>
