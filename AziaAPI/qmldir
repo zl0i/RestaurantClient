@@ -1,0 +1,2 @@
+module AziaAPI
+singleton AziaAPI 1.0 AziaAPI.qml

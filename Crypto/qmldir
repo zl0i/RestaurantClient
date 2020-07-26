@@ -1,0 +1,3 @@
+module Crypto
+singleton Crypto 1.0 Crypto.qml
+

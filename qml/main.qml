@@ -3,7 +3,9 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 import QtGraphicalEffects 1.0
 
-import Components 1.0
+//import Components 1.0
+import "./Components"
+import AziaAPI 1.0
 
 Window {
     visible: true
@@ -81,7 +83,52 @@ Window {
         }
     }
 
-    AuthDrawer {
-        visible: true
+    /*Component.onCompleted: {
+        var obj = {
+            "name": "Дмитрий",
+            "phoneNumber": "89202173095",
+            "password": "1996q1996w",
+            "address": "Морская 46, 18"
+        }
+        AziaAPI.registration(obj,
+                             function() {
+                                 console.log("registr")
+                             },
+                             function () {
+                                 console.log("error registr")
+                             })
+    }*/
+
+    AuthDialog {
+        //visible: true
+        onInput: {
+            console.log("auth")
+            AziaAPI.authentication(obj,
+                                   function (responseText) {
+                                       console.log(responseText)
+                                       close()
+                                       console.log("win")
+                                   },
+                                   function () {
+                                       console.log("error")
+                                   })
+           /* AziaAPI.getMenu(
+                        function (menu) {
+                            console.log(menu)
+                        },
+                        function () {
+                            console.log("error")
+                        })*/
+        }
+        onRegistrationClicked: {
+            AziaAPI.registration(obj,
+                                 function() {
+                                     console.log("registr")
+                                     close()
+                                 },
+                                 function () {
+                                     console.log("error registr")
+                                 })
+        }
     }
 }

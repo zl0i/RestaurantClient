@@ -8,9 +8,13 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-
+    QCoreApplication::setOrganizationName("Azia");
+    //QCoreApplication::setOrganizationDomain("mysoft.com"); //needed ios
+    QCoreApplication::setApplicationName("AziaClient");
 
     qmlRegisterSingletonType(QUrl("qrc:qml/Data/Data.qml"), "AziaData", 1, 0, "Data");
+
+
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -18,6 +22,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
+    engine.addImportPath(":/");
     engine.addImportPath(":/qml");
     engine.load(url);
 

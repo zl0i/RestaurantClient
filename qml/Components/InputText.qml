@@ -3,7 +3,24 @@ import QtQuick.Controls 2.12
 
 TextField {
     id: _field
-    height: 50
+    height: 45
+
+    verticalAlignment: Text.AlignBottom
+    horizontalAlignment: Text.AlignLeft
+    leftPadding: 10
+    bottomPadding: 5
+    font.pixelSize: 16
+
+    //property string placeholderText
+
+
+    Label {
+        font.pixelSize: 12
+        text: _field.placeholderText
+    }
+    placeholderTextColor: "#00000000"
+
+    //placeholderText: "Login"
 
     onFocusChanged:  {
         if(focus) {

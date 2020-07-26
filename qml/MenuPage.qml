@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 
 import AziaData 1.0
 
-import Components 1.0
+import "./Components"
 
 Item {
     id: _menuPage
@@ -38,6 +38,7 @@ Item {
             orientation: Qt.Horizontal
             spacing: 10
             model: Data.getCategoriesMenu()
+
             highlight: Item {
                 width: _categoriesView.currentItem.width; height: _categoriesView.currentItem.height
                 Rectangle {
@@ -96,13 +97,14 @@ Item {
         })
     }
 
-    ListView {
+    SwipeRefreshListView {
         id: _menuView
         x: 20; y: 90
         width: parent.width - 40
         height: parent.height - y
         clip: true
         model: _menuModel
+        contentColor: "#5AD166"
         section.property: "category"
         section.criteria: ViewSection.FullString
         section.delegate: Label {
@@ -110,6 +112,9 @@ Item {
             verticalAlignment: Text.AlignVCenter
             text: section
             font { pixelSize: 18; bold: true }
+        }
+        onStartUpdate: {
+            console.log("update menu")
         }
 
         delegate: MenuDelegate {

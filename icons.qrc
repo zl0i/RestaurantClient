@@ -4,5 +4,7 @@
         <file>icons/profile-black.svg</file>
         <file>icons/shopping-black.svg</file>
         <file>icons/stock-black.svg</file>
+        <file>icons/arrowBack-black.svg</file>
+        <file>icons/exit-black.svg</file>
     </qresource>
 </RCC>

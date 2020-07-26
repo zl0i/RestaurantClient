@@ -15,6 +15,15 @@
         <file>qml/Components/MenuInfoDrawer.qml</file>
         <file>qml/Components/CustomButton.qml</file>
         <file>qml/Components/InputText.qml</file>
-        <file>qml/Components/AuthDrawer.qml</file>
+        <file>qml/Components/AuthDialog.qml</file>
+        <file>AjaxLibrary/Ajax.qml</file>
+        <file>AjaxLibrary/qmldir</file>
+        <file>AziaAPI/AziaAPI.qml</file>
+        <file>AziaAPI/qmldir</file>
+        <file>Crypto/Crypto.qml</file>
+        <file>Crypto/qmldir</file>
+        <file>qml/Components/ImageButton.qml</file>
+        <file>qml/Components/SwipeRefreshListView.qml</file>
+        <file>qml/Components/SwipeRefreshLayout.qml</file>
     </qresource>
 </RCC>

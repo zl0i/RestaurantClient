@@ -1,7 +1,28 @@
 pragma Singleton
-import QtQuick 2.9
+import QtQuick 2.12
+import Qt.labs.settings 1.0
 
-QtObject {
+Item {
+    id: _root
+
+    property string firstName: ""
+    property string phoneNumber: ""
+
+    //property var menu: []
+    property var activeOrder: ({})
+    property var basket: []
+    property var history: []
+
+    Settings {
+        property alias firstName: _root.firstName
+        property alias phoneNumber: _root.phoneNumber
+
+        property alias menu: _root.menu
+        property alias activeOrder: _root.activeOrder
+        property alias basket: _root.basket
+        property alias history: _root.history
+
+    }
 
     function findIndexMenuByCategory(category) {
         return menu.findIndex(function(item) {
@@ -359,13 +380,11 @@ QtObject {
         }
     ]
 
-    property var activeOrder
-
-    property var basket
 
 
 
-    readonly property var history : [
+
+    /*readonly property var history : [
         {
             "id": 546,
             "cost": "2456.50",
@@ -392,7 +411,7 @@ QtObject {
 
             ]
         }
-    ]
+    ]*/
 }
 
 

@@ -14,13 +14,43 @@ Rectangle {
     property color releasedColor: "#4FD65C"
     property color disableColor: "#D3D3D3"
 
+    property color pressedTextColor: "#FFFFFF"
+    property color releasedTextColor: "#FFFFFF"
+
+    states: [
+        State {
+            name: "green"
+            PropertyChanges {
+                target: _button
+                pressedColor: "#25D500"
+                releasedColor: "#4FD65C"
+                disableColor: "#D3D3D3"
+                pressedTextColor: "#FFFFFF"
+                releasedTextColor: "#FFFFFF"
+                height: 35
+            }
+        },
+        State {
+            name: "opacity"
+            PropertyChanges {
+                target: _button
+                pressedTextColor: "#4FD65C"
+                releasedTextColor: "#25D500"
+                pressedColor: "#00000000"
+                releasedColor: "#00000000"
+                height: 20
+            }
+        }
+    ]
+    state: "green"
+
     Label {
         id: _label
         width: parent.width
         height: parent.height
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        color: "#FFFFFF"
+        color: _mouseArea.pressed ? _button.pressedTextColor : _button.releasedTextColor
         font.pixelSize: 16
         text: _button.text
     }
