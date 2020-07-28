@@ -1,12 +1,14 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtGraphicalEffects 1.0
 
 Rectangle {
     id: _button
-    width: _label.contentWidth + 60; height: 35; radius: 10
+    width: _label.contentWidth + 60; height: 40; radius: 10
     color: _mouseArea.pressed ? pressedColor : releasedColor
 
     property string text
+    property bool enableShadow: false
 
     signal clicked()
 
@@ -44,6 +46,13 @@ Rectangle {
     ]
     state: "green"
 
+    layer.enabled: enableShadow
+    layer.effect: DropShadow {
+        radius: 8
+        samples: 16
+        color: "#80000000"
+    }
+
     Label {
         id: _label
         width: parent.width
@@ -51,7 +60,7 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         color: _mouseArea.pressed ? _button.pressedTextColor : _button.releasedTextColor
-        font.pixelSize: 16
+        font { pixelSize: 16; bold: true }
         text: _button.text
     }
 

@@ -1,13 +1,18 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
+import QtQml 2.14
 import QtGraphicalEffects 1.0
 
 import AziaData 1.0
+import AziaAPI 1.0
 
 import "./Components"
 
 Item {
     id: _menuPage
+
+    property var basket: Basket.basket
+
     Rectangle {
         width: parent.width; height: 80
         layer.enabled: true
@@ -23,9 +28,9 @@ Item {
             width: parent.width-40; height: 30
             onTextChanged: {
                 if(text)
-                    fillModel(Data.filterMenuByName(text))
+                    _menuModel.fillModel(MenuItems.filterMenuByName(text))
                 else
-                    fillModel(Data.menu)
+                    _menuModel.fillModel(MenuItems.menu)
             }
         }
 
@@ -37,10 +42,11 @@ Item {
             clip: true
             orientation: Qt.Horizontal
             spacing: 10
-            model: Data.getCategoriesMenu()
+            model: MenuItems.getCategoriesMenu()
 
             highlight: Item {
-                width: _categoriesView.currentItem.width; height: _categoriesView.currentItem.height
+                width: _categoriesView.currentItem ? _categoriesView.currentItem.width : 0
+                height: _categoriesView.currentItem ? _categoriesView.currentItem.height : 0
                 Rectangle {
                     id: _highlightItem
                     y: parent.height
@@ -70,8 +76,8 @@ Item {
                 MouseArea {
                     width: parent.width; height: parent.height
                     onClicked: {
-                        _categoriesView.currentIndex = index                        
-                        _menuView.positionViewAtIndex(Data.findIndexMenuByCategory(modelData), ListView.Beginning)
+                        _categoriesView.currentIndex = index
+                        _menuView.positionViewAtIndex(MenuItems.findIndexMenuByCategory(modelData), ListView.Beginning)
                     }
                 }
             }
@@ -81,29 +87,39 @@ Item {
 
     ListModel {
         id: _menuModel
-        Component.onCompleted: fillModel(Data.menu)
+        Component.onCompleted: fillModel(MenuItems.menu)
+
+        function fillModel(menu) {
+            _menuModel.clear()
+            menu.forEach(function (item) {
+                _menuModel.append({
+                                      "id": item["_id"],
+                                      "name": item.name,
+                                      "cost": item.cost,
+                                      "image": item.img,
+                                      "description": item.description,
+                                      "category": item.category
+                                  })
+            })
+        }
     }
 
-    function fillModel(menu) {
-        _menuModel.clear()
-        menu.forEach(function (item) {
-            _menuModel.append({
-                                  "name": item.name,
-                                  "cost": item.cost,
-                                  "image": item.img,
-                                  "description": item.description,
-                                  "category": item.category
-                              })
-        })
+
+    onBasketChanged: {
+        for(var i = 0; i < _menuView.count; i++) {
+            _menuView.itemAtIndex(i).count = Basket.getCountById(_menuView.itemAtIndex(i).menu_id)
+        }
     }
+
 
     SwipeRefreshListView {
         id: _menuView
-        x: 20; y: 90
+        x: 20; y: 80; z:-1
         width: parent.width - 40
         height: parent.height - y
         clip: true
         model: _menuModel
+        spacing: -1
         contentColor: "#5AD166"
         section.property: "category"
         section.criteria: ViewSection.FullString
@@ -115,20 +131,36 @@ Item {
         }
         onStartUpdate: {
             console.log("update menu")
+            AziaAPI.getMenu(
+                        function(responseText) {
+                            _menuView.stopRunningUpdate()
+                            MenuItems.parseMenu(JSON.parse(responseText))
+                            _menuModel.fillModel(MenuItems.menu)
+
+                        },
+                        function(error) {
+
+                        })
         }
 
         delegate: MenuDelegate {
-            width: _menuView.width; height: 80
+            id: _menuDelegate
+            width: _menuView.width; height: 100
+            menu_id: model.id
             name: model.name
-            image: "qrc:/icons/burger-black.svg"
+            image: "http://localhost:3000/" + model.image
+            cost: model.cost
+            count: Basket.getCountById(menu_id)
             onClicked: {
                 _menuInfo.name = model.name
-                _menuInfo.image = "qrc:/icons/burger-black.svg"//model.image
+                _menuInfo.image = "http://localhost:3000/" + model.image
                 _menuInfo.info = model.description
                 _menuInfo.open()
             }
+            onEditedCount: {
+                Basket.setCountItem(MenuItems.menu[index], count)
+            }
         }
-
         onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
     }
 

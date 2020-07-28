@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("AziaClient");
 
     qmlRegisterSingletonType(QUrl("qrc:qml/Data/Data.qml"), "AziaData", 1, 0, "Data");
+    qmlRegisterSingletonType(QUrl("qrc:qml/Data/MenuItems.qml"), "AziaData", 1, 0, "MenuItems");
+    qmlRegisterSingletonType(QUrl("qrc:qml/Data/Basket.qml"), "AziaData", 1, 0, "Basket");
 
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

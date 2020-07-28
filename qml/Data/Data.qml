@@ -7,48 +7,30 @@ Item {
 
     property string firstName: ""
     property string phoneNumber: ""
+    property var address
 
-    //property var menu: []
-    property var activeOrder: ({})
-    property var basket: []
+    property var activeOrder: ({})    
     property var history: []
 
     Settings {
+        id: _settings
         property alias firstName: _root.firstName
         property alias phoneNumber: _root.phoneNumber
 
-        property alias menu: _root.menu
-        property alias activeOrder: _root.activeOrder
-        property alias basket: _root.basket
-        property alias history: _root.history
+        //property alias menu: _root.menu
+        //property alias activeOrder: _root.activeOrder
+        //property alias basket: _root.basket
+        //property alias history: _root.history
 
     }
 
-    function findIndexMenuByCategory(category) {
-        return menu.findIndex(function(item) {
-            if(item.category === category)
-                return true
-        })
+    function clearCash() {
+
     }
 
-    function getCategoriesMenu() {
-        var cat = [];
-        menu.forEach(function (item) {
-           if(cat.indexOf(item.category) === -1)
-               cat.push(item.category)
-        })
-        return cat
-    }
 
-    function filterMenuByName(str) {
-        var reg = new RegExp(str, "i")
-        return menu.filter(function(item) {
-            if(reg.test(item.name))
-                return true
-        })
-    }
 
-    readonly property var menu: [
+    /*readonly property var menu: [
         {
             "name": "Лагман",
             "cost": 200,
@@ -378,7 +360,7 @@ Item {
             "img": "",
             "category": "Разное"
         }
-    ]
+    ]*/
 
 
 

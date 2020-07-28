@@ -109,10 +109,10 @@ Item {
     }
 
     function ordered(menu, address, success, fail) {
-        var obj = {
+        /*var obj = {
             "address": address,
             "menu": menu
-        }
+        }*/
 
         var headers = getHeadersWithSignature(obj)
 

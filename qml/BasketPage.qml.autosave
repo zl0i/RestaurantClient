@@ -84,6 +84,9 @@ Item {
 
     OrderDrawer {
         id: _orderDrawer
+        onAccess: {
+            AziaAPI.ordered()
+        }
     }
 
 

@@ -25,5 +25,9 @@
         <file>qml/Components/ImageButton.qml</file>
         <file>qml/Components/SwipeRefreshListView.qml</file>
         <file>qml/Components/SwipeRefreshLayout.qml</file>
+        <file>qml/Components/AddBasketItem.qml</file>
+        <file>qml/Data/Basket.qml</file>
+        <file>qml/Data/MenuItems.qml</file>
+        <file>qml/Components/OrderDrawer.qml</file>
     </qresource>
 </RCC>

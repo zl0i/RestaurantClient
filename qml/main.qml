@@ -5,6 +5,7 @@ import QtGraphicalEffects 1.0
 
 //import Components 1.0
 import "./Components"
+import AziaData 1.0
 import AziaAPI 1.0
 
 Window {
@@ -16,8 +17,9 @@ Window {
     SwipeView {
         id: _swipeView
         width: parent.width; height: parent.height-75
+        clip: true
         MenuPage {
-
+            id: _menuPage
         }
 
         BasketPage {
@@ -47,9 +49,9 @@ Window {
         }
         Row {
             x: 20; y: parent.height/2-height/2
-            spacing: (parent.width-220)/4
+            spacing: (parent.width-340)/4
             NavigationDelegate {
-                width: 55; height: 55
+                width: 80; height: 55
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Меню")
                 icon: "qrc:/icons/burger-black.svg"
@@ -57,15 +59,30 @@ Window {
                 onClicked: _swipeView.currentIndex = 0
             }
             NavigationDelegate {
-                width: 55; height: 55
+                width: 80; height: 55
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Корзина")
                 icon: "qrc:/icons/shopping-black.svg"
                 selected: _swipeView.currentIndex === 1
                 onClicked: _swipeView.currentIndex = 1
+                Rectangle {
+                    x: parent.width - 50
+                    y: parent.height - height - 20
+                    width: 55; height: 16; radius: 8
+                    color: "#5AD166"
+                    visible: total > 0
+                    property int total: Basket.getTotal()
+                    Label {
+                        width: parent.width; height: parent.height
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        color: "#FFFFFF"
+                        text: parent.total + " р."
+                    }
+                }
             }
             NavigationDelegate {
-                width: 55; height: 55
+                width: 80; height: 55
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Акции")
                 icon: "qrc:/icons/stock-black.svg"
@@ -73,7 +90,7 @@ Window {
                 onClicked: _swipeView.currentIndex = 2
             }
             NavigationDelegate {
-                width: 55; height: 55
+                width: 80; height: 55
                 iconWidth: 35; iconHeight: 30
                 text: qsTr("Профиль")
                 icon: "qrc:/icons/profile-black.svg"
@@ -81,23 +98,7 @@ Window {
                 onClicked: _swipeView.currentIndex = 3
             }
         }
-    }
-
-    /*Component.onCompleted: {
-        var obj = {
-            "name": "Дмитрий",
-            "phoneNumber": "89202173095",
-            "password": "1996q1996w",
-            "address": "Морская 46, 18"
-        }
-        AziaAPI.registration(obj,
-                             function() {
-                                 console.log("registr")
-                             },
-                             function () {
-                                 console.log("error registr")
-                             })
-    }*/
+    }    
 
     AuthDialog {
         //visible: true
@@ -111,14 +112,7 @@ Window {
                                    },
                                    function () {
                                        console.log("error")
-                                   })
-           /* AziaAPI.getMenu(
-                        function (menu) {
-                            console.log(menu)
-                        },
-                        function () {
-                            console.log("error")
-                        })*/
+                                   })           
         }
         onRegistrationClicked: {
             AziaAPI.registration(obj,
