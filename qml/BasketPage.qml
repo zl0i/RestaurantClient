@@ -35,7 +35,7 @@ Item {
     }
 
     SwipeView.onIsCurrentItemChanged: {
-     //console.log( SwipeView.isCurrentItem)
+        //console.log( SwipeView.isCurrentItem)
         /*if(SwipeView.isCurrentItem) {
             Basket.basketChanged()
         }*/
@@ -84,7 +84,23 @@ Item {
 
     OrderDrawer {
         id: _orderDrawer
+        onAccess: {
+            var obj = {
+                "menu": JSON.stringify(Basket.basket),
+                "comment": _orderDrawer.comment,
+                "address": _orderDrawer.address,
+                "phone": "123456789",
+                "phoneNumber": Data.phoneNumber
+            }
+
+            AziaAPI.ordered(obj,
+                            function(responseText) {
+                                console.log(responseText)
+                                close()
+                            },
+                            function (status, text) {
+                                console.log("error:", text)
+                            })
+        }
     }
-
-
 }

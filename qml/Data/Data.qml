@@ -7,7 +7,7 @@ Item {
 
     property string firstName: ""
     property string phoneNumber: ""
-    property var address
+    property var address    
 
     property var activeOrder: ({})    
     property var history: []

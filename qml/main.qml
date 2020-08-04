@@ -98,21 +98,21 @@ Window {
                 onClicked: _swipeView.currentIndex = 3
             }
         }
-    }    
+    }
 
     AuthDialog {
-        //visible: true
+        visible: true
+
         onInput: {
             console.log("auth")
             AziaAPI.authentication(obj,
                                    function (responseText) {
-                                       console.log(responseText)
                                        close()
-                                       console.log("win")
+                                       Data.phoneNumber = obj.phoneNumber
                                    },
                                    function () {
                                        console.log("error")
-                                   })           
+                                   })
         }
         onRegistrationClicked: {
             AziaAPI.registration(obj,

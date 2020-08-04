@@ -62,13 +62,7 @@ Item {
 
         Ajax.ajaxPOST(serverName+"user/register", getHeadersWithSignature(body),
                       function (responseText) {
-                          console.log(responseText)
-                          var json = JSON.parse(responseText)
-                          if(json.status === "ok") {
-                              success()
-                          } else {
-                              fail("Не удалось зарегистрироваться")
-                          }
+                          success()
                       },
                       function(status, statusText) {
                           fail(statusText)
@@ -86,11 +80,7 @@ Item {
         Ajax.ajaxPOST(serverName + "user/input",  getHeadersWithSignature(body),
                       function (responseText) {
                           var json = JSON.parse(responseText)
-                          if(json.status === "ok") {
-                              success(responseText)
-                          } else {
-                              fail("")
-                          }
+                          success(responseText)
                       },
                       function(status, statusText) {
                           fail(statusText)
@@ -108,26 +98,18 @@ Item {
                      })
     }
 
-    function ordered(menu, address, success, fail) {
-        var obj = {
-            "address": address,
-            "menu": menu
-        }
+    function ordered(obj, success, fail) {
 
-        var headers = getHeadersWithSignature(obj)
+        var body = getHeadersWithSignature(obj)
 
 
-        Ajax.ajaxPOST(serverName + "ordered", headers,
+        Ajax.ajaxPOST(serverName + "orders", body,
                       function (responseText) {
                           var jsonData = JSON.parse(responseText)
-                          if(jsonData.status === "ok") {
-                              success()
-                          } else {
-                              fail(jsonData, jsonData.status)
-                          }
+                          success(responseText)
                       },
                       function(status, statusText) {
-                          fail(statusText)
+                          fail(status, statusText)
                       })
     }
 

@@ -45,7 +45,7 @@ Drawer {
             }
             Flickable {
                 width: parent.width; height: 150
-                contentHeight: _info.contentHeight + 100
+                contentHeight: _info.contentHeight+10
                 clip: true
                 ScrollBar.vertical: ScrollBar {}
                 Label {

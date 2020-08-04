@@ -13,8 +13,12 @@ QtObject {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
         xhr.setRequestHeader('Content-Length', data.length)
 
-        xhr.onload = function() {           
-            success(xhr.responseText)
+        xhr.onload = function() {
+            if(xhr.status >= 200 && xhr.status < 300) {
+                success(xhr.responseText, xhr.status)
+            } else {
+               fail(xhr.status, xhr.responseText)
+            }
         }
 
         xhr.onerror = function() {           
