@@ -1,34 +1,37 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
-Drawer {
-    id: _drawer
-    y: parent.height - height
-    width:  parent.width
-    height: 240//0.6 *parent.height
-    interactive: opened
-    edge: Qt.BottomEdge
-    padding: 20
+Dialog {
+    id: _dialog
+    parent: Overlay.overlay
+    x: parent.width/2 - width/2
+    y: parent.height/2 - height/2
+    width:  parent.width-40
+    height: 290
+    modal: true; dim: true
+    padding: 0
 
-    property alias address: _address.text
-    property string comment: _comment.text
+    Overlay.modal: Rectangle { color: "#A0000000" }
+
+    property alias address: _address
+    property alias comment: _comment.text
+    property alias phone: _phone.text
 
     signal access()
 
     background: Rectangle {
         width: parent.width; height: parent.height
-        radius: 20
-        Rectangle {
-            y: parent.height-height
-            width: parent.width; height: 20
-        }
+        radius: 20        
     }
     contentItem: Item {
-
-        Rectangle {
-            x: parent.width/2 - width/2; y: 5
-            width: 80; height: 4; radius: 2
-            color: "#C4C4C4"
+        ImageButton {
+            x: parent.width - 30
+            y: 10
+            width: 20; height: 20
+            image: "qrc:/icons/exit-black.svg"
+            onClicked: {
+                _dialog.close()
+            }
         }
         Column {
             x: 20; y: 10
@@ -40,10 +43,13 @@ Drawer {
                 text: qsTr("Оформление заказа")
             }
             InputText {
+                id: _phone
+                width: parent.width
+                placeholderText: qsTr("Телефон")
+            }
+            InputAddressField {
                 id: _address
                 width: parent.width
-                placeholderText: qsTr("Адрес")
-                passwordMaskDelay: 500
             }
             InputText {
                 id: _comment
@@ -53,7 +59,7 @@ Drawer {
             CustomButton {
                 x: parent.width/2 - width/2
                 text: qsTr("Применить")
-                onClicked: _drawer.access()
+                onClicked: _dialog.access()
             }
         }
     }

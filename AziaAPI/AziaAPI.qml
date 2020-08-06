@@ -8,7 +8,7 @@ import Crypto 1.0
 Item {
     id: _root
 
-    readonly property string serverName: "http://localhost:3000/azia/" //"http://azia.tiksi.ru/clientapi/"
+    readonly property string serverName: "http://localhost:8989/aziaclient/" //"http://azia.tiksi.ru/clientapi/"
     readonly property string apiKey: "5a20fbce-fdd6-40ea-84fb-b6c1d75fd368"
 
 
@@ -78,8 +78,7 @@ Item {
         }
 
         Ajax.ajaxPOST(serverName + "user/input",  getHeadersWithSignature(body),
-                      function (responseText) {
-                          var json = JSON.parse(responseText)
+                      function (responseText) {                          
                           success(responseText)
                       },
                       function(status, statusText) {
@@ -105,7 +104,7 @@ Item {
 
         Ajax.ajaxPOST(serverName + "orders", body,
                       function (responseText) {
-                          var jsonData = JSON.parse(responseText)
+                          var jsonUser = JSON.parse(responseText)
                           success(responseText)
                       },
                       function(status, statusText) {

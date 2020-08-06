@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     //QCoreApplication::setOrganizationDomain("mysoft.com"); //needed ios
     QCoreApplication::setApplicationName("AziaClient");
 
-    qmlRegisterSingletonType(QUrl("qrc:qml/Data/Data.qml"), "AziaData", 1, 0, "Data");
+    qmlRegisterSingletonType(QUrl("qrc:qml/Data/User.qml"), "AziaData", 1, 0, "User");
     qmlRegisterSingletonType(QUrl("qrc:qml/Data/MenuItems.qml"), "AziaData", 1, 0, "MenuItems");
     qmlRegisterSingletonType(QUrl("qrc:qml/Data/Basket.qml"), "AziaData", 1, 0, "Basket");
 

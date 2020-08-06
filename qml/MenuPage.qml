@@ -106,18 +106,17 @@ Item {
 
 
     onBasketChanged: {
-        for(var i = 0; i < _menuView.count; i++) {
-            _menuView.itemAtIndex(i).count = Basket.getCountById(_menuView.itemAtIndex(i).menu_id)
+        for(var i = 0; i < _menuView.count; i++) {            
+            if(_menuView.itemAtIndex(i))
+                _menuView.itemAtIndex(i).count = Basket.getCountById(_menuView.itemAtIndex(i).menu_id)
         }
-    }
-
+    }   
 
     SwipeRefreshListView {
         id: _menuView
         x: 20; y: 80; z:-1
         width: parent.width - 40
         height: parent.height - y
-        clip: true
         model: _menuModel
         spacing: -1
         contentColor: "#5AD166"
@@ -129,6 +128,8 @@ Item {
             text: section
             font { pixelSize: 18; bold: true }
         }
+
+
         onStartUpdate: {
             console.log("update menu")
             AziaAPI.getMenu(
@@ -148,12 +149,12 @@ Item {
             width: _menuView.width; height: 100
             menu_id: model.id
             name: model.name
-            image: "http://localhost:3000/" + model.image
+            image: "http://localhost:8989/" + model.image
             cost: model.cost
             count: Basket.getCountById(menu_id)
             onClicked: {
                 _menuInfo.name = model.name
-                _menuInfo.image = "http://localhost:3000/" + model.image
+                _menuInfo.image = "http://localhost:8989/" + model.image
                 _menuInfo.info = model.description
                 _menuInfo.open()
             }

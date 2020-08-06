@@ -20,9 +20,9 @@ ListView {
     boundsBehavior: Flickable.DragOverBounds
 
     SwipeRefreshLayout {
-        id: _swipe        
+        id: _swipe
         parentHeight: _root.height
-        parentOvershoot: -_root.verticalOvershoot
+        parentOvershoot: -_root.verticalOvershoot        
         pressed: _root.dragging
         speed: 0.8
         onUpdateStart: _root.startUpdate()

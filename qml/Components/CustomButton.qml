@@ -8,7 +8,10 @@ Rectangle {
     color: _mouseArea.pressed ? pressedColor : releasedColor
 
     property string text
+    property string extractText
     property bool enableShadow: false
+    property alias label: _label
+    property alias exLabel: _extractLabel
 
     signal clicked()
 
@@ -55,13 +58,23 @@ Rectangle {
 
     Label {
         id: _label
+        leftPadding: _button.extractText ? 20 : 0
         width: parent.width
         height: parent.height
         verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: _button.extractText ? Text.AlignLeft : Text.AlignHCenter
         color: _mouseArea.pressed ? _button.pressedTextColor : _button.releasedTextColor
         font { pixelSize: 16; bold: true }
         text: _button.text
+    }
+    Label {
+        id: _extractLabel
+        x: parent.width - width- 20
+        height: parent.height
+        verticalAlignment: Text.AlignVCenter
+        color: _mouseArea.pressed ? _button.pressedTextColor : _button.releasedTextColor
+        font { pixelSize: 16; bold: true }
+        text: _button.extractText
     }
 
     MouseArea {

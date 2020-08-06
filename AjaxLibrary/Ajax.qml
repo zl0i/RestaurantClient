@@ -5,13 +5,13 @@ QtObject {
 
     property int timeout: 30000
 
-    function ajaxPOST(url, data, success, fail) {
+    function ajaxPOST(url, user, success, fail) {
         var xhr = new XMLHttpRequest()
         xhr.timeout = timeout
         xhr.open("POST", url, true)        
 
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-        xhr.setRequestHeader('Content-Length', data.length)
+        xhr.setRequestHeader('Content-Length', user.length)
 
         xhr.onload = function() {
             if(xhr.status >= 200 && xhr.status < 300) {
@@ -25,16 +25,16 @@ QtObject {
             fail(xhr.status, xhr.statusText)
         }
 
-        xhr.send(data)
+        xhr.send(user)
     }
 
-    function ajaxGET(url, data, success, fail) {
+    function ajaxGET(url, user, success, fail) {
         var xhr = new XMLHttpRequest()
         xhr.timeout = timeout
 
         var fullUrl = url
-        if(data !== "")
-            fullUrl += '?' + data;
+        if(user !== "")
+            fullUrl += '?' + user;
         xhr.open("GET", fullUrl, true)
 
         xhr.onload = function() {

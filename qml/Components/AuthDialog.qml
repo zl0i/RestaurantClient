@@ -72,11 +72,10 @@ Dialog {
                 echoMode: TextInput.Password
                 passwordMaskDelay: 500
             }
-            InputText {
+            InputAddressField {
                 id: _address
                 width: parent.width
-                visible: _dialog.registrationDialog
-                placeholderText: qsTr("Адрес")
+                visible: _dialog.registrationDialog                
             }
             CustomButton {
                 x: parent.width/2 - width/2

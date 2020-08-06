@@ -8,12 +8,6 @@ import AziaData 1.0
 import AziaAPI 1.0
 
 Item {
-
-
-    //property var basket: Basket.basket
-
-
-
     clip: true
     Rectangle {
         width: parent.width; height: 50
@@ -34,19 +28,12 @@ Item {
         }
     }
 
-    SwipeView.onIsCurrentItemChanged: {
-        //console.log( SwipeView.isCurrentItem)
-        /*if(SwipeView.isCurrentItem) {
-            Basket.basketChanged()
-        }*/
-    }
     Timer {
         id: _tim
         interval: 200
         running: false
         repeat: false
         onTriggered: {
-            console.log("tut123")
             Basket.basketChanged()
         }
     }
@@ -59,6 +46,7 @@ Item {
         delegate: BasketDelegate {
             id: _basketDelegate
             width: parent.width; height: 100
+            image: "http://localhost:8989/" + modelData.img
             name: modelData.name
             cost: modelData.cost
             count: modelData.count
@@ -67,7 +55,12 @@ Item {
                 Basket.basketChanged()
             }
             onDecrement: {
-                Basket.basket[index].count = count
+                if(count === 0) {
+                    Basket.basket.splice(index, 1)
+                } else {
+                    Basket.basket[index].count = count
+                }
+
                 Basket.basketChanged()
             }
         }
@@ -78,19 +71,27 @@ Item {
         width: parent.width - 40; height: 40
         visible: Basket.basket.length > 0
         enableShadow: true
-        text: qsTr("Оформить заказ %1").arg(Basket.getTotal())
+        text: qsTr("Оформить заказ")
+        extractText: qsTr("%1 р.").arg(Basket.getTotal())
         onClicked: _orderDrawer.open()
+
     }
 
-    OrderDrawer {
+    OrderDialog {
         id: _orderDrawer
+        phone: User.phoneNumber
+        address {
+            street: User.address.street
+            house: User.address.house
+            flat: User.address.flat
+        }
         onAccess: {
             var obj = {
-                "menu": JSON.stringify(Basket.basket),
+                "menu": JSON.stringify(Basket.getMinimumBasket()),
                 "comment": _orderDrawer.comment,
                 "address": _orderDrawer.address,
-                "phone": "123456789",
-                "phoneNumber": Data.phoneNumber
+                "phone": _orderDrawer.phone,
+                "phoneNumber": User.phoneNumber
             }
 
             AziaAPI.ordered(obj,

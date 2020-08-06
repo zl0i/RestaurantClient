@@ -7,10 +7,41 @@ Item {
 
     property string firstName: ""
     property string phoneNumber: ""
-    property var address    
+    property var address: {
+        "street": "Морская",
+        "house": 46,
+        "flat": 18
+    }
 
-    property var activeOrder: ({})    
-    property var history: []
+    property var activeOrder:
+    {
+        "datetime": "2020-08-06T00:43:37.000Z",
+        "total": "560.00",
+        "status": "access"
+    }
+
+    property var history: [
+        {
+            "datetime": "2020-08-05T00:43:00.000Z",
+            "total": "560.00",
+            "status": "access"
+        },
+        {
+            "datetime": "2020-07-23T13:51:00.000Z",
+            "total": "25.00",
+            "status": "access"
+        },
+        {
+            "datetime": "2020-04-18T16:56:00.000Z",
+            "total": "113.00",
+            "status": "canceled"
+        },
+        {
+            "datetime": "2019-12-03T17:43:00.000Z",
+            "total": "2560.00",
+            "status": "access"
+        },
+    ]
 
     Settings {
         id: _settings
@@ -31,62 +62,6 @@ Item {
 
 
     /*readonly property var menu: [
-        {
-            "name": "Лагман",
-            "cost": 200,
-            "description": "Вкуснейший суп из дикого оленя приготовленный талантом под литр водки. Покупайте наш суп не пожалеете!!! Вкуснейший суп из дикого оленя приготовленный талантом под литр водки. Покупайте наш суп не пожалеете!!! Вкуснейший суп из дикого оленя приготовленный талантом под литр водки. Покупайте наш суп не пожалеете!!!",
-            "img": "",
-            "category": "Первое"
-        },
-        {
-            "name": "Борщ",
-            "cost": 150,
-            "description": "",
-            "img": "",
-            "category": "Первое"
-        },
-        {
-            "name": "Суп с фрикадельками",
-            "cost": 190,
-            "description": "",
-            "img": "",
-            "category": "Первое"
-        },
-        {
-            "name": "Пельмени",
-            "cost": 190,
-            "description": "",
-            "img": "",
-            "category": "Первое"
-        },
-        {
-            "name": "Солянка",
-            "cost": 190,
-            "description": "",
-            "img": "",
-            "category": "Первое"
-        },
-        {
-            "name": "Куриный суп",
-            "cost": 190,
-            "description": "",
-            "img": "",
-            "category": "Первое"
-        },
-        {
-            "name": "Босо лагман",
-            "cost": 200,
-            "description": "",
-            "img": "",
-            "category": "Второе"
-        },
-        {
-            "name": "Ганфан",
-            "cost": 190,
-            "description": "",
-            "img": "",
-            "category": "Второе"
-        },
         {
             "name": "Бифштекс",
             "cost": 190,

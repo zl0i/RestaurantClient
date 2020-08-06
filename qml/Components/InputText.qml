@@ -11,16 +11,11 @@ TextField {
     bottomPadding: 5
     font.pixelSize: 16
 
-    //property string placeholderText
-
-
     Label {
         font.pixelSize: 12
         text: _field.placeholderText
     }
-    placeholderTextColor: "#00000000"
-
-    //placeholderText: "Login"
+    placeholderTextColor: "#00000000"   
 
     onFocusChanged:  {
         if(focus) {
@@ -42,11 +37,8 @@ TextField {
         NumberAnimation {
             id: _animation
             target: _line
-            property: "width"
-            //from: 0
-            //to: _field.width
+            property: "width"            
             duration: 250
-
         }
 
         Rectangle {

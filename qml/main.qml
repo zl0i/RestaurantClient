@@ -44,8 +44,8 @@ Window {
         layer.effect: DropShadow {
             radius: 8
             samples: 16
-            verticalOffset: -4
-            color: "#80000000"
+            verticalOffset: -3
+            color: "#40000000"
         }
         Row {
             x: 20; y: parent.height/2-height/2
@@ -101,14 +101,19 @@ Window {
     }
 
     AuthDialog {
-        visible: true
+        //visible: true
 
         onInput: {
             console.log("auth")
             AziaAPI.authentication(obj,
                                    function (responseText) {
                                        close()
-                                       Data.phoneNumber = obj.phoneNumber
+                                       var user = JSON.parse(responseText)
+                                       console.log(responseText)
+                                       User.phoneNumber = obj.phoneNumber
+                                       User.firstName = user.info.name
+                                       User.address = user.info.address
+                                       //User.history = user.info.orders
                                    },
                                    function () {
                                        console.log("error")

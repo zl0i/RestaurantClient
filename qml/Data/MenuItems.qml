@@ -29,9 +29,9 @@ QtObject {
         })
     }
 
-    function parseMenu(data) {
+    function parseMenu(user) {
         _root.menu = []
-        data.forEach(function (item) {
+        user.forEach(function (item) {
             _root.menu.push(item)
         })
         menuChanged()

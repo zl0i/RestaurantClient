@@ -5,6 +5,17 @@ QtObject {
 
     property var basket: []
 
+    function getMinimumBasket() {
+        var arr = []
+        basket.forEach(function(item){
+            arr.push({
+                        "_id": item._id,
+                         "count": item.name
+                     })
+        })
+        return arr
+    }
+
     function add(menuItem) {
         var index = basket.findIndex(function(item) {
             if(item["_id"] === menuItem["_id"])
@@ -55,10 +66,7 @@ QtObject {
 
     function getCountById(id) {
 
-        var index = -1/*basket.findIndex(function(item, i) {
-            if(item["_id"] === id)
-                return true
-        })*/
+        var index = -1
         for(var i = 0; i < basket.length; i++) {
             if(basket[i]["_id"] === id) {
                 index = i
@@ -68,8 +76,6 @@ QtObject {
 
         if(index === -1)
             return 0
-        //else
-        //console.log(index)
 
         return basket[index].count
     }

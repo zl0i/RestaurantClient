@@ -1,4 +1,4 @@
-import QtQuick 2.9
+import QtQuick 2.12
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -31,7 +31,7 @@ Rectangle {
 
     onPressedChanged: {
         if(!enabledUpdate) return
-        if(pressed === false && parentOvershoot > parentHeight/10) {
+        if(pressed === false && _updateItem.parentOvershoot > parentHeight/10) {
             startUpdate()
         }
     }
@@ -40,7 +40,7 @@ Rectangle {
         updateRunnig = true
         updateStart()
         y = parentHeight/6
-       _preUpdateAnimation.start()
+        _preUpdateAnimation.start()
     }
 
     function stopUpdate() {
@@ -51,7 +51,7 @@ Rectangle {
     onAngleChanged: _canvas.requestPaint()
 
 
-   NumberAnimation {
+    NumberAnimation {
         id: _preUpdateAnimation
         target: _updateItem
         property: "y"
@@ -59,26 +59,26 @@ Rectangle {
         to: parentHeight/10
         duration: 150
         onStopped: {
-           _updateItem.y = parentHeight/10
+            _updateItem.y = parentHeight/10
         }
     }
 
     NumberAnimation {
-         id: _stopAnimantion
-         target: _updateItem
-         property: "scale"
-         from: 1
-         to: 0
-         duration: 100
-         onStopped: {
-              updateFinish()
-              updateRunnig = false
-              _updateItem.scale = 1
-              _updateItem.y = Qt.binding(function () {
-                  if(parentOvershoot === 0) return -5000
-                  return parentOvershoot-height > parentHeight/6 ? parentHeight/6 : parentOvershoot-height-2
-              })
-         }
+        id: _stopAnimantion
+        target: _updateItem
+        property: "scale"
+        from: 1
+        to: 0
+        duration: 250
+        onStopped: {
+            updateFinish()
+            updateRunnig = false
+            _updateItem.scale = 1
+            _updateItem.y = Qt.binding(function () {
+                if(_updateItem.parentOvershoot === 0) return -5000
+                return _updateItem.parentOvershoot-height > parentHeight/6 ? parentHeight/6 : _updateItem.parentOvershoot-height-2
+            })
+        }
     }
 
     width: 38; height: width
@@ -122,7 +122,7 @@ Rectangle {
                     target: _canvas
                     property: "stopAng"
                     from: 40; to: 360
-                    duration: 1000 * _updateItem.speed                    
+                    duration: 1000 * _updateItem.speed
                 }
                 NumberAnimation {
                     target: _canvas

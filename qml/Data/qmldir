@@ -1,4 +1,4 @@
-module Data
-singleton Data 1.0 Data.qml
+module User
+singleton User 1.0 User.qml
 singleton Menu 1.0 Menu.qml
 singleton Basket 1.0 Basket.qml
