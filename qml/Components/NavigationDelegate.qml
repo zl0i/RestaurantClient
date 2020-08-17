@@ -22,6 +22,7 @@ Item {
         width: _item.iconWidth
         height: _item.iconHeight
         source: _item.icon
+        fillMode: Image.PreserveAspectFit
         layer.enabled: _item.pressed || _item.selected
         layer.effect: ColorOverlay {
             color: _item.pressedColor
@@ -33,7 +34,7 @@ Item {
         width: parent.width
         horizontalAlignment: Text.AlignHCenter
         color: (_item.pressed || _item.selected) ? _item.pressedColor : _item.releasedColor
-        font.pixelSize: 20
+        font.pixelSize: 14
         text: _item.text
     }
 

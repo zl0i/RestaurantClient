@@ -16,7 +16,7 @@ Window {
 
     SwipeView {
         id: _swipeView
-        width: parent.width; height: parent.height-75
+        width: parent.width; height: parent.height-60
         clip: true
         MenuPage {
             id: _menuPage
@@ -38,7 +38,7 @@ Window {
 
     Rectangle {
         y: parent.height-height
-        width: parent.width; height: 75
+        width: parent.width; height: 60
         color: "#FFFFFF"
         layer.enabled: true
         layer.effect: DropShadow {
@@ -48,54 +48,65 @@ Window {
             color: "#40000000"
         }
         Row {
-            x: 20; y: parent.height/2-height/2
-            spacing: (parent.width-340)/4
+            x: parent.width/2 - width/2
+            y: parent.height/2-height/2
+            spacing: 20//parent.width-200)/4
             NavigationDelegate {
-                width: 80; height: 55
-                iconWidth: 35; iconHeight: 30
+                width: 50; height: 45
+                iconWidth: 30; iconHeight: 25
                 text: qsTr("Меню")
                 icon: "qrc:/icons/burger-black.svg"
                 selected: _swipeView.currentIndex === 0
                 onClicked: _swipeView.currentIndex = 0
             }
             NavigationDelegate {
-                width: 80; height: 55
-                iconWidth: 35; iconHeight: 30
+                width: 50; height: 45
+               iconWidth: 30; iconHeight: 25
                 text: qsTr("Корзина")
                 icon: "qrc:/icons/shopping-black.svg"
                 selected: _swipeView.currentIndex === 1
                 onClicked: _swipeView.currentIndex = 1
                 Rectangle {
-                    x: parent.width - 50
+                    x: parent.width - 30
                     y: parent.height - height - 20
-                    width: 55; height: 16; radius: 8
+                    width: _label.contentWidth + 10; height: 16; radius: 8
                     color: "#5AD166"
                     visible: total > 0
                     property int total: Basket.getTotal()
                     Label {
+                        id: _label
                         width: parent.width; height: parent.height
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         color: "#FFFFFF"
-                        text: parent.total + " р."
+                        font.pixelSize: 10
+                        text: qsTr("%1 р.").arg(parent.total)
                     }
                 }
             }
             NavigationDelegate {
-                width: 80; height: 55
-                iconWidth: 35; iconHeight: 30
+                width: 50; height: 45
+                iconWidth: 30; iconHeight: 25
                 text: qsTr("Акции")
                 icon: "qrc:/icons/stock-black.svg"
                 selected: _swipeView.currentIndex === 2
                 onClicked: _swipeView.currentIndex = 2
             }
             NavigationDelegate {
-                width: 80; height: 55
-                iconWidth: 35; iconHeight: 30
+                width: 50; height: 45
+                iconWidth: 30; iconHeight: 25
                 text: qsTr("Профиль")
                 icon: "qrc:/icons/profile-black.svg"
                 selected: _swipeView.currentIndex === 3
                 onClicked: _swipeView.currentIndex = 3
+            }
+            NavigationDelegate {
+                width: 50; height: 45
+                iconWidth: 30; iconHeight: 25
+                text: qsTr("ХЗ")
+                icon: "qrc:/icons/profile-black.svg"
+                selected: _swipeView.currentIndex === 4
+                onClicked: _swipeView.currentIndex = 4
             }
         }
     }

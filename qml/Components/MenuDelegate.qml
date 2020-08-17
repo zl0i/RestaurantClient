@@ -28,7 +28,7 @@ Rectangle {
     Rectangle {
         x: 20; y: parent.height/2 - height/2
         width: 80; height: 80
-        radius: 5
+        radius: 5        
         color: "#00000000"
         border { width: 2; color: "#C4C4C4" }
         Image {
@@ -47,6 +47,12 @@ Rectangle {
                 if(status === Image.Ready) {
                     visible = true
                     _prototypeImage.visible = false
+                }
+            }
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    width: 80; height: 80; radius: 5
                 }
             }
         }
@@ -71,7 +77,7 @@ Rectangle {
 
     AddBasketItem {
         id: _counter
-        x: parent.width - width- 20; y: parent.height - 50
+        x: parent.width - width; y: parent.height - 40
         onIncrement: _delegate.editedCount()
         onDecrement: _delegate.editedCount()
     }

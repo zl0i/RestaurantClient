@@ -31,5 +31,7 @@
         <file>qml/Components/OrderDialog.qml</file>
         <file>qml/Components/InputAddressField.qml</file>
         <file>qml/Components/OrderDelegate.qml</file>
+        <file>qml/Components/EventDelegate.qml</file>
+        <file>qml/Data/Events.qml</file>
     </qresource>
 </RCC>

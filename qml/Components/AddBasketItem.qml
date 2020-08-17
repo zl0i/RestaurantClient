@@ -1,9 +1,10 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 
-Item {
+Row {
     id: _addItem
-    width: 120; height: 40
+    width: 90; height: 30
+    layoutDirection: Qt.RightToLeft
 
     property int count: 0
 
@@ -11,14 +12,13 @@ Item {
     signal decrement()
 
     Rectangle {
-        x: 80
-        width: 40; height: 40; radius: 10
+        width: 30; height: 30; radius: 10
         color: "#C4C4C4"
         Label {
             width: parent.width; height: parent.height
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 24
+            font.pixelSize: 18
             color: "#FFFFFF"
             text: "+"
         }
@@ -32,23 +32,23 @@ Item {
     }
 
     Label {
-        width: parent.width; height: parent.height
+        width:30; height: 30
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 24
+        font.pixelSize: 18
         color: "#707070"
         text: _addItem.count
     }
 
     Rectangle {
-        width: 40; height: 40; radius: 10
+        width: 30; height: 30; radius: 10
         visible: _addItem.count != 0
         color: "#C4C4C4"
         Label {
             width: parent.width; height: parent.height
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 24
+            font.pixelSize: 18
             color: "#FFFFFF"
             text: "-"
         }
@@ -58,8 +58,6 @@ Item {
                  _addItem.count -= 1
                 _addItem.decrement()
             }
-
         }
     }
-
 }

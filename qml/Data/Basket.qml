@@ -10,7 +10,7 @@ QtObject {
         basket.forEach(function(item){
             arr.push({
                         "_id": item._id,
-                         "count": item.name
+                         "count": item.count
                      })
         })
         return arr

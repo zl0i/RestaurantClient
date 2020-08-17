@@ -8,7 +8,8 @@ import Crypto 1.0
 Item {
     id: _root
 
-    readonly property string serverName: "http://localhost:8989/aziaclient/" //"http://azia.tiksi.ru/clientapi/"
+    readonly property string host: "https://localhost"
+    readonly property string urlAPI: host + "/aziaclient" //"http://azia.tiksi.ru/clientapi/"
     readonly property string apiKey: "5a20fbce-fdd6-40ea-84fb-b6c1d75fd368"
 
 
@@ -60,7 +61,7 @@ Item {
             "address": obj.address
         }
 
-        Ajax.ajaxPOST(serverName+"user/register", getHeadersWithSignature(body),
+        Ajax.ajaxPOST(urlAPI+"/user/register", getHeadersWithSignature(body),
                       function (responseText) {
                           success()
                       },
@@ -77,7 +78,8 @@ Item {
             "password": Crypto.sha1(obj.password + "|" + _root.apiKey)
         }
 
-        Ajax.ajaxPOST(serverName + "user/input",  getHeadersWithSignature(body),
+
+        Ajax.ajaxPOST(urlAPI + "/user/input",  getHeadersWithSignature(body),
                       function (responseText) {                          
                           success(responseText)
                       },
@@ -88,7 +90,7 @@ Item {
 
     function getMenu(success, fail) {
 
-        Ajax.ajaxGET(serverName + "menu", getHeadersWithSignature({}),
+        Ajax.ajaxGET(urlAPI + "/menu", getHeadersWithSignature({}),
                      function(responseText) {
                          success(responseText)
                      },
@@ -102,7 +104,7 @@ Item {
         var body = getHeadersWithSignature(obj)
 
 
-        Ajax.ajaxPOST(serverName + "orders", body,
+        Ajax.ajaxPOST(urlAPI + "/orders", body,
                       function (responseText) {
                           var jsonUser = JSON.parse(responseText)
                           success(responseText)
@@ -112,27 +114,14 @@ Item {
                       })
     }
 
-
-    /*function updateInfo(success, fail) {
-        var obj = {
-            "token": _root.token
-        }
-
-        var headers = getHeadersWithSignature(obj)
-
-        Ajax.ajaxPOST(serverName + "get_info", headers,
-                      function (responseText) {
-                          var json = JSON.parse(responseText)
-                          if(json.status === "ok") {
-                              success(json)
-                          }
-                          else {
-                              fail("Не удалось обновить информацию")
-                          }
-                      },
-                      function(status, statusText) {
-                          fail(statusText)
-                      })
-    }*/
+    function getEvents(success, fail) {
+        Ajax.ajaxGET(urlAPI + "/events", getHeadersWithSignature({}),
+                     function(responseText) {
+                         success(responseText)
+                     },
+                     function(status, statusText) {
+                         fail()
+                     })
+    }
 
 }

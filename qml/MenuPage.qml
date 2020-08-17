@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
-import QtQml 2.14
+import QtQml 2.12
 import QtGraphicalEffects 1.0
 
 import AziaData 1.0
@@ -14,7 +14,7 @@ Item {
     property var basket: Basket.basket
 
     Rectangle {
-        width: parent.width; height: 80
+        width: parent.width; height: 85
         layer.enabled: true
         layer.effect: DropShadow {
             radius: 8
@@ -24,7 +24,7 @@ Item {
         }
 
         SearchItem {
-            x: 20; y: 10
+            x: 20; y: 20
             width: parent.width-40; height: 30
             onTextChanged: {
                 if(text)
@@ -110,34 +110,33 @@ Item {
             if(_menuView.itemAtIndex(i))
                 _menuView.itemAtIndex(i).count = Basket.getCountById(_menuView.itemAtIndex(i).menu_id)
         }
-    }   
+    }
 
     SwipeRefreshListView {
         id: _menuView
-        x: 20; y: 80; z:-1
+        x: 20; y: 85; z:-1
         width: parent.width - 40
         height: parent.height - y
+        bottomMargin: 20
         model: _menuModel
         spacing: -1
         contentColor: "#5AD166"
         section.property: "category"
         section.criteria: ViewSection.FullString
         section.delegate: Label {
-            width: _menuView.width; height: 70
+            width: _menuView.width; height: 60
             verticalAlignment: Text.AlignVCenter
             text: section
             font { pixelSize: 18; bold: true }
         }
 
 
-        onStartUpdate: {
-            console.log("update menu")
+        onStartUpdate: {            
             AziaAPI.getMenu(
                         function(responseText) {
                             _menuView.stopRunningUpdate()
                             MenuItems.parseMenu(JSON.parse(responseText))
                             _menuModel.fillModel(MenuItems.menu)
-
                         },
                         function(error) {
 
@@ -149,12 +148,12 @@ Item {
             width: _menuView.width; height: 100
             menu_id: model.id
             name: model.name
-            image: "http://localhost:8989/" + model.image
+            image: AziaAPI.host + "/" + model.image
             cost: model.cost
             count: Basket.getCountById(menu_id)
             onClicked: {
                 _menuInfo.name = model.name
-                _menuInfo.image = "http://localhost:8989/" + model.image
+                _menuInfo.image = AziaAPI.host + "/" + model.image
                 _menuInfo.info = model.description
                 _menuInfo.open()
             }

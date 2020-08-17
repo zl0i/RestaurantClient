@@ -49,24 +49,30 @@ Rectangle {
                     _prototypeImage.visible = false
                 }
             }
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    width: 80; height: 80; radius: 5
+                }
+            }
         }
     }
 
     Label {
-        x: 120; y: 10
+        x: 110; y: 10
         font.pixelSize: 20
         text: _delegate.name
     }
     Label {
-        x: parent.width - width - 20; y: parent.height - 40
+        x: parent.width - width; y: parent.height - 40
         font.pixelSize: 24
         color: "#707070"
-        text: (_delegate.cost  * _delegate.count )+ " р."
+        text: qsTr("%1 р.").arg(_delegate.cost  * _delegate.count )
     }
 
     AddBasketItem {
         id: _counter
-        x: 120; y: parent.height - 50
+        x: 110; y: parent.height - 40
         onIncrement: _delegate.increment()
         onDecrement: _delegate.decrement()
     }
