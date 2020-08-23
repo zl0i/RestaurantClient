@@ -59,11 +59,13 @@ Dialog {
                 width: parent.width
                 visible: _dialog.registrationDialog
                 placeholderText: qsTr("Имя")
+                text: "Дмитрий"
             }
             InputText {
                 id: _phoneNumber
                 width: parent.width
                 placeholderText: qsTr("Номер телефона")
+                text: "89202173095"
             }
             InputText {
                 id: _password
@@ -71,11 +73,15 @@ Dialog {
                 placeholderText: qsTr("Пароль")
                 echoMode: TextInput.Password
                 passwordMaskDelay: 500
+                text: "1996q1996w"
             }
             InputAddressField {
                 id: _address
                 width: parent.width
-                visible: _dialog.registrationDialog                
+                visible: _dialog.registrationDialog
+                street: "Морская"
+                house: "46"
+                flat: "18"
             }
             CustomButton {
                 x: parent.width/2 - width/2
@@ -96,10 +102,14 @@ Dialog {
                 onClicked: {
                     if(_dialog.registrationDialog) {
                         var obj = {
-                            "name": _name.tex,
+                            "name": _name.text,
                             "phoneNumber": _phoneNumber.text,
                             "password": _password.text,
-                            "address": _address.text
+                            "address": {
+                                "street": _address.street,
+                                "house": _address.house,
+                                "flat": _address.flat
+                            }
                         }
                         _dialog.registrationClicked(obj)
                     } else {

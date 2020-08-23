@@ -112,7 +112,7 @@ Window {
     }
 
     AuthDialog {
-        //visible: true
+        visible: true
 
         onInput: {
             console.log("auth")
@@ -124,7 +124,7 @@ Window {
                                        User.phoneNumber = obj.phoneNumber
                                        User.firstName = user.info.name
                                        User.address = user.info.address
-                                       //User.history = user.info.orders
+                                       User.history = user.info.orders
                                    },
                                    function () {
                                        console.log("error")
@@ -136,8 +136,8 @@ Window {
                                      console.log("registr")
                                      close()
                                  },
-                                 function () {
-                                     console.log("error registr")
+                                 function (error) {
+                                     console.log(error)
                                  })
         }
     }

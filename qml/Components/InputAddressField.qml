@@ -22,7 +22,7 @@ Row {
         id: _houseField
         width: 50
         placeholderText: qsTr("Дом")
-        validator: RegExpValidator { regExp: /[1-9]{1,3}[/]{0,1}[0-9]{0,3}/}
+        validator: RegExpValidator { regExp: /[1-9]{1,3}[/]{0,1}[0-9]{0,3}[А-я]{0,1}/}
     }
 
     InputText {

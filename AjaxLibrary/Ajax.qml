@@ -10,7 +10,7 @@ QtObject {
         xhr.timeout = timeout
         xhr.open("POST", url, true)        
 
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.setRequestHeader('Content-Length', body.length)
 
         xhr.onload = function() {

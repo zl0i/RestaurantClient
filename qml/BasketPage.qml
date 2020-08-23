@@ -89,7 +89,11 @@ Item {
             var obj = {
                 "menu": JSON.stringify(Basket.getMinimumBasket()),
                 "comment": _orderDialog.comment,
-                "address": _orderDialog.address.street + " " + _orderDialog.address.house + " " + _orderDialog.address.flat,
+                "address": {
+                    "street": _orderDialog.address.street,
+                    "house": _orderDialog.address.house,
+                    "flat":_orderDialog.address.flat
+                },
                 "phone": _orderDialog.phone,
                 "phoneNumber": User.phoneNumber
             }

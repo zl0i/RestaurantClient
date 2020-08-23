@@ -43,12 +43,7 @@ Item {
     function getHeadersWithSignature(obj) {
         obj.signature = getSignature(obj)
 
-        var sendData = []
-        for(var i in obj) {
-            sendData.push(i + '=' + obj[i])
-        }
-        sendData = sendData.join("&")
-        return sendData
+        return JSON.stringify(obj)
     }
 
     function registration(obj, success, fail) {
@@ -58,10 +53,15 @@ Item {
             "name": obj.name,
             "phoneNumber": obj.phoneNumber,
             "password": Crypto.sha1(obj.password + "|" + _root.apiKey),
-            "address": obj.address
+            "address": {
+                "street": obj.address.street,
+                "house": obj.address.house,
+                "flat": obj.address.flat
+            }
         }
+        console.log(getHeadersWithSignature(body))
 
-        Ajax.ajaxPOST(urlAPI+"/user/register", getHeadersWithSignature(body),
+        Ajax.ajaxPOST(urlAPI+"/users/register", getHeadersWithSignature(body),
                       function (responseText) {
                           success()
                       },
@@ -79,7 +79,7 @@ Item {
         }
 
 
-        Ajax.ajaxPOST(urlAPI + "/user/input",  getHeadersWithSignature(body),
+        Ajax.ajaxPOST(urlAPI + "/users/input",  getHeadersWithSignature(body),
                       function (responseText) {                          
                           success(responseText)
                       },
@@ -102,7 +102,7 @@ Item {
     function ordered(obj, success, fail) {
 
         var body = getHeadersWithSignature(obj)
-
+        console.log(body)
 
         Ajax.ajaxPOST(urlAPI + "/orders", body,
                       function (responseText) {
