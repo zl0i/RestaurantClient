@@ -8,40 +8,14 @@ Item {
     property string firstName: ""
     property string phoneNumber: ""
     property var address: {
-        "street": "Морская",
-        "house": 46,
-        "flat": 18
+        "street": "",
+        "house": "",
+        "flat": ""
     }
 
-    property var activeOrder:
-    {
-        "datetime": "2020-08-06T00:43:37.000Z",
-        "total": "560.00",
-        "status": "access"
-    }
+    property var activeOrder
 
-    property var history: [
-        {
-            "datetime": "2020-08-05T00:43:00.000Z",
-            "total": "560.00",
-            "status": "access"
-        },
-        {
-            "datetime": "2020-07-23T13:51:00.000Z",
-            "total": "25.00",
-            "status": "access"
-        },
-        {
-            "datetime": "2020-04-18T16:56:00.000Z",
-            "total": "113.00",
-            "status": "canceled"
-        },
-        {
-            "datetime": "2019-12-03T17:43:00.000Z",
-            "total": "2560.00",
-            "status": "access"
-        },
-    ]
+    property var history: []
 
     Settings {
         id: _settings
@@ -54,12 +28,6 @@ Item {
         //property alias history: _root.history
 
     }
-
-    function clearCash() {
-
-    }
-
-
 
     /*readonly property var menu: [
         {

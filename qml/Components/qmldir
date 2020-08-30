@@ -9,5 +9,8 @@ CustomButton 1.0 CustomButton.qml
 InputText 1.0 InputText.qml
 ImageButton 1.0 ImageButton.qml
 AuthDialog 1.0 AuthDialog.qml
+OrderDelegate 1.0 OrderDelegate.qml
+ActiveOrderDelegate 1.0 ActiveOrderDelegate.qml
 SwipeRefreshListView 1.0 SwipeRefreshListView.qml
 SwipeRefreshListView 1.0 SwipeRefreshListView.qml
+SwipeRefreshPage 1.0 SwipeRefreshPage.qml

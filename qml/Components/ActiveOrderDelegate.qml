@@ -9,6 +9,14 @@ Item {
     property var datetime
     property var total: 0
 
+    function getTextStatus() {
+        if(status === "accepted")
+            return qsTr("Готовится")
+        else if(status === "delivery")
+            return qsTr("Уже в пути")
+        return qsTr("Принят")
+    }
+
     Image {
         width: 40; height: 40
         source: {
@@ -26,7 +34,7 @@ Item {
         Label {
             font.pixelSize: 16
             color: "#494949"
-            text: new Date(_delegate.datetime).toLocaleString(Qt.locale(), "dd.MM.yyyy")
+            text: getTextStatus()
         }
         Label {
             font.pixelSize: 16

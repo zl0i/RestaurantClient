@@ -12,13 +12,11 @@ Item {
     readonly property string urlAPI: host + "/aziaclient" //"http://azia.tiksi.ru/clientapi/"
     readonly property string apiKey: "5a20fbce-fdd6-40ea-84fb-b6c1d75fd368"
 
-
-    Component.onCompleted: {
-        //console.log("token:", token)
-    }
-
+    property string token: "" //hashPassword
     Settings {
-        //property alias token: _root.token
+        id: _setting
+
+        property alias token: _root.token
     }
 
 
@@ -59,7 +57,7 @@ Item {
                 "flat": obj.address.flat
             }
         }
-        console.log(getHeadersWithSignature(body))
+        token = body.password
 
         Ajax.ajaxPOST(urlAPI+"/users/register", getHeadersWithSignature(body),
                       function (responseText) {
@@ -77,10 +75,10 @@ Item {
             "phoneNumber": obj.phoneNumber,
             "password": Crypto.sha1(obj.password + "|" + _root.apiKey)
         }
-
+        token = body.password
 
         Ajax.ajaxPOST(urlAPI + "/users/input",  getHeadersWithSignature(body),
-                      function (responseText) {                          
+                      function (responseText) {
                           success(responseText)
                       },
                       function(status, statusText) {
@@ -102,9 +100,8 @@ Item {
     function ordered(obj, success, fail) {
 
         var body = getHeadersWithSignature(obj)
-        console.log(body)
 
-        Ajax.ajaxPOST(urlAPI + "/orders", body,
+        Ajax.ajaxPOST(urlAPI + "/order", body,
                       function (responseText) {
                           var jsonUser = JSON.parse(responseText)
                           success(responseText)
@@ -122,6 +119,23 @@ Item {
                      function(status, statusText) {
                          fail()
                      })
+    }
+
+    function getInfo(phoneNumber, success, fail) {
+        //проверить что бы в obj были phoneNubmer и password не пустыми
+
+        var body = {
+            "phoneNumber": phoneNumber,
+            "password": token
+        }
+
+        Ajax.ajaxPOST(urlAPI + "/users/info",  getHeadersWithSignature(body),
+                      function (responseText) {
+                          success(responseText)
+                      },
+                      function(status, statusText) {
+                          fail(statusText)
+                      })
     }
 
 }

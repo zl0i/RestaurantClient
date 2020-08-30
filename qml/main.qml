@@ -50,7 +50,7 @@ Window {
         Row {
             x: parent.width/2 - width/2
             y: parent.height/2-height/2
-            spacing: 20//parent.width-200)/4
+            spacing: 20
             NavigationDelegate {
                 width: 50; height: 45
                 iconWidth: 30; iconHeight: 25
@@ -115,19 +115,19 @@ Window {
         visible: true
 
         onInput: {
-            console.log("auth")
             AziaAPI.authentication(obj,
                                    function (responseText) {
                                        close()
-                                       var user = JSON.parse(responseText)
-                                       console.log(responseText)
+                                       var user = JSON.parse(responseText)                                       
                                        User.phoneNumber = obj.phoneNumber
                                        User.firstName = user.info.name
                                        User.address = user.info.address
-                                       User.history = user.info.orders
+                                       User.history = user.info.orders.reverse()
+                                       User.activeOrder = user.info.activeOrder
+                                       console.log(JSON.stringify(User.activeOrder))
                                    },
-                                   function () {
-                                       console.log("error")
+                                   function (error) {
+                                       console.log("error:", error)
                                    })
         }
         onRegistrationClicked: {

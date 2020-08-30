@@ -96,11 +96,11 @@ Item {
                 },
                 "phone": _orderDialog.phone,
                 "phoneNumber": User.phoneNumber
-            }
-            console.log(JSON.stringify(obj))
+            }           
             AziaAPI.ordered(obj,
                             function(responseText) {
                                 console.log(responseText)
+                                Basket.basket = []
                                 close()
                             },
                             function (status, text) {

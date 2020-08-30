@@ -29,52 +29,82 @@ Item {
         }
     }
 
-    Column {
+    SwipeRefreshPage {
+        z: -1
         x: 20; y: 60
         width: parent.width- 40; height: parent.height-60
-        spacing: 20
+        contentColor: "#5AD166"
+        contentHeight: _content.height
+        bottomMargin: 20
+        onStartUpdate: {
+            AziaAPI.getInfo(User.phoneNumber,
+                            function(responseText) {
+                                var user = JSON.parse(responseText)
+                                //User.phoneNumber = obj.phoneNumber
+                                User.firstName = user.info.name
+                                User.address = user.info.address
+                                User.history = user.info.orders.reverse()
+                                User.activeOrder = user.info.activeOrder
+                                console.log(JSON.stringify(User.activeOrder))
+                            },
+                            function (error) {
+                                console.log("error:", error)
+                            })
+            stopRunningUpdate()
+        }
+
         Column {
-            spacing: 5
+            id: _content
+            width: parent.width
+            //height: parent.height
+            spacing: 20
+            Column {
+                spacing: 5
+                Label {
+                    color: "#272727"
+                    font { pixelSize: 20; bold: true}
+                    text: qsTr("Здраствуйте %1!").arg(User.firstName)
+                }
+                Label {
+                    color: "#272727"
+                    font { pixelSize: 14}
+                    text: User.phoneNumber
+                }
+            }
+            Column {
+                width: parent.width
+                spacing: 20
+                visible: Boolean(User.activeOrder)// !== undefined
+                Label {
+                    color: "#272727"
+                    font { pixelSize: 20; bold: true}
+                    text: qsTr("Текущий заказ:")
+                }
+                ActiveOrderDelegate {
+                    status: User.activeOrder ? User.activeOrder.status : ""
+                    datetime: User.activeOrder ? User.activeOrder.datetime : ""
+                    total: User.activeOrder ? User.activeOrder.total : ""
+                }
+            }
             Label {
                 color: "#272727"
                 font { pixelSize: 20; bold: true}
-                text: qsTr("Здраствуйте %1!").arg(User.firstName)
+                text: qsTr("Предыдущие заказы:")
             }
-            Label {
-                color: "#272727"
-                font { pixelSize: 14}
-                text: User.phoneNumber
-            }
-        }
-        Label {
-            color: "#272727"
-            font { pixelSize: 20; bold: true}
-            text: qsTr("Текущий заказ:")
-        }
-        OrderDelegate {
-            status: "processing"
-            datetime: User.activeOrder.datetime
-            total: User.activeOrder.total
-        }
-        Label {
-            color: "#272727"
-            font { pixelSize: 20; bold: true}
-            text: qsTr("Предыдущие заказы:")
-        }
 
-        ListView {
-            width: parent.width
-            height: parent.height - 100
-            model: User.history
-            clip: true
-            spacing: 20
-            delegate: OrderDelegate {
-                status: modelData.status
-                datetime: modelData.datetime
-                total: modelData.total
+            Repeater {
+                width: parent.width
+                height: parent.height - y
+                //bottomMargin: 30
+                model: User.history
+                clip: true
+                //spacing: 20
+                delegate: OrderDelegate {
+                    status: "access"
+                    datetime: modelData.datetime
+                    total: modelData.cost
+                }
             }
         }
-
     }
-
 }
