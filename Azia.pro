@@ -14,7 +14,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        main.cpp
+        appcore.cpp \
+        main.cpp \
+        menuitems.cpp
 
 RESOURCES += qml.qrc \
     icons.qrc
@@ -33,12 +35,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 
 
-contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-
-    ANDROID_EXTRA_LIBS = \
-        $$PWD/android/libcrypto_1_1.so \
-        $$PWD/android/libssl_1_1.so
 
     DISTFILES += \
         android/AndroidManifest.xml \
@@ -47,5 +45,19 @@ contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
         android/gradle/wrapper/gradle-wrapper.properties \
         android/gradlew \
         android/gradlew.bat \
-        android/res/values/libs.xml
+        android/res/values/libs.xml \
+
+    include(G:/Android_SDK/android_openssl/openssl.pri)
 }
+
+ANDROID_ABIS = armeabi-v7a arm64-v8a x86
+
+#ANDROID_EXTRA_LIBS = G:/Android_SDK/android_openssl/no-asm/latest/arm/libcrypto_1_1.so G:/Android_SDK/android_openssl/no-asm/latest/arm/libssl_1_1.so G:/Android_SDK/android_openssl/no-asm/latest/arm64/libcrypto_1_1.so G:/Android_SDK/android_openssl/no-asm/latest/arm64/libssl_1_1.so G:/Android_SDK/android_openssl/no-asm/latest/x86/libcrypto_1_1.so G:/Android_SDK/android_openssl/no-asm/latest/x86/libssl_1_1.so G:/Android_SDK/android_openssl/no-asm/latest/x86_64/libcrypto_1_1.so G:/Android_SDK/android_openssl/no-asm/latest/x86_64/libssl_1_1.so
+
+
+
+HEADERS += \
+    appcore.h \
+    menuitems.h
+
+

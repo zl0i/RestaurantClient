@@ -17,26 +17,29 @@ Item {
 
     signal clicked()
 
-    Image {
-        x: parent.width/2 - width/2
-        width: _item.iconWidth
-        height: _item.iconHeight
-        source: _item.icon
-        fillMode: Image.PreserveAspectFit
-        layer.enabled: _item.pressed || _item.selected
-        layer.effect: ColorOverlay {
-            color: _item.pressedColor
+    Row {
+        anchors.centerIn: parent
+        spacing: 15
+        Image {
+            width: _item.iconWidth
+            height: _item.iconHeight
+            source: _item.icon
+            fillMode: Image.PreserveAspectFit
+            layer.enabled: _item.pressed || _item.selected
+            layer.effect: ColorOverlay {
+                color: _item.pressedColor
+            }
+        }
+        Label {
+            height: parent.height
+            verticalAlignment: Text.AlignVCenter
+            color: (_item.pressed || _item.selected) ? _item.pressedColor : _item.releasedColor
+            font.pixelSize: 14
+            text: _item.text
         }
     }
 
-    Label {
-        y: parent.height-contentHeight
-        width: parent.width
-        horizontalAlignment: Text.AlignHCenter
-        color: (_item.pressed || _item.selected) ? _item.pressedColor : _item.releasedColor
-        font.pixelSize: 14
-        text: _item.text
-    }
+
 
     MouseArea {
         id: _mouseArea

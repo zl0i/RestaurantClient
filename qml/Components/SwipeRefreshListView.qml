@@ -26,6 +26,9 @@ ListView {
         pressed: _root.dragging
         speed: 0.8
         onUpdateStart: _root.startUpdate()
+        onPressedChanged: {
+            console.log(pressed)
+        }
 
     }
 }

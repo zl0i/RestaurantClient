@@ -96,7 +96,7 @@ Item {
                                       "id": item["_id"],
                                       "name": item.name,
                                       "cost": item.cost,
-                                      "image": item.img,
+                                      "image": item.image,
                                       "description": item.description,
                                       "category": item.category
                                   })
@@ -112,29 +112,16 @@ Item {
         }
     }
 
-    SwipeRefreshListView {
-        id: _menuView
+    SwipeRefreshPage {
+        id: _menuContent
         x: 20; y: 85; z:-1
         width: parent.width - 40
         height: parent.height - y
-        bottomMargin: 20
-        model: _menuModel
-        spacing: -1
         contentColor: "#5AD166"
-        section.property: "category"
-        section.criteria: ViewSection.FullString
-        section.delegate: Label {
-            width: _menuView.width; height: 60
-            verticalAlignment: Text.AlignVCenter
-            text: section
-            font { pixelSize: 18; bold: true }
-        }
-
-
-        onStartUpdate: {            
+        onStartUpdate: {
             AziaAPI.getMenu(
                         function(responseText) {
-                            _menuView.stopRunningUpdate()
+                            _menuContent.stopRunningUpdate()
                             MenuItems.parseMenu(JSON.parse(responseText))
                             _menuModel.fillModel(MenuItems.menu)
                         },
@@ -142,27 +129,49 @@ Item {
 
                         })
         }
+        ListView {
+            id: _menuView
+            width: parent.width
+            height: parent.height
+            bottomMargin: 20
+            model: _menuModel
+            spacing: -1
 
-        delegate: MenuDelegate {
-            id: _menuDelegate
-            width: _menuView.width; height: 100
-            menu_id: model.id
-            name: model.name
-            image: AziaAPI.host + "/" + model.image
-            cost: model.cost
-            count: Basket.getCountById(menu_id)
-            onClicked: {
-                _menuInfo.name = model.name
-                _menuInfo.image = AziaAPI.host + "/" + model.image
-                _menuInfo.info = model.description
-                _menuInfo.open()
+            section.property: "category"
+            section.criteria: ViewSection.FullString
+            section.delegate: Label {
+                width: _menuView.width; height: 60
+                verticalAlignment: Text.AlignVCenter
+                text: section
+                font { pixelSize: 18; bold: true }
             }
-            onEditedCount: {
-                Basket.setCountItem(MenuItems.menu[index], count)
+
+
+
+
+            delegate: MenuDelegate {
+                id: _menuDelegate
+                width: _menuView.width; height: 100
+                menu_id: model.id
+                name: model.name
+                image: model.image ? AziaAPI.host + "/" + model.image : ""
+                cost: model.cost
+                count: Basket.getCountById(menu_id)
+                onClicked: {
+                    _menuInfo.name = model.name
+                    _menuInfo.image = model.image ? AziaAPI.host + "/" + model.image : ""
+                    _menuInfo.info = model.description
+                    _menuInfo.open()
+                }
+                onEditedCount: {
+                    Basket.setCountItem(MenuItems.menu[index], count)
+                }
             }
+            onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
         }
-        onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
     }
+
+
 
     MenuInfoDrawer {
         id: _menuInfo

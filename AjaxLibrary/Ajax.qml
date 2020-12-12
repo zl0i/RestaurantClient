@@ -14,6 +14,7 @@ QtObject {
         xhr.setRequestHeader('Content-Length', body.length)
 
         xhr.onload = function() {
+
             if(xhr.status >= 200 && xhr.status < 300) {
                 success(xhr.responseText, xhr.status)
             } else {
@@ -21,7 +22,7 @@ QtObject {
             }
         }
 
-        xhr.onerror = function() {           
+        xhr.onerror = function() {
             fail(xhr.status, xhr.statusText)
         }
 

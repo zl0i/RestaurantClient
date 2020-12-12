@@ -8,7 +8,7 @@ import Crypto 1.0
 Item {
     id: _root
 
-    readonly property string host: "https://localhost"
+    readonly property string host: "https://78.24.216.174:443"
     readonly property string urlAPI: host + "/aziaclient" //"http://azia.tiksi.ru/clientapi/"
     readonly property string apiKey: "5a20fbce-fdd6-40ea-84fb-b6c1d75fd368"
 
@@ -59,12 +59,14 @@ Item {
         }
         token = body.password
 
+        console.log(getHeadersWithSignature(body))
+
         Ajax.ajaxPOST(urlAPI+"/users/register", getHeadersWithSignature(body),
                       function (responseText) {
                           success()
                       },
                       function(status, statusText) {
-                          fail(statusText)
+                          fail(status)
                       })
     }
 
@@ -76,13 +78,13 @@ Item {
             "password": Crypto.sha1(obj.password + "|" + _root.apiKey)
         }
         token = body.password
-
+         console.log(JSON.stringify(getHeadersWithSignature(body)))
         Ajax.ajaxPOST(urlAPI + "/users/input",  getHeadersWithSignature(body),
                       function (responseText) {
                           success(responseText)
                       },
                       function(status, statusText) {
-                          fail(statusText)
+                          fail(status)
                       })
     }
 

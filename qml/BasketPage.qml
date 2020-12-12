@@ -46,7 +46,7 @@ Item {
         delegate: BasketDelegate {
             id: _basketDelegate
             width: parent.width; height: 100
-            image: AziaAPI.host + "/"  + modelData.img
+            image: AziaAPI.host + "/"  + modelData.image
             name: modelData.name
             cost: modelData.cost
             count: modelData.count

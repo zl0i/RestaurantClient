@@ -22,9 +22,6 @@ Flickable {
         _swipe.stopUpdate()
     }
 
-
-
-
     SwipeRefreshLayout {
         id: _swipe
         parentHeight: _root.height
