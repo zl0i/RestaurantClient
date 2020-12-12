@@ -6,117 +6,101 @@ Dialog {
     id: _dialog
     parent: Overlay.overlay
     x: 20; y: parent.height/2 - height/2
-    width: parent.width-40; height: registrationDialog ? 350 : 280
+    width: parent.width-40; height: 220
     modal: true; dim: true
-    closePolicy: Dialog.NoAutoClose
+    //closePolicy: Dialog.NoAutoClose
     padding: 20
     clip: true
 
-    Behavior on height {
-        NumberAnimation { duration: 500; easing.type: Easing.OutQuint }
-    }
+    property string phone
 
-    property bool registrationDialog: false
-    signal input(var obj)
-    signal registrationClicked(var obj)
+    signal inputPhone(string phone)
+    signal inputCode(string code)
 
     Overlay.modal: Rectangle {
-        color: "#80000000"
+        color: "#A0000000"
     }
 
-    background: Rectangle {
-        width: parent.width; height: parent.height
-        radius: 10
-        layer.enabled: true
-        layer.effect: DropShadow {
-            radius: 8
-            samples: 16
-            color: "#80000000"
-        }
-    }
+    background: Rectangle { radius: 10 }
 
     contentItem: Item {
-        ImageButton {
-            width: 14; height: 9
-            visible: _dialog.registrationDialog
-            image: "qrc:/icons/arrowBack-black.svg"
-            onClicked: {
-                _dialog.registrationDialog = false
+        Label {
+            x: 10
+            width: parent.width-10
+            horizontalAlignment: Text.AlignHCenter
+            font { pixelSize: 24; bold: true }
+            text: qsTr("Вход")
+        }
+
+        SwipeView {
+            id: _swipe
+            y: 35
+            width: parent.width
+            height: parent.height - y
+            spacing: 20
+            interactive: false
+
+            Item {
+                width: _swipe.width
+                height: _swipe.height
+
+                InputText {
+                    id: _phoneNumber
+                    y: 20
+                    width: parent.width
+                    placeholderText: qsTr("Номер телефона")
+                    text: _dialog.phone
+                }
+                CustomButton {
+                    x: parent.width/2 - width/2
+                    y: parent.height - height
+                    text: qsTr("Далее")
+                    onClicked: {
+                        _swipe.currentIndex++
+                        _codeInput.forceActiveFocus()
+                        _dialog.inputPhone(_phoneNumber.text)
+                    }
+                }
+            }
+            Item {
+                id: _inputCodePage
+                width: _swipe.width
+                height: _swipe.height
+
+                property int smsTimer: 90
+
+                InputCode {
+                    id: _codeInput
+                    x: parent.width/2 - width/2
+                    font { pixelSize: 24; bold: true }
+                }
+
+                Timer {
+                    id: _timer
+                    interval: 1000
+                    running: true
+                    repeat: true
+                    onTriggered: {
+                        if(_inputCodePage.smsTimer > 0)
+                            _inputCodePage.smsTimer--
+                    }
+                }
+
+                Label {
+                    y: 70
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    text: qsTr("Повторная отправка кода возможна через %1 сек").arg(_inputCodePage.smsTimer)
+                }
+
+                CustomButton {
+                    x: parent.width/2 - width/2
+                    y: parent.height - height
+                    text: qsTr("Войти")
+                    onClicked: _dialog.inputCode(_codeInput.code)
+                }
             }
         }
 
-        Column {                   
-            width: parent.width
-            spacing: 15
-            Label {
-                width: parent.width
-                horizontalAlignment: Text.AlignHCenter
-                font { pixelSize: 24; bold: true }
-                text: _dialog.registrationDialog ? qsTr("Регистрация") : qsTr("Вход")
-            }
-            InputText {
-                id: _name
-                width: parent.width
-                visible: _dialog.registrationDialog
-                placeholderText: qsTr("Имя")
-                text: "Дмитрий"
-            }
-            InputText {
-                id: _phoneNumber
-                width: parent.width
-                placeholderText: qsTr("Номер телефона")
-                text: "89202173095"
-            }
-            InputText {
-                id: _password
-                width: parent.width
-                placeholderText: qsTr("Пароль")
-                echoMode: TextInput.Password
-                passwordMaskDelay: 500
-                text: "1996q1996w"
-            }
-            InputAddressField {
-                id: _address
-                width: parent.width
-                visible: _dialog.registrationDialog
-                street: "Морская"
-                house: "46"
-                flat: "18"
-            }
-            CustomButton {
-                x: parent.width/2 - width/2
-                visible: !_dialog.registrationDialog
-                text: qsTr("Вход")
-                onClicked: {
-                    var obj = {
-                        "phoneNumber": _phoneNumber.text,
-                        "password": _password.text
-                    }
-                    _dialog.input(obj)
-                }
-            }
-            CustomButton {
-                x: parent.width/2 - width/2
-                state: _dialog.registrationDialog ? "green" : "opacity"
-                text: qsTr("Регистрация")
-                onClicked: {
-                    if(_dialog.registrationDialog) {
-                        var obj = {
-                            "name": _name.text,
-                            "phoneNumber": _phoneNumber.text,
-                            "password": _password.text,
-                            "address": {
-                                "street": _address.street,
-                                "house": _address.house,
-                                "flat": _address.flat
-                            }
-                        }
-                        _dialog.registrationClicked(obj)
-                    } else {
-                        _dialog.registrationDialog = true
-                    }
-                 }
-            }
-        }
     }
 }

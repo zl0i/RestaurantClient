@@ -26,22 +26,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl("qrc:qml/Data/Basket.qml"), "AziaData", 1, 0, "Basket");
     qmlRegisterSingletonType(QUrl("qrc:qml/Data/Events.qml"), "AziaData", 1, 0, "Events");
 
-    QNetworkAccessManager manager;
-    QNetworkRequest req(QUrl("https://78.24.216.174/aziaclient/menu"));
-    QNetworkReply *reply = manager.get(req);
-    reply->ignoreSslErrors();
-    QObject::connect(reply, &QNetworkReply::finished, [&]() {
-        if(reply->error() == QNetworkReply::NoError) {
-            QByteArray arr = reply->readAll();
-            QJsonDocument doc = QJsonDocument::fromJson(arr);
-            QJsonArray menu = doc.array();
-            qDebug() << menu.size();
-            qDebug() << menu.at(0);
 
-        } else {
-            qDebug() << "error:" << reply->errorString();
-        }
-    });
 
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));

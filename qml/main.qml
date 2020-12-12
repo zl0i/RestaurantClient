@@ -93,32 +93,14 @@ ApplicationWindow {
     }
 
     AuthDialog {
-        //visible: true
+        visible: true
+        phone: "89202173095"
+        onInputPhone:  {
+            console.log("inputPhone:", phone)
+        }
 
-        onInput: {
-            AziaAPI.authentication(obj,
-                                   function (responseText) {
-                                       close()
-                                       var user = JSON.parse(responseText)
-                                       User.phoneNumber = obj.phoneNumber
-                                       User.firstName = user.info.name
-                                       User.address = user.info.address
-                                       User.history = user.info.orders.reverse()
-                                       User.activeOrder = user.info.activeOrder
-                                   },
-                                   function (error) {
-                                       console.log("error:", error)
-                                   })
-        }
-        onRegistrationClicked: {
-            AziaAPI.registration(obj,
-                                 function(responseText) {
-                                     console.log("registration:", responseText)
-                                     close()
-                                 },
-                                 function (error) {
-                                     console.log("error:", error)
-                                 })
-        }
+        onInputCode: {
+           console.log("input code:", code)
+        }        
     }
 }

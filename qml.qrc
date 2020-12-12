@@ -35,5 +35,6 @@
         <file>qml/Data/Events.qml</file>
         <file>qml/Components/SwipeRefreshPage.qml</file>
         <file>qml/Components/ActiveOrderDelegate.qml</file>
+        <file>qml/Components/InputCode.qml</file>
     </qresource>
 </RCC>
