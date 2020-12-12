@@ -11,13 +11,13 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setOrganizationName("Azia");
+    //QCoreApplication::setOrganizationDomain("mysoft.com"); //needed ios
+    QCoreApplication::setApplicationName("AziaClient");
 
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    QCoreApplication::setOrganizationName("Azia");
-    //QCoreApplication::setOrganizationDomain("mysoft.com"); //needed ios
-    QCoreApplication::setApplicationName("AziaClient");
 
     qDebug() << QSslSocket::supportsSsl() << QSslSocket::sslLibraryVersionString() << QSslSocket::sslLibraryBuildVersionString();
 
