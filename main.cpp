@@ -21,14 +21,6 @@ int main(int argc, char *argv[])
 
     qDebug() << QSslSocket::supportsSsl() << QSslSocket::sslLibraryVersionString() << QSslSocket::sslLibraryBuildVersionString();
 
-    qmlRegisterSingletonType(QUrl("qrc:qml/Data/User.qml"), "AziaData", 1, 0, "User");
-    qmlRegisterSingletonType(QUrl("qrc:qml/Data/MenuItems.qml"), "AziaData", 1, 0, "MenuItems");
-    qmlRegisterSingletonType(QUrl("qrc:qml/Data/Basket.qml"), "AziaData", 1, 0, "Basket");
-    qmlRegisterSingletonType(QUrl("qrc:qml/Data/Events.qml"), "AziaData", 1, 0, "Events");
-
-
-
-
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
@@ -36,7 +28,6 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    engine.addImportPath(":/");
     engine.addImportPath(":/qml");
     engine.load(url);
 

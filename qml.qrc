@@ -2,9 +2,7 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/MenuPage.qml</file>
-        <file>qml/BasketPage.qml</file>
-        <file>qml/Data/User.qml</file>
-        <file>qml/Data/qmldir</file>
+        <file>qml/BasketPage.qml</file>        
         <file>qml/EventPage.qml</file>
         <file>qml/ProfilePage.qml</file>
         <file>qml/Components/BasketDelegate.qml</file>
@@ -16,23 +14,14 @@
         <file>qml/Components/CustomButton.qml</file>
         <file>qml/Components/InputText.qml</file>
         <file>qml/Components/AuthDialog.qml</file>
-        <file>AjaxLibrary/Ajax.qml</file>
-        <file>AjaxLibrary/qmldir</file>
-        <file>AziaAPI/AziaAPI.qml</file>
-        <file>AziaAPI/qmldir</file>
-        <file>Crypto/Crypto.qml</file>
-        <file>Crypto/qmldir</file>
         <file>qml/Components/ImageButton.qml</file>
         <file>qml/Components/SwipeRefreshListView.qml</file>
         <file>qml/Components/SwipeRefreshLayout.qml</file>
-        <file>qml/Components/AddBasketItem.qml</file>
-        <file>qml/Data/Basket.qml</file>
-        <file>qml/Data/MenuItems.qml</file>
+        <file>qml/Components/AddBasketItem.qml</file>        
         <file>qml/Components/OrderDialog.qml</file>
         <file>qml/Components/InputAddressField.qml</file>
         <file>qml/Components/OrderDelegate.qml</file>
-        <file>qml/Components/EventDelegate.qml</file>
-        <file>qml/Data/Events.qml</file>
+        <file>qml/Components/EventDelegate.qml</file>        
         <file>qml/Components/SwipeRefreshPage.qml</file>
         <file>qml/Components/ActiveOrderDelegate.qml</file>
         <file>qml/Components/InputCode.qml</file>

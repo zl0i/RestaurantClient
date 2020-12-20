@@ -5,9 +5,6 @@ import QtGraphicalEffects 1.0
 
 //import Components 1.0
 import "./Components"
-import AziaData 1.0
-import AziaAPI 1.0
-import AjaxLibrary 1.0
 
 ApplicationWindow {
     visible: true

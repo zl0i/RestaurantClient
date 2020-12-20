@@ -4,8 +4,6 @@ import QtQml 2.12
 import QtGraphicalEffects 1.0
 
 import "./Components"
-import AziaData 1.0
-import AziaAPI 1.0
 
 Item {
     clip: true
