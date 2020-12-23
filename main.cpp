@@ -1,12 +1,9 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QSslSocket>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QJsonDocument>
-#include <QJsonArray>
-#include <QJsonObject>
+
+#include "appcore.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +17,11 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     qDebug() << QSslSocket::supportsSsl() << QSslSocket::sslLibraryVersionString() << QSslSocket::sslLibraryBuildVersionString();
+
+    AppCore core;
+    engine.rootContext()->setContextProperty("core", &core);
+    engine.rootContext()->setContextProperty("menu", &core.menu);
+    engine.rootContext()->setContextProperty("basket", &core.basket);
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

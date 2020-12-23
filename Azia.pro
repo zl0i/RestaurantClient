@@ -16,12 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     appcore.h \
-    menuitems.h
+    basketmodel.h \
+    menumodel.h
 
 SOURCES += \
         appcore.cpp \
+        basketmodel.cpp \
         main.cpp \
-        menuitems.cpp
+        menumodel.cpp
 
 RESOURCES += qml.qrc \
     icons.qrc
@@ -49,7 +51,7 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
-ANDROID_ABIS = arm64-v8a
+ANDROID_ABIS = arm64-v8a x86
 
 
 

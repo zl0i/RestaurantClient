@@ -24,10 +24,11 @@ Item {
             x: 20; y: 20
             width: parent.width-40; height: 30
             onTextChanged: {
-                if(text)
+                menu.setFilterRegExp(new RegExp(text, 'i'))
+                /*if(text)
                     _menuModel.fillModel(MenuItems.filterMenuByName(text))
                 else
-                    _menuModel.fillModel(MenuItems.menu)
+                    _menuModel.fillModel(MenuItems.menu)*/
             }
         }
 
@@ -39,7 +40,7 @@ Item {
             clip: true
             orientation: Qt.Horizontal
             spacing: 10
-            model: MenuItems.getCategoriesMenu()
+            model: menu.categories
 
             highlight: Item {
                 width: _categoriesView.currentItem ? _categoriesView.currentItem.width : 0
@@ -82,24 +83,7 @@ Item {
     }
 
 
-    ListModel {
-        id: _menuModel
-        Component.onCompleted: fillModel(MenuItems.menu)
 
-        function fillModel(menu) {
-            _menuModel.clear()
-            menu.forEach(function (item) {
-                _menuModel.append({
-                                      "id": item["_id"],
-                                      "name": item.name,
-                                      "cost": item.cost,
-                                      "image": item.image,
-                                      "description": item.description,
-                                      "category": item.category
-                                  })
-            })
-        }
-    }
 
 
     onBasketChanged: {
@@ -115,24 +99,24 @@ Item {
         width: parent.width - 40
         height: parent.height - y
         contentColor: "#5AD166"
-        onStartUpdate: {
-            AziaAPI.getMenu(
-                        function(responseText) {
-                            _menuContent.stopRunningUpdate()
-                            MenuItems.parseMenu(JSON.parse(responseText))
-                            _menuModel.fillModel(MenuItems.menu)
-                        },
-                        function(error) {
-
-                        })
+        onStartUpdate: core.requestMenu()        
+        Connections {
+            target: core
+            function onMenuSended() {
+                _menuContent.stopRunningUpdate();
+            }
         }
+
         ListView {
             id: _menuView
             width: parent.width
             height: parent.height
             bottomMargin: 20
-            model: _menuModel
+            model: menu
             spacing: -1
+            //interactive: false
+            boundsMovement: Flickable.StopAtBounds
+            boundsBehavior: Flickable.DragOverBounds
 
             section.property: "category"
             section.criteria: ViewSection.FullString
@@ -143,20 +127,17 @@ Item {
                 font { pixelSize: 18; bold: true }
             }
 
-
-
-
             delegate: MenuDelegate {
                 id: _menuDelegate
                 width: _menuView.width; height: 100
                 menu_id: model.id
                 name: model.name
-                image: model.image ? AziaAPI.host + "/" + model.image : ""
+                image: model.image ? core.host + "/" + model.image : ""
                 cost: model.cost
                 count: Basket.getCountById(menu_id)
                 onClicked: {
                     _menuInfo.name = model.name
-                    _menuInfo.image = model.image ? AziaAPI.host + "/" + model.image : ""
+                    _menuInfo.image = model.image ? core.host + "/" + model.image : ""
                     _menuInfo.info = model.description
                     _menuInfo.open()
                 }

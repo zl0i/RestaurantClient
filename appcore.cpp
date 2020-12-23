@@ -3,21 +3,42 @@
 AppCore::AppCore(QObject *parent) : QObject(parent)
 {
 
+}
 
-    /*QNetworkAccessManager manager;
-    QNetworkRequest req(QUrl("https://78.24.216.174/aziaclient/menu"));
+void AppCore::requestMenu()
+{
+    QNetworkRequest req(QUrl(host + "/azia/api/menu"));
     QNetworkReply *reply = manager.get(req);
     reply->ignoreSslErrors();
     QObject::connect(reply, &QNetworkReply::finished, [&]() {
         if(reply->error() == QNetworkReply::NoError) {
             QByteArray arr = reply->readAll();
             QJsonDocument doc = QJsonDocument::fromJson(arr);
-            QJsonArray menu = doc.array();
-            qDebug() << menu.size();
-            qDebug() << menu.at(0);
-
+            QJsonObject menuObj = doc.object();
+            menu.parseData(menuObj);
+            emit menuSended();
         } else {
             qDebug() << "error:" << reply->errorString();
         }
-    });*/
+    });
+}
+
+void AppCore::makeOrder()
+{
+
+}
+
+void AppCore::requestHistory()
+{
+
+}
+
+void AppCore::requestStatusActiveOrder()
+{
+
+}
+
+void AppCore::addBasket(int id, int num)
+{
+
 }
