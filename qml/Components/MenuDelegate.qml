@@ -77,7 +77,7 @@ Rectangle {
 
     AddBasketItem {
         id: _counter
-        x: parent.width - width; y: parent.height - 40
+        x: parent.width - width; y: parent.height - 40        
         onIncrement: _delegate.editedCount()
         onDecrement: _delegate.editedCount()
     }

@@ -67,12 +67,12 @@ Rectangle {
         x: parent.width - width; y: parent.height - 40
         font.pixelSize: 24
         color: "#707070"
-        text: qsTr("%1 р.").arg(_delegate.cost  * _delegate.count )
+        text: qsTr("%1 р.").arg(_delegate.cost  * _delegate.count)
     }
 
     AddBasketItem {
         id: _counter
-        x: 110; y: parent.height - 40
+        x: 110; y: parent.height - 40       
         onIncrement: _delegate.increment()
         onDecrement: _delegate.decrement()
     }

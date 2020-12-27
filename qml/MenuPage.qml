@@ -8,8 +8,6 @@ import "./Components"
 Item {
     id: _menuPage
 
-    property var basket: Basket.basket
-
     Rectangle {
         width: parent.width; height: 85
         layer.enabled: true
@@ -23,15 +21,8 @@ Item {
         SearchItem {
             x: 20; y: 20
             width: parent.width-40; height: 30
-            onTextChanged: {
-                menu.setFilterRegExp(new RegExp(text, 'i'))
-                /*if(text)
-                    _menuModel.fillModel(MenuItems.filterMenuByName(text))
-                else
-                    _menuModel.fillModel(MenuItems.menu)*/
-            }
+            onTextChanged:  menu.setFilterRegExp(new RegExp(text, 'i'))
         }
-
 
         ListView {
             id: _categoriesView
@@ -75,21 +66,10 @@ Item {
                     width: parent.width; height: parent.height
                     onClicked: {
                         _categoriesView.currentIndex = index
-                        _menuView.positionViewAtIndex(MenuItems.findIndexMenuByCategory(modelData), ListView.Beginning)
+                        //_menuView.positionViewAtIndex(MenuItems.findIndexMenuByCategory(modelData), ListView.Beginning)
                     }
                 }
             }
-        }
-    }
-
-
-
-
-
-    onBasketChanged: {
-        for(var i = 0; i < _menuView.count; i++) {            
-            if(_menuView.itemAtIndex(i))
-                _menuView.itemAtIndex(i).count = Basket.getCountById(_menuView.itemAtIndex(i).menu_id)
         }
     }
 
@@ -99,7 +79,8 @@ Item {
         width: parent.width - 40
         height: parent.height - y
         contentColor: "#5AD166"
-        onStartUpdate: core.requestMenu()        
+        onStartUpdate: core.requestMenu()
+
         Connections {
             target: core
             function onMenuSended() {
@@ -114,7 +95,7 @@ Item {
             bottomMargin: 20
             model: menu
             spacing: -1
-            //interactive: false
+
             boundsMovement: Flickable.StopAtBounds
             boundsBehavior: Flickable.DragOverBounds
 
@@ -134,22 +115,25 @@ Item {
                 name: model.name
                 image: model.image ? core.host + "/" + model.image : ""
                 cost: model.cost
-                count: Basket.getCountById(menu_id)
+                count: model.count
+
+                Binding {
+                    target: _menuDelegate
+                    property: "count"
+                    value: model.count
+                }
+
                 onClicked: {
                     _menuInfo.name = model.name
                     _menuInfo.image = model.image ? core.host + "/" + model.image : ""
                     _menuInfo.info = model.description
                     _menuInfo.open()
                 }
-                onEditedCount: {
-                    Basket.setCountItem(MenuItems.menu[index], count)
-                }
+                onEditedCount: menu.setCountItem(Number(index), count)
             }
             onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
         }
     }
-
-
 
     MenuInfoDrawer {
         id: _menuInfo

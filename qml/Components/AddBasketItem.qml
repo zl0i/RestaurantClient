@@ -55,7 +55,7 @@ Row {
         MouseArea {
             width: parent.width; height: parent.height
             onClicked: {
-                 _addItem.count -= 1
+                _addItem.count -= 1
                 _addItem.decrement()
             }
         }

@@ -26,40 +26,30 @@ Item {
         }
     }
 
-    Timer {
-        id: _tim
-        interval: 200
-        running: false
-        repeat: false
-        onTriggered: {
-            Basket.basketChanged()
-        }
-    }
-
     ListView {
+        id: _basketView
         x: 20; y: 60; z: -1
         width: parent.width-40; height: parent.height-40
         spacing: -1
-        model: Basket.basket
+        model: basket
         delegate: BasketDelegate {
             id: _basketDelegate
-            width: parent.width; height: 100
-            image: AziaAPI.host + "/"  + modelData.image
-            name: modelData.name
-            cost: modelData.cost
-            count: modelData.count
+            width: _basketView.width; height: 100
+            image: core.host + "/"  + model.image
+            name: model.name
+            cost: model.cost
+            count: model.count
+
+            Binding {
+                target: _basketDelegate
+                property: "count"
+                value: model.count
+            }
             onIncrement: {
-                Basket.basket[index].count = count
-                Basket.basketChanged()
+                menu.setCountItem(String(model.id), count)
             }
             onDecrement: {
-                if(count === 0) {
-                    Basket.basket.splice(index, 1)
-                } else {
-                    Basket.basket[index].count = count
-                }
-
-                Basket.basketChanged()
+                 menu.setCountItem(String(model.id), count)
             }
         }
     }
@@ -67,22 +57,21 @@ Item {
     CustomButton {
         x: 20; y: parent.height - 60
         width: parent.width - 40; height: 40
-        visible: Basket.basket.length > 0
+        visible: basket.rowCount() > 0
         enableShadow: true
         text: qsTr("Оформить заказ")
-        extractText: qsTr("%1 р.").arg(Basket.getTotal())
+        extractText: qsTr("%1 р.").arg(basket.total)
         onClicked: _orderDialog.open()
-
     }
 
     OrderDialog {
         id: _orderDialog
-        phone: User.phoneNumber
+        /*phone: User.phoneNumber
         address {
             street: User.address.street
             house: User.address.house
             flat: User.address.flat
-        }
+        }*/
         onAccess: {
             var obj = {
                 "menu": JSON.stringify(Basket.getMinimumBasket()),
@@ -94,7 +83,7 @@ Item {
                 },
                 "phone": _orderDialog.phone,
                 "phoneNumber": User.phoneNumber
-            }           
+            }
             AziaAPI.ordered(obj,
                             function(responseText) {
                                 console.log(responseText)

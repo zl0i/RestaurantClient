@@ -1,6 +1,6 @@
 #include "appcore.h"
 
-AppCore::AppCore(QObject *parent) : QObject(parent)
+AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu)
 {
 
 }
@@ -19,6 +19,8 @@ void AppCore::requestMenu()
             emit menuSended();
         } else {
             qDebug() << "error:" << reply->errorString();
+            emit menuSended();
+            emit error(reply->errorString());
         }
     });
 }
@@ -34,11 +36,6 @@ void AppCore::requestHistory()
 }
 
 void AppCore::requestStatusActiveOrder()
-{
-
-}
-
-void AppCore::addBasket(int id, int num)
 {
 
 }

@@ -29,14 +29,13 @@ private:
 
 signals:
     void menuSended();
+    void error(QString);
 
 public slots:
     void requestMenu();
     void makeOrder();
     void requestHistory();
     void requestStatusActiveOrder();
-
-    void addBasket(int id, int num);
 };
 
 #endif // APPCORE_H

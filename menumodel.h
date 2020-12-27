@@ -9,7 +9,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 
-class MenuModel : public QSortFilterProxyModel
+class MenuModel : public QStandardItemModel
 {
     Q_OBJECT
     Q_PROPERTY(QStringList categories MEMBER categories NOTIFY categoriesChanged)
@@ -25,29 +25,36 @@ public:
         QUrl imageUrl;
     }MenuItem;
 
-    explicit MenuModel(QObject *parent = nullptr);
-
-    void parseData(QJsonObject obj);
-
-    QHash<int, QByteArray> roleNames() const;
-
-private:
-
     typedef enum {
         IdRole = Qt::UserRole+1,
         NameRole,
         CategoryRole,
         CostRole,
         DescriptionRole,
-        ImageRole
+        ImageRole,
+        CountRole
     }MenuRoles;
 
-     QStandardItemModel menus;
-     QStringList categories;
+    explicit MenuModel(QObject *parent = nullptr);
+
+    void parseData(QJsonObject obj);
+
+public slots:
+
+    void setCountItem(int row, int num);
+    void setCountItem(QString id, int num);
+
+private:
+
+    QStringList categories;
+
+    QModelIndex indexById(QString id);
+
+    QHash<int, QByteArray> roleNames() const;
 
 signals:
 
-     void categoriesChanged();
+    void categoriesChanged();
 };
 
 #endif // MENUITEMS_H
