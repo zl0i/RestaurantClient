@@ -37,12 +37,14 @@ void MenuModel::setCountItem(int row, int num)
 {    
     QModelIndex index = this->index(row, 0);
     setData(index, num, MenuModel::CountRole);
+    emit countChanged();
 }
 
 void MenuModel::setCountItem(QString id, int num)
 {   
     QModelIndex index = indexById(id);
     setData(index, num, MenuModel::CountRole);
+    emit countChanged();
 }
 
 int MenuModel::findIndexByCategory(QString cat)

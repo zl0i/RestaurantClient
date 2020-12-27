@@ -57,7 +57,7 @@ Item {
     CustomButton {
         x: 20; y: parent.height - 60
         width: parent.width - 40; height: 40
-        visible: basket.rowCount() > 0
+        visible: _basketView.count > 0
         enableShadow: true
         text: qsTr("Оформить заказ")
         extractText: qsTr("%1 р.").arg(basket.total)

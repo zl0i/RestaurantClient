@@ -56,6 +56,8 @@ private:
 
 signals:
 
+    void countChanged();
+
     void categoriesChanged();
 };
 
