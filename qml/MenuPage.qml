@@ -27,7 +27,7 @@ Item {
         ListView {
             id: _categoriesView
             x: 10; y: parent.height-height
-            width: parent.width-10; height: 25
+            width: parent.width-15; height: 25
             clip: true
             orientation: Qt.Horizontal
             spacing: 10
@@ -47,15 +47,7 @@ Item {
                         samples: 16
                         color: "#5AD166"
                         verticalOffset: 4
-                    }
-                    Behavior on x {
-                        NumberAnimation {
-                            duration: 250
-                        }
-                    }
-                    Behavior on width {
-                        NumberAnimation { duration: 100 }
-                    }
+                    }                    
                 }
             }
 
@@ -66,7 +58,8 @@ Item {
                     width: parent.width; height: parent.height
                     onClicked: {
                         _categoriesView.currentIndex = index
-                        //_menuView.positionViewAtIndex(MenuItems.findIndexMenuByCategory(modelData), ListView.Beginning)
+                        _menuView.positionViewAtIndex(menu.findIndexByCategory(modelData), ListView.Beginning)
+                        _categoriesView.positionViewAtIndex(index, ListView.Beginning)
                     }
                 }
             }

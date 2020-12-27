@@ -45,6 +45,17 @@ void MenuModel::setCountItem(QString id, int num)
     setData(index, num, MenuModel::CountRole);
 }
 
+int MenuModel::findIndexByCategory(QString cat)
+{
+    for(int i = 0; i < rowCount(); i++) {
+        QModelIndex index = this->index(i, 0);
+        if(data(index, MenuRoles::CategoryRole).toString() == cat) {
+            return index.row();
+        }
+    }
+    return 0;
+}
+
 QModelIndex MenuModel::indexById(QString id)
 {
     for(int i = 0; i < rowCount(); i++) {

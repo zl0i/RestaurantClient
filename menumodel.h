@@ -44,6 +44,8 @@ public slots:
     void setCountItem(int row, int num);
     void setCountItem(QString id, int num);
 
+    int findIndexByCategory(QString cat);
+
 private:
 
     QStringList categories;
