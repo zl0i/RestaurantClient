@@ -26,68 +26,65 @@ Item {
         }
     }
 
-    SwipeRefreshPage {
-        z: -1
-        x: 20; y: 60
-        width: parent.width- 40; height: parent.height-60
-        contentColor: "#5AD166"
-        contentHeight: _content.height
-        bottomMargin: 20
-        onStartUpdate: {
 
+    Column {
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: parent.height - height - 120
+        spacing: 10
+        Label {
+            height: 35
+            font {
+                pixelSize: 24
+                bold: true
+            }
+            text: qsTr("Здравствуйте %1!").arg(user.name)
         }
-
-        Column {
-            id: _content
-            width: parent.width
-            //height: parent.height
-            spacing: 20
-            Column {
-                spacing: 5
-                Label {
-                    color: "#272727"
-                    font { pixelSize: 20; bold: true}
-                    text: qsTr("Здраствуйте %1!").arg(user.name)
-                }
-                Label {
-                    color: "#272727"
-                    font { pixelSize: 14}
-                    text: user.phone
-                }
+        Label {
+            height: 35
+            font {
+                pixelSize: 24
+                bold: true
             }
-            Column {
-                width: parent.width
-                spacing: 20
-                visible: !!user.activeOrder
-                Label {
-                    color: "#272727"
-                    font { pixelSize: 20; bold: true}
-                    text: qsTr("Текущий заказ:")
-                }
-                ActiveOrderDelegate {
-                    status:  user.activeOrder.status
-                    datetime: user.activeOrder.datetime
-                    total: user.activeOrder.total
-                }
+            text: qsTr("Активный заказ")
+            MouseArea {
+                anchors.fill: parent
+                onClicked: console.log("active order")
             }
-            Label {
-                color: "#272727"
-                font { pixelSize: 20; bold: true}
-                text: qsTr("Предыдущие заказы:")
+        }
+        Label {
+            height: 35
+            font {
+                pixelSize: 24
+                bold: true
             }
-
-            Repeater {
-                width: parent.width
-                height: parent.height - y
-                //bottomMargin: 30
-                model: user.history
-                clip: true
-                //spacing: 20
-                delegate: OrderDelegate {
-                    status: "access"
-                    datetime: model.datetime
-                    total: model.cost
-                }
+            text: qsTr("История")
+            MouseArea {
+                anchors.fill: parent
+                onClicked: console.log("history")
+            }
+        }
+        Label {
+            height: 35
+            font {
+                pixelSize: 24
+                bold: true
+            }
+            text: qsTr("Профиль")
+            MouseArea {
+                anchors.fill: parent
+                onClicked: console.log("profile")
+            }
+        }
+        Label {
+            height: 35
+            font {
+                pixelSize: 24
+                bold: true
+            }
+            text: qsTr("Выход")
+            MouseArea {
+                anchors.fill: parent
+                onClicked: console.log("logout")
             }
         }
     }
