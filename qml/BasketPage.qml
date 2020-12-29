@@ -66,12 +66,12 @@ Item {
 
     OrderDialog {
         id: _orderDialog
-        /*phone: User.phoneNumber
+        phone: user.phone
         address {
-            street: User.address.street
-            house: User.address.house
-            flat: User.address.flat
-        }*/
+            street: user.address[0].street
+            house: user.address[0].house
+            flat: user.address[0].flat
+        }
         onAccess: {
             var obj = {
                 "menu": JSON.stringify(Basket.getMinimumBasket()),
@@ -84,15 +84,7 @@ Item {
                 "phone": _orderDialog.phone,
                 "phoneNumber": User.phoneNumber
             }
-            AziaAPI.ordered(obj,
-                            function(responseText) {
-                                console.log(responseText)
-                                Basket.basket = []
-                                close()
-                            },
-                            function (status, text) {
-                                console.log("error:", text)
-                            })
+            core.makeOrder()
         }
     }
 }

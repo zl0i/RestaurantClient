@@ -21,7 +21,7 @@ Item {
         SearchItem {
             x: 20; y: 20
             width: parent.width-40; height: 30
-            onTextChanged:  menu.setFilterRegExp(new RegExp(text, 'i'))
+            onTextChanged: menu.setFilterRegExp(new RegExp(text, 'i'))
         }
 
         ListView {
@@ -33,9 +33,10 @@ Item {
             spacing: 10
             model: menu.categories
 
-            highlight: Item {
-                width: _categoriesView.currentItem ? _categoriesView.currentItem.width : 0
-                height: _categoriesView.currentItem ? _categoriesView.currentItem.height : 0
+            Item {
+                x: _categoriesView.currentItem.x - _categoriesView.contentX
+                width:  _categoriesView.currentItem.width
+                height: _categoriesView.currentItem.height
                 Rectangle {
                     id: _highlightItem
                     y: parent.height
@@ -47,19 +48,28 @@ Item {
                         samples: 16
                         color: "#5AD166"
                         verticalOffset: 4
-                    }                    
+                    }
+                }
+
+                Behavior on x {
+                    NumberAnimation { duration: 250 }
+                }
+
+                Behavior on width {
+                    NumberAnimation { duration: 100 }
                 }
             }
 
             delegate: Label {
+                id: _delegate
                 font.pixelSize: 18
                 text: modelData
                 MouseArea {
                     width: parent.width; height: parent.height
                     onClicked: {
+                        _menuView.positionViewAtIndex(menu.findIndexByCategory(_delegate.text), ListView.Beginning)
                         _categoriesView.currentIndex = index
-                        _menuView.positionViewAtIndex(menu.findIndexByCategory(modelData), ListView.Beginning)
-                        _categoriesView.positionViewAtIndex(index, ListView.Beginning)
+                        _categoriesView.positionViewAtIndex(index, ListView.Center)
                     }
                 }
             }
@@ -106,7 +116,7 @@ Item {
                 width: _menuView.width; height: 100
                 menu_id: model.id
                 name: model.name
-                image: model.image ? core.host + "/" + model.image : ""
+                image: "http://localhost/" + model.image
                 cost: model.cost
                 count: model.count
 
@@ -118,7 +128,7 @@ Item {
 
                 onClicked: {
                     _menuInfo.name = model.name
-                    _menuInfo.image = model.image ? core.host + "/" + model.image : ""
+                    _menuInfo.image = image
                     _menuInfo.info = model.description
                     _menuInfo.open()
                 }

@@ -34,25 +34,15 @@ Item {
         leftMargin: 20
         rightMargin: 20
         bottomMargin: 20
-        model: Events.events
+        model: 0
         spacing: 20
         contentColor: "#5AD166"
-        onStartUpdate: {
-            AziaAPI.getEvents(
-                        function(responseText) {
-                            _eventsView.stopRunningUpdate()                            
-                            Events.parse(JSON.parse(responseText))
-                        },
-                        function(error) {
-                             _eventsView.stopRunningUpdate()
-                        })
-        }
 
         delegate: EventDelegate {
             id: _menuDelegate
             width: _eventsView.width-40
-            image: AziaAPI.host + "/" + modelData.image
-            text: modelData.text
+            image: core.host + "/" + model.image
+            text: model.text
         }
     }
 }

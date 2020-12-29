@@ -34,20 +34,7 @@ Item {
         contentHeight: _content.height
         bottomMargin: 20
         onStartUpdate: {
-            AziaAPI.getInfo(User.phoneNumber,
-                            function(responseText) {
-                                var user = JSON.parse(responseText)
-                                //User.phoneNumber = obj.phoneNumber
-                                User.firstName = user.info.name
-                                User.address = user.info.address
-                                User.history = user.info.orders.reverse()
-                                User.activeOrder = user.info.activeOrder
-                                console.log(JSON.stringify(User.activeOrder))
-                            },
-                            function (error) {
-                                console.log("error:", error)
-                            })
-            stopRunningUpdate()
+
         }
 
         Column {
@@ -60,27 +47,27 @@ Item {
                 Label {
                     color: "#272727"
                     font { pixelSize: 20; bold: true}
-                    text: qsTr("Здраствуйте %1!").arg(User.firstName)
+                    text: qsTr("Здраствуйте %1!").arg(user.name)
                 }
                 Label {
                     color: "#272727"
                     font { pixelSize: 14}
-                    text: User.phoneNumber
+                    text: user.phone
                 }
             }
             Column {
                 width: parent.width
                 spacing: 20
-                visible: Boolean(User.activeOrder)// !== undefined
+                visible: !!user.activeOrder
                 Label {
                     color: "#272727"
                     font { pixelSize: 20; bold: true}
                     text: qsTr("Текущий заказ:")
                 }
                 ActiveOrderDelegate {
-                    status: User.activeOrder ? User.activeOrder.status : ""
-                    datetime: User.activeOrder ? User.activeOrder.datetime : ""
-                    total: User.activeOrder ? User.activeOrder.total : ""
+                    status:  user.activeOrder.status
+                    datetime: user.activeOrder.datetime
+                    total: user.activeOrder.total
                 }
             }
             Label {
@@ -93,13 +80,13 @@ Item {
                 width: parent.width
                 height: parent.height - y
                 //bottomMargin: 30
-                model: User.history
+                model: user.history
                 clip: true
                 //spacing: 20
                 delegate: OrderDelegate {
                     status: "access"
-                    datetime: modelData.datetime
-                    total: modelData.cost
+                    datetime: model.datetime
+                    total: model.cost
                 }
             }
         }

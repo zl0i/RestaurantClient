@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += \
     appcore.h \
     basketmodel.h \
+    customer.h \
     menumodel.h
 
 SOURCES += \
         appcore.cpp \
         basketmodel.cpp \
+        customer.cpp \
         main.cpp \
         menumodel.cpp
 

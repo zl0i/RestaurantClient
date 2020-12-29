@@ -5,6 +5,29 @@ AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu)
 
 }
 
+void AppCore::inputByPhone(QString phone)
+{
+    qDebug() << "inputByPhone:" << phone;
+    tempPhone = phone;
+}
+
+void AppCore::loginBySMS(QString code)
+{
+    qDebug() << "loginBySMS:" << tempPhone << "code:" << code;
+    user.parseData(QJsonObject {});
+    if(tempPhone == "+79999999999" && code == "9674") {
+        emit authenticated();
+    } else {
+        emit error("code not valid");
+    }
+}
+
+void AppCore::loginByToken()
+{
+    qDebug() << "loginByToken";
+    user.parseData(QJsonObject {});
+}
+
 void AppCore::requestMenu()
 {
     QNetworkRequest req(QUrl(host + "/azia/api/menu"));

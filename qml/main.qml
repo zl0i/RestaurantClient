@@ -3,7 +3,6 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 import QtGraphicalEffects 1.0
 
-//import Components 1.0
 import "./Components"
 
 ApplicationWindow {
@@ -24,14 +23,9 @@ ApplicationWindow {
 
         }
 
-        EventPage {
-
-        }
-
         ProfilePage {
 
         }
-
     }
 
     Rectangle {
@@ -83,21 +77,30 @@ ApplicationWindow {
                 iconWidth: 30; iconHeight: 25
                 text: qsTr("Профиль")
                 icon: "qrc:/icons/profile-black.svg"
-                selected: _swipeView.currentIndex === 3
-                onClicked: _swipeView.currentIndex = 3
+                selected: _swipeView.currentIndex === 2
+                onClicked: _swipeView.currentIndex = 2
             }
         }
     }
 
     AuthDialog {
+        id: _authDialog
         visible: true
-        phone: "89202173095"
-        onInputPhone:  {
-            console.log("inputPhone:", phone)
+        phone: user.phone
+        onInputPhone: core.inputByPhone(phone)
+        onInputCode: core.loginBySMS(code)
+    }
+
+    Connections {
+        target: core
+        function onAuthenticated() {
+            _authDialog.close()
         }
 
-        onInputCode: {
-           console.log("input code:", code)
-        }        
+        function onError(msg) {
+            console.log("error:", msg)
+        }
     }
+
+    Component.onCompleted: core.loginByToken()
 }
