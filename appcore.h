@@ -41,6 +41,7 @@ public slots:
     void inputByPhone(QString);
     void loginBySMS(QString);
     void loginByToken();
+    void logout();
 
     void requestMenu();
     void makeOrder();

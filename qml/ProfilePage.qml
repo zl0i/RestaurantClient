@@ -84,7 +84,7 @@ Item {
             text: qsTr("Выход")
             MouseArea {
                 anchors.fill: parent
-                onClicked: console.log("logout")
+                onClicked: core.logout()
             }
         }
     }

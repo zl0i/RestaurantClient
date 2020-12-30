@@ -9,23 +9,78 @@ void AppCore::inputByPhone(QString phone)
 {
     qDebug() << "inputByPhone:" << phone;
     tempPhone = phone;
+
+    QNetworkRequest req(QUrl(host + "/azia/api/users/input"));
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj {
+        {"phone", tempPhone}
+    };
+    QNetworkReply *reply = manager.post(req, QJsonDocument(obj).toJson());
+    reply->ignoreSslErrors();
+    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+        if(reply->error() == QNetworkReply::NoError) {
+
+        } else {
+            qDebug() << "error:" << reply->errorString();
+            emit error(reply->errorString());
+        }
+    });
 }
 
 void AppCore::loginBySMS(QString code)
 {
     qDebug() << "loginBySMS:" << tempPhone << "code:" << code;
-    user.parseData(QJsonObject {});
-    if(tempPhone == "+79999999999" && code == "9674") {
-        emit authenticated();
-    } else {
-        emit error("code not valid");
-    }
+
+    QNetworkRequest req(QUrl(host + "/azia/api/users/login"));
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj {
+        {"phone", tempPhone},
+        {"code", code}
+    };
+    QNetworkReply *reply = manager.post(req, QJsonDocument(obj).toJson());
+    reply->ignoreSslErrors();
+    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+        if(reply->error() == QNetworkReply::NoError) {
+            emit authenticated();
+            QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+            user.parseData(doc.object());
+        } else {
+            qDebug() << "error:" << reply->errorString();
+            emit error(reply->errorString());
+        }
+    });
 }
 
 void AppCore::loginByToken()
 {
+
+    if(user.getToken().isEmpty())
+        return;
+
     qDebug() << "loginByToken";
-    user.parseData(QJsonObject {});
+    QNetworkRequest req(QUrl(host + "/azia/api/users/token"));
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QJsonObject obj {
+        {"phone", user.getPhone()},
+        {"token", user.getToken()}
+    };
+    QNetworkReply *reply = manager.post(req, QJsonDocument(obj).toJson());
+    reply->ignoreSslErrors();
+    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+        if(reply->error() == QNetworkReply::NoError) {
+            emit authenticated();
+            QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
+            user.parseData(doc.object());
+        } else {
+            qDebug() << "error:" << reply->errorString();
+            emit error(reply->errorString());
+        }
+    });
+}
+
+void AppCore::logout()
+{
+    user.clear();
 }
 
 void AppCore::requestMenu()

@@ -18,12 +18,19 @@ public:
 
     void parseData(QJsonObject);
 
+    QString getPhone();
+    QString getToken();
+
+    void save();
+    void clear();
+
 private:
     QSettings settings;
 
     QString name;
     QString phone;
     QJsonArray address;
+    QString token;
 
 signals:
     void userChanged();
