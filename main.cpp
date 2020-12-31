@@ -4,6 +4,7 @@
 #include <QSslSocket>
 
 #include "appcore.h"
+#include "cachnamfactory.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    engine.setNetworkAccessManagerFactory(new CachNAMFactory);
 
     qDebug() << QSslSocket::supportsSsl() << QSslSocket::sslLibraryVersionString() << QSslSocket::sslLibraryBuildVersionString();
 

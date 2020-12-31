@@ -8,6 +8,7 @@
 #include <QUrl>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QSettings>
 
 class MenuModel : public QStandardItemModel
 {
@@ -39,20 +40,26 @@ public:
 
     void parseData(QJsonObject obj);
 
+    void fillFromSetting();
+    void save();
+    void clearSetting();
+    void clearModel();
+
+private:
+
+    QSettings settings;
+    QStringList categories;
+
+    QModelIndex indexById(QString id);
+
+    QHash<int, QByteArray> roleNames() const;
+
 public slots:
 
     void setCountItem(int row, int num);
     void setCountItem(QString id, int num);
 
     int findIndexByCategory(QString cat);
-
-private:
-
-    QStringList categories;
-
-    QModelIndex indexById(QString id);
-
-    QHash<int, QByteArray> roleNames() const;
 
 signals:
 

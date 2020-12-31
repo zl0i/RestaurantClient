@@ -85,6 +85,8 @@ void AppCore::logout()
 
 void AppCore::requestMenu()
 {
+    qDebug() << "requestMenu";
+
     QNetworkRequest req(QUrl(host + "/azia/api/menu"));
     QNetworkReply *reply = manager.get(req);
     reply->ignoreSslErrors();
