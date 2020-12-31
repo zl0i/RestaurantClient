@@ -91,6 +91,10 @@ ApplicationWindow {
         onInputCode: core.loginBySMS(code)
     }
 
+    ErrorPopup {
+       id: _errorPopup
+    }
+
     Connections {
         target: core
         function onAuthenticated() {
@@ -98,7 +102,7 @@ ApplicationWindow {
         }
 
         function onError(msg) {
-            console.log("error:", msg)
+            _errorPopup.show(msg)
         }
     }
 

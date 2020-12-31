@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>qml/main.qml</file>
         <file>qml/MenuPage.qml</file>
-        <file>qml/BasketPage.qml</file>        
+        <file>qml/BasketPage.qml</file>
         <file>qml/EventPage.qml</file>
         <file>qml/ProfilePage.qml</file>
         <file>qml/Components/BasketDelegate.qml</file>
@@ -17,13 +17,14 @@
         <file>qml/Components/ImageButton.qml</file>
         <file>qml/Components/SwipeRefreshListView.qml</file>
         <file>qml/Components/SwipeRefreshLayout.qml</file>
-        <file>qml/Components/AddBasketItem.qml</file>        
+        <file>qml/Components/AddBasketItem.qml</file>
         <file>qml/Components/OrderDialog.qml</file>
         <file>qml/Components/InputAddressField.qml</file>
         <file>qml/Components/OrderDelegate.qml</file>
-        <file>qml/Components/EventDelegate.qml</file>        
+        <file>qml/Components/EventDelegate.qml</file>
         <file>qml/Components/SwipeRefreshPage.qml</file>
         <file>qml/Components/ActiveOrderDelegate.qml</file>
         <file>qml/Components/InputCode.qml</file>
+        <file>qml/Components/ErrorPopup.qml</file>
     </qresource>
 </RCC>
