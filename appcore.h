@@ -36,6 +36,7 @@ signals:
     void error(QString);
 
     void authenticated();
+    void payment(QString);
 
 public slots:
     void inputByPhone(QString);

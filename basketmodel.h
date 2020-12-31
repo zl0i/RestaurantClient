@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QSortFilterProxyModel>
+#include <QJsonArray>
+#include <QJsonObject>
 
 #include "menumodel.h"
 
@@ -12,6 +14,8 @@ class BasketModel : public QSortFilterProxyModel
     Q_PROPERTY(int total READ getTotal NOTIFY totalChanged)
 public:
     explicit BasketModel(MenuModel *menus, QObject *parent = nullptr);
+
+    QJsonArray order();
 
 private:
     MenuModel *menus;

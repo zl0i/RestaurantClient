@@ -105,7 +105,24 @@ void AppCore::requestMenu()
 
 void AppCore::makeOrder()
 {
+    QNetworkRequest req(QUrl(host + "/azia/api/orders"));
 
+    QJsonObject obj;
+    obj.insert("menu", basket.order());
+    obj.insert("phone", user.getPhone());
+    obj.insert("token", user.getToken());
+
+    QJsonDocument doc(obj);
+    QNetworkReply *reply = manager.post(req, doc.toJson());
+    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+        if(reply->error() == QNetworkReply::NoError) {
+            QByteArray arr = reply->readAll();
+            QJsonDocument doc = QJsonDocument::fromJson(arr);
+        } else {
+            qDebug() << "error:" << reply->errorString();
+            emit error(reply->errorString());
+        }
+    });
 }
 
 void AppCore::requestHistory()
