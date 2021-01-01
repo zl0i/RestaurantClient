@@ -15,6 +15,7 @@ Popup {
 
     function show(text) {
         errorText = text
+        opacity = 1
         open()
     }
 
@@ -56,6 +57,5 @@ Popup {
         id: _timer
         interval: _popup.durationShow
         onTriggered: _popup.close()
-
     }
 }
