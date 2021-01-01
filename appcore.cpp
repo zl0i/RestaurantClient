@@ -2,7 +2,7 @@
 
 AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu)
 {
-
+    loginByToken();
 }
 
 void AppCore::inputByPhone(QString phone)
@@ -17,7 +17,7 @@ void AppCore::inputByPhone(QString phone)
     };
     QNetworkReply *reply = manager.post(req, QJsonDocument(obj).toJson());
     reply->ignoreSslErrors();
-    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if(reply->error() == QNetworkReply::NoError) {
 
         } else {
@@ -39,7 +39,7 @@ void AppCore::loginBySMS(QString code)
     };
     QNetworkReply *reply = manager.post(req, QJsonDocument(obj).toJson());
     reply->ignoreSslErrors();
-    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if(reply->error() == QNetworkReply::NoError) {
             emit authenticated();
             QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
@@ -66,7 +66,7 @@ void AppCore::loginByToken()
     };
     QNetworkReply *reply = manager.post(req, QJsonDocument(obj).toJson());
     reply->ignoreSslErrors();
-    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if(reply->error() == QNetworkReply::NoError) {
             emit authenticated();
             QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());

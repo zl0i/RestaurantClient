@@ -105,6 +105,4 @@ ApplicationWindow {
             _errorPopup.show(msg)
         }
     }
-
-    Component.onCompleted: core.loginByToken()
 }
