@@ -35,7 +35,7 @@ Item {
         delegate: BasketDelegate {
             id: _basketDelegate
             width: _basketView.width; height: 100
-            image: core.host + "/"  + model.image
+            image: "http://localhost/" + model.image
             name: model.name
             cost: model.cost
             count: model.count
@@ -73,18 +73,16 @@ Item {
             flat: user.address[0].flat
         }
         onAccess: {
-            var obj = {
-                "menu": JSON.stringify(Basket.getMinimumBasket()),
+            var obj = {                
                 "comment": _orderDialog.comment,
                 "address": {
                     "street": _orderDialog.address.street,
                     "house": _orderDialog.address.house,
                     "flat":_orderDialog.address.flat
                 },
-                "phone": _orderDialog.phone,
-                "phoneNumber": User.phoneNumber
+                "phone": _orderDialog.phone
             }
-            core.makeOrder()
+            core.makeOrder(obj)
         }
     }
 }

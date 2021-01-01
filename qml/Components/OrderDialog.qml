@@ -58,7 +58,7 @@ Dialog {
             }
             CustomButton {
                 x: parent.width/2 - width/2
-                text: qsTr("Применить")
+                text: qsTr("Перейти к оплате")
                 onClicked: _dialog.access()
             }
         }

@@ -105,18 +105,25 @@ void AppCore::requestMenu()
     });
 }
 
-void AppCore::makeOrder()
+void AppCore::makeOrder(QJsonObject info)
 {
     QNetworkRequest req(QUrl(host + "/azia/api/orders"));
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     QJsonObject obj;
-    obj.insert("menu", basket.order());
-    obj.insert("phone", user.getPhone());
     obj.insert("token", user.getToken());
-
+    obj.insert("menu", basket.order());
+    obj.insert("phoneUser", user.getPhone());
+    obj.insert("phoneOrder", info.value("phone"));
+    obj.insert("comment", info.value("comment"));
+    obj.insert("address", info.value("address"));
     QJsonDocument doc(obj);
+
+    //если адрес новый - сохранить
+
     QNetworkReply *reply = manager.post(req, doc.toJson());
-    QObject::connect(reply, &QNetworkReply::finished, [&]() {
+    reply->ignoreSslErrors();
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if(reply->error() == QNetworkReply::NoError) {
             QByteArray arr = reply->readAll();
             QJsonDocument doc = QJsonDocument::fromJson(arr);

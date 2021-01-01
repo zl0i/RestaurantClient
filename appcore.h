@@ -45,7 +45,7 @@ public slots:
     void logout();
 
     void requestMenu();
-    void makeOrder();
+    void makeOrder(QJsonObject info);
     void requestHistory();
     void requestStatusActiveOrder();
 };

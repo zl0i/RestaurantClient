@@ -13,8 +13,8 @@ QJsonArray BasketModel::order()
     for(int i = 0; i < this->rowCount(); i++) {
         QModelIndex index = this->index(i, 0);
         QJsonObject item;
-        item.insert("id", this->data(index, MenuModel::IdRole).toJsonValue());
-        item.insert("count", this->data(index, MenuModel::CountRole).toJsonValue());
+        item.insert("id", data(index, MenuModel::IdRole).toJsonValue());
+        item.insert("count", data(index, MenuModel::CountRole).toJsonValue());
         arr.append(item);
     }
 

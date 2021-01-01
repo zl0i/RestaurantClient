@@ -42,7 +42,7 @@ void MenuModel::fillFromSetting()
     for(int i = 0; i < arr.size(); i++) {
         QJsonObject itemJson = arr.at(i).toObject();
         QModelIndex index = this->index(i, 0);
-        setData(index, itemJson.value("_id").toString(), IdRole);
+        setData(index, itemJson.value("id").toString(), IdRole);
         setData(index, itemJson.value("name").toString(), NameRole);
         setData(index, itemJson.value("category"), CategoryRole);
         setData(index, itemJson.value("image"), ImageRole);
