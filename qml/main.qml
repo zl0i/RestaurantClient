@@ -91,8 +91,6 @@ ApplicationWindow {
         onInputCode: core.loginBySMS(code)
     }
 
-
-
     Connections {
         target: core
         function onAuthenticated() {
@@ -107,7 +105,6 @@ ApplicationWindow {
             _paymentPage.open(html)
         }
     }
-
 
     PaymentPage {
         id: _paymentPage

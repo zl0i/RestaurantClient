@@ -73,8 +73,9 @@ void AppCore::loginByToken()
             user.parseData(doc.object());
         } else {
             qDebug() << "error:" << reply->errorString();
-            emit error(reply->errorString());
+            errorHandler(reply);
         }
+        reply->deleteLater();
     });
 }
 
@@ -100,8 +101,9 @@ void AppCore::requestMenu()
         } else {
             qDebug() << "error:" << reply->errorString();
             emit menuSended();
-            emit error(reply->errorString());
+            errorHandler(reply);
         }
+        reply->deleteLater();
     });
 }
 
@@ -140,8 +142,9 @@ void AppCore::makeOrder(QJsonObject info)
 
         } else {
             qDebug() << "error:" << reply->errorString();
-            emit error(reply->errorString());
+            errorHandler(reply);
         }
+        reply->deleteLater();
     });
 }
 
@@ -153,4 +156,31 @@ void AppCore::requestHistory()
 void AppCore::requestStatusActiveOrder()
 {
 
+}
+
+void AppCore::errorHandler(QNetworkReply *reply)
+{
+    const QNetworkReply::NetworkError err = reply->error();
+
+    switch (err) {
+    case QNetworkReply::HostNotFoundError:
+        emit error(tr("Сервер не найден"));
+        break;
+    case QNetworkReply::InternalServerError:
+        emit error(tr("Внутрення ошибка сервера"));
+        break;
+    case QNetworkReply::ProtocolInvalidOperationError: {
+        QByteArray arr = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(arr);
+        QJsonObject errorObj = doc.object();
+        QString errorString = errorObj.value("result").toString();
+        emit error(errorString);
+        break;
+    }
+    case QNetworkReply::UnknownNetworkError:
+        emit error("Неизвестная ошибка");
+        break;
+    default:
+        emit error(tr("Внутрення ошибка"));
+    }
 }

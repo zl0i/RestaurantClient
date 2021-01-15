@@ -8,6 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QFile>
 
 #include "customer.h"
 #include "menumodel.h"
@@ -26,7 +27,6 @@ public:
 
 private:
 
-    const QString host = "https://localhost";
     QString tempPhone;
 
     QNetworkAccessManager manager;
@@ -48,6 +48,9 @@ public slots:
     void makeOrder(QJsonObject info);
     void requestHistory();
     void requestStatusActiveOrder();
+
+private slots:
+    void errorHandler(QNetworkReply*);
 };
 
 #endif // APPCORE_H

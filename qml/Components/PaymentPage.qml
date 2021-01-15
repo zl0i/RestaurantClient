@@ -1,12 +1,11 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtWebView 1.11
-//import QtQuick.Window 2.12
 
 Item {
     id: _page
     anchors.fill: parent
-    visible: true
+    visible: false
 
     signal back()
     signal error(var text)
@@ -26,10 +25,6 @@ Item {
         y: 60
         width: parent.width
         height: parent.height - 60
-        //url: "qrc:/icons/payment-page.html"
-        url: "https://yandex.ru/"
-        //url: "https://jsonplaceholder.typicode.com/todos/1"
-
 
         onUrlChanged: {
             if(url == 'https://yandex.ru/') {
