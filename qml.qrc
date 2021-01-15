@@ -26,5 +26,6 @@
         <file>qml/Components/ActiveOrderDelegate.qml</file>
         <file>qml/Components/InputCode.qml</file>
         <file>qml/Components/ErrorPopup.qml</file>
+        <file>qml/Components/PaymentPage.qml</file>
     </qresource>
 </RCC>

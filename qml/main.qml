@@ -91,9 +91,7 @@ ApplicationWindow {
         onInputCode: core.loginBySMS(code)
     }
 
-    ErrorPopup {
-       id: _errorPopup
-    }
+
 
     Connections {
         target: core
@@ -104,5 +102,20 @@ ApplicationWindow {
         function onError(msg) {
             _errorPopup.show(msg)
         }
+
+        function onPayment(html) {
+            _paymentPage.open(html)
+        }
+    }
+
+
+    PaymentPage {
+        id: _paymentPage
+        onBack: close()
+        onError: _errorPopup.show(text)
+    }
+
+    ErrorPopup {
+       id: _errorPopup
     }
 }

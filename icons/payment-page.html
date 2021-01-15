@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+</head>
+
+<body>
+    <div width=640 height=480 align='center'>
+        <canvas id="canvas"></canvas>
+    </div>
+    <div id="payment-form"></div>
+</body>
+<style>
+    body {
+        background-color: #FFFFFF;
+    }
+</style>
+<script>
+    let example = document.getElementById("canvas");
+    let ctx = example.getContext('2d');
+
+    example.width = 200;
+    example.height = 200;
+
+    var centerX = example.width / 2;
+    var centerY = example.height / 2;
+
+    let angle = 0;
+
+    function draw() {
+        ctx.clearRect(0, 0, 640, 480)
+        ctx.lineWidth = 3
+        var angleK = angle * Math.PI / 180
+
+        ctx.strokeStyle = "#3CB371"
+        ctx.beginPath()
+        ctx.arc(centerX, centerY, 73, 0 + angleK, Math.PI + angleK);
+        ctx.stroke()
+
+        ctx.strokeStyle = '#1A1A1A'
+        ctx.beginPath()
+        ctx.arc(centerX, centerY, 63, 0 + angleK * 2, Math.PI + angleK * 2);
+        ctx.stroke()
+    }
+
+    setInterval(function () {
+        if (angle < 361) {
+            angle += 1
+        } else {
+            angle = 0
+        }
+        draw()
+    }, 8)
+
+    window.onload = function () {
+        example.hidden = true
+    }
+</script>
+
+<script src="https://yookassa.ru/checkout-widget/v1/checkout-widget.js"></script>
+<script>
+    const checkout = new window.YooMoneyCheckoutWidget({
+        confirmation_token: '%1',
+        return_url: 'https://yandex.ru',
+        embedded_3ds: false,
+        customization: {
+            colors: {
+                controlPrimary: '#00BF96'
+            }
+        },
+        error_callback(error) {
+        }
+    });
+
+    checkout.render('payment-form')
+
+        .then(() => {
+
+        });
+</script>
+
+
+</html>

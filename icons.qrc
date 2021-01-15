@@ -9,5 +9,6 @@
         <file>icons/order-access.svg</file>
         <file>icons/order-canceled.svg</file>
         <file>icons/order-processing.svg</file>
+        <file>icons/payment-page.html</file>
     </qresource>
 </RCC>

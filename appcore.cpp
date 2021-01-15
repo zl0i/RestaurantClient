@@ -127,6 +127,17 @@ void AppCore::makeOrder(QJsonObject info)
         if(reply->error() == QNetworkReply::NoError) {
             QByteArray arr = reply->readAll();
             QJsonDocument doc = QJsonDocument::fromJson(arr);
+
+            QJsonObject obj = doc.object();
+
+            QFile file(":icons/payment-page.html");
+            file.open(QIODevice::ReadOnly);
+
+            QString html = file.readAll();
+
+            html.replace("%1", obj.value("payment_token").toString());
+            emit payment(html);
+
         } else {
             qDebug() << "error:" << reply->errorString();
             emit error(reply->errorString());

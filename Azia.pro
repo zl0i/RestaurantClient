@@ -1,4 +1,5 @@
-QT += quick svg network
+QT += quick svg network webview
+QT -= widgets
 
 CONFIG += c++11
 
@@ -60,3 +61,4 @@ ANDROID_ABIS = arm64-v8a x86
 
 
 
+android: include(G:/Android_SDK/android_openssl/openssl.pri)
