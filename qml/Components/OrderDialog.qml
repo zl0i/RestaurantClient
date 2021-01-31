@@ -46,6 +46,7 @@ Dialog {
                 id: _phone
                 width: parent.width
                 placeholderText: qsTr("Телефон")
+                horizontalAlignment: Text.AlignLeft
             }
             InputAddressField {
                 id: _address
