@@ -116,7 +116,7 @@ Item {
                 width: _menuView.width; height: 100
                 menu_id: model.id
                 name: model.name
-                image: "http://localhost/" + model.image
+                image: core.host + "/" + model.image
                 cost: model.cost
                 count: model.count
 
