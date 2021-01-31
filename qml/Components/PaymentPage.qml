@@ -28,7 +28,7 @@ Item {
 
         onUrlChanged: {
             if(url == 'https://yandex.ru/') {
-                _webView.visible = false
+                _page.visible = false
                 _webView.stop()
             }
         }
