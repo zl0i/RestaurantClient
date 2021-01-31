@@ -2,21 +2,23 @@
 
 Customer::Customer(QObject *parent) : QObject(parent)
 {
-
     phone = settings.value("phone", "").toString();
     token = settings.value("token").toString();
     name = settings.value("name", "").toString();
-    address = settings.value("address", QJsonArray {
-                                 QJsonObject{
+    address = settings.value("address", QJsonObject {
                                      {"street", ""},
                                      {"house", ""},
                                      {"flat", ""}
-                                 }
-                             }).toJsonArray();
+                                 }).toJsonObject();
 
     qDebug() << "user info:" << '\n'
              << "phone:" << phone << '\n'
              << "token:" << token << '\n';
+}
+
+bool Customer::isAuthenticated()
+{
+    return !token.isEmpty();
 }
 
 void Customer::parseData(QJsonObject obj)
@@ -45,5 +47,10 @@ void Customer::save()
 
 void Customer::clear()
 {
+    phone = "";
+    token = "";
+    name = "";
+    address = QJsonObject();
     settings.clear();
+    emit userChanged();
 }

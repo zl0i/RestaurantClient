@@ -17,7 +17,8 @@
 class AppCore : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString host MEMBER host CONSTANT)
+    Q_PROPERTY(QString host MEMBER host CONSTANT)    
+
 public:
     explicit AppCore(QObject *parent = nullptr);
 
@@ -25,8 +26,10 @@ public:
     MenuModel menu;
     BasketModel basket;
 
-private:
-    QString host = "https://localhost";
+private:   
+
+    const QString host = "https://192.168.1.101";
+    //const QString host = "https://62.109.28.233";
 
     QString tempPhone;
 
@@ -34,6 +37,7 @@ private:
 
 signals:
     void menuSended();
+    void userInfoSended();
     void error(QString);
 
     void authenticated();
@@ -41,14 +45,13 @@ signals:
 
 public slots:
     void inputByPhone(QString);
-    void loginBySMS(QString);
-    void loginByToken();
+    void loginBySMS(QString);    
     void logout();
 
     void requestMenu();
     void makeOrder(QJsonObject info);
-    void requestHistory();
-    void requestStatusActiveOrder();
+    void updateUserInfo();
+
 
 private slots:
     void errorHandler(QNetworkReply*);

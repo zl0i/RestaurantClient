@@ -6,7 +6,11 @@ import QtGraphicalEffects 1.0
 import "./Components"
 
 Item {
+    id: _basketPage
     clip: true
+
+    property bool makingOrder: false
+
     Rectangle {
         width: parent.width; height: 50
         layer.enabled: true
@@ -61,16 +65,33 @@ Item {
         enableShadow: true
         text: qsTr("Оформить заказ")
         extractText: qsTr("%1 р.").arg(basket.total)
-        onClicked: _orderDialog.open()
+        onClicked: {
+            if(user.isAuthenticated()) {
+                _orderDialog.open()
+            } else {
+                _authDialog.open()
+                makingOrder = true
+            }
+        }
+    }
+
+    Connections {
+        target: core
+        function onAuthenticated() {
+            if(_basketPage.makingOrder) {
+                _orderDialog.open()
+                _basketPage.makingOrder = false
+            }
+        }
     }
 
     OrderDialog {
         id: _orderDialog
         phone: user.phone
         address {
-            street: user.address[0].street
-            house: user.address[0].house
-            flat: user.address[0].flat
+            street: user.address.street
+            house: user.address.house
+            flat: user.address.flat
         }
         onAccess: {
             var obj = {                

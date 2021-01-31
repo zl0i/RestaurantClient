@@ -2,7 +2,7 @@
 
 AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu)
 {
-    loginByToken();
+
 }
 
 void AppCore::inputByPhone(QString phone)
@@ -51,34 +51,6 @@ void AppCore::loginBySMS(QString code)
     });
 }
 
-void AppCore::loginByToken()
-{
-
-    if(user.getToken().isEmpty())
-        return;
-
-    qDebug() << "loginByToken";
-    QNetworkRequest req(QUrl(host + "/azia/api/users/token"));
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QJsonObject obj {
-        {"phone", user.getPhone()},
-        {"token", user.getToken()}
-    };
-    QNetworkReply *reply = manager.post(req, QJsonDocument(obj).toJson());
-    reply->ignoreSslErrors();
-    QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if(reply->error() == QNetworkReply::NoError) {
-            emit authenticated();
-            QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
-            user.parseData(doc.object());
-        } else {
-            qDebug() << "error:" << reply->errorString();
-            errorHandler(reply);
-        }
-        reply->deleteLater();
-    });
-}
-
 void AppCore::logout()
 {
     user.clear();
@@ -109,6 +81,11 @@ void AppCore::requestMenu()
 
 void AppCore::makeOrder(QJsonObject info)
 {
+    if(!user.isAuthenticated()) {
+        emit error(tr("Сначала автризуйтесь"));
+        return;
+    }
+
     QNetworkRequest req(QUrl(host + "/azia/api/orders"));
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -148,14 +125,29 @@ void AppCore::makeOrder(QJsonObject info)
     });
 }
 
-void AppCore::requestHistory()
+void AppCore::updateUserInfo()
 {
+    QString strUrl = host + "/azia/api/users/%1/info";
+    QUrl url(strUrl.arg(user.getToken()));
 
-}
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    QNetworkReply *reply = manager.get(req);
+    reply->ignoreSslErrors();
 
-void AppCore::requestStatusActiveOrder()
-{
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        if(reply->error() == QNetworkReply::NoError) {
+            QByteArray arr = reply->readAll();
+            QJsonDocument doc = QJsonDocument::fromJson(arr);
 
+            user.parseData(doc.object());
+            emit userInfoSended();
+        } else {
+            qDebug() << "error:" << reply->errorString();
+            errorHandler(reply);
+        }
+        reply->deleteLater();
+    });
 }
 
 void AppCore::errorHandler(QNetworkReply *reply)

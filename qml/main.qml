@@ -15,6 +15,7 @@ ApplicationWindow {
         id: _swipeView
         width: parent.width; height: parent.height-60
         clip: true
+
         MenuPage {
             id: _menuPage
         }
@@ -78,14 +79,18 @@ ApplicationWindow {
                 text: qsTr("Профиль")
                 icon: "qrc:/icons/profile-black.svg"
                 selected: _swipeView.currentIndex === 2
-                onClicked: _swipeView.currentIndex = 2
+                onClicked: {
+                    _swipeView.currentIndex = 2
+                    if(!user.isAuthenticated()) {
+                        _authDialog.open()
+                    }
+                }
             }
         }
     }
 
     AuthDialog {
-        id: _authDialog
-        visible: true
+        id: _authDialog       
         phone: user.phone
         onInputPhone: core.inputByPhone(phone)
         onInputCode: core.loginBySMS(code)

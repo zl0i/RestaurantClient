@@ -11,10 +11,11 @@ class Customer : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name MEMBER name NOTIFY userChanged)
     Q_PROPERTY(QString phone MEMBER phone NOTIFY userChanged)
-    Q_PROPERTY(QJsonArray address MEMBER address NOTIFY userChanged)
+    Q_PROPERTY(QJsonObject address MEMBER address NOTIFY userChanged)
 
 public:
     explicit Customer(QObject *parent = nullptr);
+
 
     void parseData(QJsonObject);
 
@@ -29,8 +30,12 @@ private:
 
     QString name;
     QString phone;
-    QJsonArray address;
+    QJsonObject address;
     QString token;
+
+public slots:
+
+    bool isAuthenticated();
 
 signals:
     void userChanged();
