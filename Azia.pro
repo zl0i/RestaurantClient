@@ -23,11 +23,11 @@ HEADERS += \
     menumodel.h
 
 SOURCES += \
-        appcore.cpp \
-        basketmodel.cpp \
-        customer.cpp \
-        main.cpp \
-        menumodel.cpp
+    appcore.cpp \
+    basketmodel.cpp \
+    customer.cpp \
+    main.cpp \
+    menumodel.cpp
 
 RESOURCES += qml.qrc \
     icons.qrc
@@ -36,29 +36,26 @@ RESOURCES += qml.qrc \
 QML_IMPORT_PATH = $$PWD
 QML2_IMPORT_PATH = $$PWD
 
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-QML_DESIGNER_IMPORT_PATH =
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES += \
-    android/AndroidManifest.xml \
-    android/build.gradle \
-    android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
-    android/gradlew.bat \
-    android/res/values/libs.xml
+android {
 
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+    DISTFILES += \
+        android/AndroidManifest.xml \
+        android/build.gradle \
+        android/gradle/wrapper/gradle-wrapper.jar \
+        android/gradle/wrapper/gradle-wrapper.properties \
+        android/gradlew \
+        android/gradlew.bat \
+        android/res/values/libs.xml
 
-ANDROID_ABIS = arm64-v8a x86
+    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
+    include(G:/Android_SDK/android_openssl/openssl.pri)
 
-
-
-
-android: include(G:/Android_SDK/android_openssl/openssl.pri)
+    ANDROID_ABIS = arm64-v8a x86
+}
