@@ -27,5 +27,6 @@
         <file>qml/Components/InputCode.qml</file>
         <file>qml/Components/ErrorPopup.qml</file>
         <file>qml/Components/PaymentPage.qml</file>
+        <file>qml/Components/LogoutDialog.qml</file>
     </qresource>
 </RCC>

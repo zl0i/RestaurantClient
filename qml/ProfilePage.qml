@@ -27,6 +27,7 @@ Item {
     }
 
     SwipeRefreshPage {
+        id: _swipePage
         z: -1
         x: 20; y: 60
         width: parent.width- 40; height: parent.height-60
@@ -34,7 +35,14 @@ Item {
         contentHeight: _content.height
         bottomMargin: 20
         onStartUpdate: {
+            core.updateUserInfo();
+        }
 
+        Connections {
+            target: core
+            function onUserInfoSended() {
+                _swipePage.stopRunningUpdate()
+            }
         }
 
         Column {
@@ -65,7 +73,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: core.logout()
+                        onClicked: _logoutDialog.open()
                     }
                 }
             }
@@ -79,9 +87,9 @@ Item {
                     text: qsTr("Текущий заказ:")
                 }
                 ActiveOrderDelegate {
-                    status:  user.activeOrder.status
-                    datetime: user.activeOrder.datetime
-                    total: user.activeOrder.total
+                    //status:  user.activeOrder.status
+                    //datetime: user.activeOrder.datetime
+                    //total: user.activeOrder.total
                 }
             }
             Label {
@@ -102,5 +110,10 @@ Item {
                 }
             }
         }
+    }
+
+    LogoutDialog {
+        id: _logoutDialog
+        onLogout: core.logout()
     }
 }
