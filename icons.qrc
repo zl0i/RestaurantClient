@@ -10,5 +10,6 @@
         <file>icons/order-canceled.svg</file>
         <file>icons/order-processing.svg</file>
         <file>icons/payment-page.html</file>
+        <file>icons/logout-black.svg</file>
     </qresource>
 </RCC>

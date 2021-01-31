@@ -26,6 +26,7 @@ public:
     BasketModel basket;
 
 private:
+    QString host = "https://localhost";
 
     QString tempPhone;
 
