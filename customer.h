@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QJsonObject>
 #include <QJsonArray>
+#include "ActiveOrder.h"
 
 class Customer : public QObject
 {
@@ -12,10 +13,10 @@ class Customer : public QObject
     Q_PROPERTY(QString name MEMBER name NOTIFY userChanged)
     Q_PROPERTY(QString phone MEMBER phone NOTIFY userChanged)
     Q_PROPERTY(QJsonObject address MEMBER address NOTIFY userChanged)
+    Q_PROPERTY(ActiveOrder *activeOrder MEMBER activeOrder NOTIFY userChanged)
 
 public:
     explicit Customer(QObject *parent = nullptr);
-
 
     void parseData(QJsonObject);
 
@@ -27,6 +28,9 @@ public:
     void save();
     void clear();
 
+    void setPaymentToken(QString);
+    QString getPaymentToken();
+
 private:
     QSettings settings;
 
@@ -35,6 +39,7 @@ private:
     QJsonObject address;
     QString token;
 
+    ActiveOrder *activeOrder = new ActiveOrder();
 public slots:
 
     bool isAuthenticated();

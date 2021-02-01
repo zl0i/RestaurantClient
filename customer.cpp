@@ -27,6 +27,11 @@ void Customer::parseData(QJsonObject obj)
     phone = obj.value("phone").toString();
     token = obj.value("token").toString();
     address = obj.value("address").toObject();
+    activeOrder->total = obj.value("activeOrder").toObject().value("total").toDouble();
+    activeOrder->datetime = obj.value("activeOrder").toObject().value("datetime").toString();
+    activeOrder->status = obj.value("activeOrder").toObject().value("status").toString();
+
+    emit activeOrder->activeOrderChanged();
     emit userChanged();
     save();
 }
@@ -62,4 +67,14 @@ void Customer::clear()
     address = QJsonObject();
     settings.clear();
     emit userChanged();
+}
+
+void Customer::setPaymentToken(QString ptoken)
+{
+    activeOrder->payment_token = ptoken;
+}
+
+QString Customer::getPaymentToken()
+{
+    return activeOrder->payment_token;
 }

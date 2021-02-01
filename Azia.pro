@@ -16,6 +16,7 @@ CONFIG += c++11
 
 
 HEADERS += \
+    ActiveOrder.h \
     appcore.h \
     basketmodel.h \
     cachnamfactory.h \

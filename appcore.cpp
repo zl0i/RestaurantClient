@@ -108,16 +108,11 @@ void AppCore::makeOrder(QJsonObject info)
             QJsonDocument doc = QJsonDocument::fromJson(arr);
 
             QJsonObject obj = doc.object();
+            QString token = obj.value("payment_token").toString();
 
-            QFile file(":icons/payment-page.html");
-            file.open(QIODevice::ReadOnly);
-
-            QString html = file.readAll();
-
-            html.replace("%1", obj.value("payment_token").toString());
-            emit payment(html);
+            user.setPaymentToken(token);
+            openPaymentForm();
             basket.clearBasket();
-
         } else {
             emit makeOrderError();
             qDebug() << "error:" << reply->errorString();
@@ -150,6 +145,17 @@ void AppCore::updateUserInfo()
         }
         reply->deleteLater();
     });
+}
+
+void AppCore::openPaymentForm()
+{
+    QFile file(":icons/payment-page.html");
+    file.open(QIODevice::ReadOnly);
+
+    QString html = file.readAll();
+
+    html.replace("%1", user.getPaymentToken());
+    emit payment(html);
 }
 
 void AppCore::errorHandler(QNetworkReply *reply)

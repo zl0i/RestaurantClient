@@ -10,17 +10,27 @@ Item {
     property var total: 0
 
     function getTextStatus() {
-        if(status === "accepted")
+        switch (status) {
+        case 'wait_payment':
+            return qsTr("Ожидает оплаты")
+        case 'accepted':
+            return qsTr("Принят")
+        case 'coocking':
             return qsTr("Готовится")
-        else if(status === "delivery")
+        case 'delivering':
             return qsTr("Уже в пути")
-        return qsTr("Принят")
+        case 'success':
+            return qsTr("Готов")
+        case 'canseled':
+            return qsTr("Отменен")
+        }
+        return qsTr("Неизвесно")
     }
 
     Image {
         width: 40; height: 40
         source: {
-            if(_delegate.status === "access") {
+            if(_delegate.status === "success") {
                 return "qrc:/icons/order-access.svg"
             } else if(_delegate.status === "canceled") {
                 return "qrc:/icons/order-canceled.svg"
@@ -34,7 +44,7 @@ Item {
         Label {
             font.pixelSize: 16
             color: "#494949"
-            text: getTextStatus()
+            text: _delegate.status == "success" ||  _delegate.status == "canseled" ? new Date(_delegate.datetime).toLocaleString(Qt.locale(), "dd.MM.yyyy") : getTextStatus()
         }
         Label {
             font.pixelSize: 16

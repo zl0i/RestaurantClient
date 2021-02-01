@@ -80,16 +80,20 @@ Item {
             Column {
                 width: parent.width
                 spacing: 20
-                visible: !!user.activeOrder
+                visible: !!user.activeOrder.total
                 Label {
                     color: "#272727"
                     font { pixelSize: 20; bold: true}
                     text: qsTr("Текущий заказ:")
                 }
                 ActiveOrderDelegate {
-                    //status:  user.activeOrder.status
-                    //datetime: user.activeOrder.datetime
-                    //total: user.activeOrder.total
+                    status:  user.activeOrder.status
+                    datetime: user.activeOrder.datetime
+                    total: user.activeOrder.total
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: core.openPaymentForm();
+                    }
                 }
             }
             Label {

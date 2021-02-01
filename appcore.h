@@ -52,6 +52,7 @@ public slots:
     void requestMenu();
     void makeOrder(QJsonObject info);
     void updateUserInfo();
+    void openPaymentForm();
 
 
 private slots:
