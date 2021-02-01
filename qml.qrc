@@ -28,5 +28,7 @@
         <file>qml/Components/ErrorPopup.qml</file>
         <file>qml/Components/PaymentPage.qml</file>
         <file>qml/Components/LogoutDialog.qml</file>
+        <file>qml/Components/CustomBusyIndicator.qml</file>
+        <file>qml/Components/InputPhoneField.qml</file>
     </qresource>
 </RCC>

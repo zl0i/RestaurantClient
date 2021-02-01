@@ -22,6 +22,8 @@ public:
     QString getPhone();
     QString getToken();
 
+    void setAddress(QJsonObject);
+
     void save();
     void clear();
 

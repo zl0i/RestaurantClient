@@ -34,6 +34,7 @@ Item {
         id: _basketView
         x: 20; y: 60; z: -1
         width: parent.width-40; height: parent.height-40
+        bottomMargin: 120
         spacing: -1
         model: basket
         delegate: BasketDelegate {
@@ -93,17 +94,21 @@ Item {
             house: user.address.house
             flat: user.address.flat
         }
-        onAccess: {
-            var obj = {                
-                "comment": _orderDialog.comment,
-                "address": {
-                    "street": _orderDialog.address.street,
-                    "house": _orderDialog.address.house,
-                    "flat":_orderDialog.address.flat
-                },
-                "phone": _orderDialog.phone
-            }
+        onPayment: {
             core.makeOrder(obj)
+            showBusyIndicator = true
+        }
+    }
+
+    Connections {
+        target: core
+
+        function onPayment(html) {
+            _orderDialog.close()
+        }
+
+        function onMakeOrderError() {
+            _orderDialog.showBusyIndicator = false
         }
     }
 }

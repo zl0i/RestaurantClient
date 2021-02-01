@@ -16,12 +16,24 @@ Dialog {
     property alias address: _address
     property alias comment: _comment.text
     property alias phone: _phone.text
+    property bool showBusyIndicator: false
 
-    signal access()
+    signal payment(var obj)
+
+    function reset() {
+        _comment.text = ""
+        showBusyIndicator = false
+    }
+
+    function verificate() {
+        return _phone.text && _address.filled
+    }
+
+    onOpened: reset();
 
     background: Rectangle {
         width: parent.width; height: parent.height
-        radius: 20        
+        radius: 10
     }
     contentItem: Item {
         ImageButton {
@@ -42,15 +54,16 @@ Dialog {
                 font { pixelSize: 18; bold: true }
                 text: qsTr("Оформление заказа")
             }
-            InputText {
+            InputPhoneField {
                 id: _phone
-                width: parent.width
-                placeholderText: qsTr("Телефон")
-                horizontalAlignment: Text.AlignLeft
+                width: parent.width                
+                horizontalAlignment: Text.AlignLeft                
+                onAccepted: _address.forceActiveFocus()
             }
             InputAddressField {
                 id: _address
                 width: parent.width
+                onAccepted: _comment.forceActiveFocus()
             }
             InputText {
                 id: _comment
@@ -60,7 +73,36 @@ Dialog {
             CustomButton {
                 x: parent.width/2 - width/2
                 text: qsTr("Перейти к оплате")
-                onClicked: _dialog.access()
+                onClicked: {
+                    if(_dialog.verificate()) {
+                        var obj = {
+                            "comment": _comment.text,
+                            "address": {
+                                "street": _address.street,
+                                "house": _address.house,
+                                "flat": _address.flat
+                            },
+                            "phone": _phone.getClearPhoneNumber()
+                        }
+                        _dialog.payment(obj)
+                    } else {
+                        _errorPopup.show(qsTr("Заполните поля телефона и адреса"))
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            width: parent.width
+            height: parent.height
+            radius: 10
+            visible: _dialog.showBusyIndicator
+            color: "#C0000000"
+
+            CustomBusyIndicator {
+                anchors.centerIn: parent
+                width: 100; height: 100
+                running: _dialog.showBusyIndicator
             }
         }
     }

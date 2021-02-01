@@ -38,6 +38,7 @@ private:
 signals:
     void menuSended();
     void userInfoSended();
+    void makeOrderError();
     void error(QString);
 
     void authenticated();

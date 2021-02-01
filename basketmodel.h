@@ -16,6 +16,7 @@ public:
     explicit BasketModel(MenuModel *menus, QObject *parent = nullptr);
 
     QJsonArray order();
+    void clearBasket();
 
 private:
     MenuModel *menus;

@@ -98,7 +98,7 @@ void AppCore::makeOrder(QJsonObject info)
     obj.insert("address", info.value("address"));
     QJsonDocument doc(obj);
 
-    //если адрес новый - сохранить
+    user.setAddress(info.value("address").toObject());
 
     QNetworkReply *reply = manager.post(req, doc.toJson());
     reply->ignoreSslErrors();
@@ -116,8 +116,10 @@ void AppCore::makeOrder(QJsonObject info)
 
             html.replace("%1", obj.value("payment_token").toString());
             emit payment(html);
+            basket.clearBasket();
 
         } else {
+            emit makeOrderError();
             qDebug() << "error:" << reply->errorString();
             errorHandler(reply);
         }

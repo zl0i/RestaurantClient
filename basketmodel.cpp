@@ -8,7 +8,7 @@ BasketModel::BasketModel(MenuModel *menus, QObject *parent) : QSortFilterProxyMo
 
 QJsonArray BasketModel::order()
 {
-    QJsonArray arr;
+    QJsonArray arr;    
 
     for(int i = 0; i < this->rowCount(); i++) {
         QModelIndex index = this->index(i, 0);
@@ -20,6 +20,14 @@ QJsonArray BasketModel::order()
 
     return arr;
 
+}
+
+void BasketModel::clearBasket()
+{
+    for(int i = rowCount()-1; i >= 0; i--) {
+        QModelIndex index = this->index(i, 0);
+        setData(index, 0, MenuModel::CountRole);       
+    }
 }
 
 bool BasketModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
