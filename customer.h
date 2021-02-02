@@ -17,6 +17,7 @@ class Customer : public QObject
     Q_PROPERTY(QJsonObject address MEMBER address NOTIFY userChanged)
     Q_PROPERTY(ActiveOrder *activeOrder MEMBER activeOrder NOTIFY userChanged)
     Q_PROPERTY(OrderHistoryModel *orders MEMBER orders NOTIFY userChanged)
+    Q_PROPERTY(bool isAuthenticated READ isAuthenticated NOTIFY userChanged)
 
 public:
     explicit Customer(QObject *parent = nullptr);

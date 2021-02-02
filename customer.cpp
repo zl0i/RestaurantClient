@@ -6,10 +6,10 @@ Customer::Customer(QObject *parent) : QObject(parent)
     token = settings.value("token").toString();
     name = settings.value("name", "").toString();
     address = settings.value("address", QJsonObject {
-                                     {"street", ""},
-                                     {"house", ""},
-                                     {"flat", ""}
-                                 }).toJsonObject();
+                                 {"street", ""},
+                                 {"house", ""},
+                                 {"flat", ""}
+                             }).toJsonObject();
 
     qDebug() << "user info:" << '\n'
              << "phone:" << phone << '\n'
@@ -65,6 +65,7 @@ void Customer::clear()
     phone = "";
     token = "";
     name = "";
+    orders->clearModel();
     address = QJsonObject();
     settings.clear();
     emit userChanged();

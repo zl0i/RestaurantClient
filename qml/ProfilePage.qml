@@ -26,14 +26,34 @@ Item {
         }
     }
 
+    Column {
+        width: parent.width
+        anchors.centerIn: parent
+        visible: !user.isAuthenticated
+        spacing: 20
+        Label {
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            font { pixelSize: 18; weight: Font.Bold }
+            wrapMode: Text.WordWrap
+            text: qsTr("Войдите в профиль, чтобы увидеть историю покупок")
+        }
+        CustomButton {
+            x: parent.width/2 - width/2
+            text: qsTr("Войти")
+            onClicked: _authDialog.open()
+        }
+    }
+
     SwipeRefreshPage {
         id: _swipePage
         z: -1
         x: 20; y: 60
-        width: parent.width- 40; height: parent.height-60
+        width: parent.width-40; height: parent.height-60
         contentColor: "#5AD166"
         contentHeight: _content.height
         bottomMargin: 20
+        enabled: user.isAuthenticated
         onStartUpdate: {
             core.updateUserInfo();
         }
@@ -49,6 +69,7 @@ Item {
             id: _content
             width: parent.width
             spacing: 20
+            visible: user.isAuthenticated
             Item {
                 width: parent.width
                 height: 50
@@ -100,17 +121,34 @@ Item {
                 color: "#272727"
                 font { pixelSize: 20; bold: true}
                 text: qsTr("Предыдущие заказы:")
+                visible: _repeater.count > 0
             }
-
             Repeater {
+                id: _repeater
                 width: parent.width
                 height: parent.height - y
                 model: user.orders
+                visible: count > 0
                 clip: true
                 delegate: OrderDelegate {
                     status: "access"
                     datetime: model.datetime
                     total: model.cost
+                }
+            }
+
+            Item {
+                width: parent.width
+                height: _swipePage.height-y
+                visible: _repeater.count == 0
+                Label {
+                    width: parent.width
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font { pixelSize: 18; weight: Font.Bold }
+                    wrapMode: Text.WordWrap
+                    text: qsTr("История заказов пока что пуста")
                 }
             }
         }

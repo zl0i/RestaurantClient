@@ -135,6 +135,20 @@ Item {
                 onEditedCount: menu.setCountItem(Number(index), count)
             }
             onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
+            Item {
+                width: parent.width
+                height: parent.height
+                visible: parent.count === 0
+                Label {
+                    width: parent.width
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font { pixelSize: 18; weight: Font.Bold }
+                    wrapMode: Text.WordWrap
+                    text: qsTr("Здесь пока ничего нет\nПотяните вниз, чтобы обновить страницу")
+                }
+            }
         }
     }
 

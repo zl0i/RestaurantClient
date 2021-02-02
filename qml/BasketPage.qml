@@ -54,7 +54,21 @@ Item {
                 menu.setCountItem(String(model.id), count)
             }
             onDecrement: {
-                 menu.setCountItem(String(model.id), count)
+                menu.setCountItem(String(model.id), count)
+            }
+        }
+        Item {
+            width: parent.width
+            height: parent.height
+            visible: parent.count === 0
+            Label {
+                width: parent.width
+                height: parent.height
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font { pixelSize: 18; weight: Font.Bold }
+                wrapMode: Text.WordWrap
+                text: qsTr("Корзина пока пуста")
             }
         }
     }
@@ -67,7 +81,7 @@ Item {
         text: qsTr("Оформить заказ")
         extractText: qsTr("%1 р.").arg(basket.total)
         onClicked: {
-            if(user.isAuthenticated()) {
+            if(user.isAuthenticated) {
                 _orderDialog.open()
             } else {
                 _authDialog.open()

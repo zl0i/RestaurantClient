@@ -11,6 +11,8 @@ ApplicationWindow {
     height: 720
     title: "Azia"
 
+    font.family: "Roboto"
+
     SwipeView {
         id: _swipeView
         width: parent.width; height: parent.height-60
@@ -81,7 +83,7 @@ ApplicationWindow {
                 selected: _swipeView.currentIndex === 2
                 onClicked: {
                     _swipeView.currentIndex = 2
-                    if(!user.isAuthenticated()) {
+                    if(!user.isAuthenticated) {
                         _authDialog.open()
                     }
                 }
