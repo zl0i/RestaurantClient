@@ -9,6 +9,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QFile>
+#include <QTimer>
 
 #include "customer.h"
 #include "menumodel.h"
@@ -32,6 +33,7 @@ private:
     //const QString host = "https://62.109.28.233";
 
     QString tempPhone;
+    QTimer timer;
 
     QNetworkAccessManager manager;
 

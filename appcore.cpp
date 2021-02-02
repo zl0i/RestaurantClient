@@ -3,6 +3,12 @@
 AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu)
 {
 
+    timer.setInterval(1000*60*5);
+    connect(&timer, &QTimer::timeout, this, &AppCore::updateUserInfo);
+    if(user.isAuthenticated()) {
+        updateUserInfo();
+        timer.start();
+    }
 }
 
 void AppCore::inputByPhone(QString phone)
@@ -42,6 +48,7 @@ void AppCore::loginBySMS(QString code)
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if(reply->error() == QNetworkReply::NoError) {
             emit authenticated();
+            timer.start();
             QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
             user.parseData(doc.object());
         } else {
@@ -54,6 +61,7 @@ void AppCore::loginBySMS(QString code)
 void AppCore::logout()
 {
     user.clear();
+    timer.stop();
 }
 
 void AppCore::requestMenu()
@@ -68,13 +76,12 @@ void AppCore::requestMenu()
             QByteArray arr = reply->readAll();
             QJsonDocument doc = QJsonDocument::fromJson(arr);
             QJsonObject menuObj = doc.object();
-            menu.parseData(menuObj);
-            emit menuSended();
+            menu.parseData(menuObj);            
         } else {
-            qDebug() << "error:" << reply->errorString();
-            emit menuSended();
+            qDebug() << "error:" << reply->errorString();            
             errorHandler(reply);
         }
+        emit menuSended();
         reply->deleteLater();
     });
 }
@@ -124,6 +131,11 @@ void AppCore::makeOrder(QJsonObject info)
 
 void AppCore::updateUserInfo()
 {
+    if(!user.isAuthenticated()) {
+        emit error(tr("Сначала автризуйтесь"));
+        return;
+    }
+
     QString strUrl = host + "/azia/api/users/%1/info";
     QUrl url(strUrl.arg(user.getToken()));
 
@@ -138,11 +150,12 @@ void AppCore::updateUserInfo()
             QJsonDocument doc = QJsonDocument::fromJson(arr);
 
             user.parseData(doc.object());
-            emit userInfoSended();
+
         } else {
             qDebug() << "error:" << reply->errorString();
             errorHandler(reply);
         }
+        emit userInfoSended();
         reply->deleteLater();
     });
 }
