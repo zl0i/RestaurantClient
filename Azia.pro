@@ -21,14 +21,16 @@ HEADERS += \
     basketmodel.h \
     cachnamfactory.h \
     customer.h \
-    menumodel.h
+    menumodel.h \
+    orderhistorymodel.h
 
 SOURCES += \
     appcore.cpp \
     basketmodel.cpp \
     customer.cpp \
     main.cpp \
-    menumodel.cpp
+    menumodel.cpp \
+    orderhistorymodel.cpp
 
 RESOURCES += qml.qrc \
     icons.qrc

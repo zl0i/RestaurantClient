@@ -30,6 +30,7 @@ void Customer::parseData(QJsonObject obj)
     activeOrder->total = obj.value("activeOrder").toObject().value("total").toDouble();
     activeOrder->datetime = obj.value("activeOrder").toObject().value("datetime").toString();
     activeOrder->status = obj.value("activeOrder").toObject().value("status").toString();
+    orders->parseData(obj.value("history").toArray());
 
     emit activeOrder->activeOrderChanged();
     emit userChanged();

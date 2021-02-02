@@ -105,7 +105,7 @@ Item {
             Repeater {
                 width: parent.width
                 height: parent.height - y
-                model: user.history
+                model: user.orders
                 clip: true
                 delegate: OrderDelegate {
                     status: "access"

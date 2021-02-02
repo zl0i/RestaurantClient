@@ -5,7 +5,9 @@
 #include <QSettings>
 #include <QJsonObject>
 #include <QJsonArray>
+
 #include "ActiveOrder.h"
+#include "orderhistorymodel.h"
 
 class Customer : public QObject
 {
@@ -14,6 +16,7 @@ class Customer : public QObject
     Q_PROPERTY(QString phone MEMBER phone NOTIFY userChanged)
     Q_PROPERTY(QJsonObject address MEMBER address NOTIFY userChanged)
     Q_PROPERTY(ActiveOrder *activeOrder MEMBER activeOrder NOTIFY userChanged)
+    Q_PROPERTY(OrderHistoryModel *orders MEMBER orders NOTIFY userChanged)
 
 public:
     explicit Customer(QObject *parent = nullptr);
@@ -33,6 +36,8 @@ public:
 
 private:
     QSettings settings;
+
+    OrderHistoryModel *orders = new OrderHistoryModel();
 
     QString name;
     QString phone;
