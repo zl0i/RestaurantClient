@@ -4,8 +4,6 @@
 #include <QObject>
 #include <QModelIndex>
 #include <QStandardItemModel>
-#include <QSortFilterProxyModel>
-#include <QUrl>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QSettings>
@@ -16,15 +14,6 @@ class MenuModel : public QStandardItemModel
     Q_PROPERTY(QStringList categories MEMBER categories NOTIFY categoriesChanged)
 
 public:
-
-    typedef struct {
-        QString id;
-        QString name;
-        QString category;
-        double cost;
-        QString description;
-        QUrl imageUrl;
-    }MenuItem;
 
     typedef enum {
         IdRole = Qt::UserRole+1,

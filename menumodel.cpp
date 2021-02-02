@@ -1,7 +1,5 @@
 #include "menumodel.h"
 
-#include <QSortFilterProxyModel>
-
 MenuModel::MenuModel(QObject *parent) : QStandardItemModel(parent)
 {
     fillFromSetting();
