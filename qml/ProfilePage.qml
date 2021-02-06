@@ -101,20 +101,19 @@ Item {
             Column {
                 width: parent.width
                 spacing: 20
-                visible: !!user.activeOrder.total
+                visible: activeOrder.isEmpty
                 Label {
                     color: "#272727"
                     font { pixelSize: 20; bold: true}
                     text: qsTr("Текущий заказ:")
                 }
-                ActiveOrderDelegate {
-                    status:  user.activeOrder.status
-                    datetime: user.activeOrder.datetime
-                    total: user.activeOrder.total
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: core.openPaymentForm();
-                    }
+                OrderDelegate {
+                    enableExpand: true
+                    status:  activeOrder.status
+                    datetime: activeOrder.datetime
+                    total: activeOrder.total
+                    menu: activeOrder
+                    onPayment: core.openPaymentForm()
                 }
             }
             Label {
@@ -131,7 +130,7 @@ Item {
                 visible: count > 0
                 clip: true
                 delegate: OrderDelegate {
-                    status: "access"
+                    status: model.status
                     datetime: model.datetime
                     total: model.cost
                 }

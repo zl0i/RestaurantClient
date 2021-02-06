@@ -6,10 +6,9 @@
         <file>icons/stock-black.svg</file>
         <file>icons/arrowBack-black.svg</file>
         <file>icons/exit-black.svg</file>
-        <file>icons/order-access.svg</file>
-        <file>icons/order-canceled.svg</file>
-        <file>icons/order-processing.svg</file>
         <file>icons/payment-page.html</file>
         <file>icons/logout-black.svg</file>
+        <file>icons/box-white.svg</file>
+        <file>icons/arrow-down-white.svg</file>
     </qresource>
 </RCC>

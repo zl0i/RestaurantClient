@@ -6,7 +6,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "ActiveOrder.h"
+//#include "activeorder.h"
 #include "orderhistorymodel.h"
 
 class Customer : public QObject
@@ -14,8 +14,7 @@ class Customer : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name MEMBER name NOTIFY userChanged)
     Q_PROPERTY(QString phone MEMBER phone NOTIFY userChanged)
-    Q_PROPERTY(QJsonObject address MEMBER address NOTIFY userChanged)
-    Q_PROPERTY(ActiveOrder *activeOrder MEMBER activeOrder NOTIFY userChanged)
+    Q_PROPERTY(QJsonObject address MEMBER address NOTIFY userChanged)   
     Q_PROPERTY(OrderHistoryModel *orders MEMBER orders NOTIFY userChanged)
     Q_PROPERTY(bool isAuthenticated READ isAuthenticated NOTIFY userChanged)
 
@@ -44,8 +43,8 @@ private:
     QString phone;
     QJsonObject address;
     QString token;
+    QString paymentToken;
 
-    ActiveOrder *activeOrder = new ActiveOrder();
 public slots:
 
     bool isAuthenticated();

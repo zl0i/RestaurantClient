@@ -2,6 +2,7 @@
 
 Customer::Customer(QObject *parent) : QObject(parent)
 {
+
     phone = settings.value("phone", "").toString();
     token = settings.value("token").toString();
     name = settings.value("name", "").toString();
@@ -26,13 +27,8 @@ void Customer::parseData(QJsonObject obj)
 {
     phone = obj.value("phone").toString();
     token = obj.value("token").toString();
-    address = obj.value("address").toObject();
-    activeOrder->total = obj.value("activeOrder").toObject().value("total").toDouble();
-    activeOrder->datetime = obj.value("activeOrder").toObject().value("datetime").toString();
-    activeOrder->status = obj.value("activeOrder").toObject().value("status").toString();
-    orders->parseData(obj.value("history").toArray());
-
-    emit activeOrder->activeOrderChanged();
+    address = obj.value("address").toObject();    
+    orders->parseData(obj.value("history").toArray());    
     emit userChanged();
     save();
 }
@@ -73,10 +69,10 @@ void Customer::clear()
 
 void Customer::setPaymentToken(QString ptoken)
 {
-    activeOrder->payment_token = ptoken;
+    paymentToken = ptoken;
 }
 
 QString Customer::getPaymentToken()
 {
-    return activeOrder->payment_token;
+    return paymentToken;
 }

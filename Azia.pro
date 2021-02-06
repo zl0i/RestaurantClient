@@ -16,7 +16,7 @@ CONFIG += c++11
 
 
 HEADERS += \
-    ActiveOrder.h \
+    activeorder.h \
     appcore.h \
     basketmodel.h \
     cachnamfactory.h \
@@ -25,6 +25,7 @@ HEADERS += \
     orderhistorymodel.h
 
 SOURCES += \
+    activeorder.cpp \
     appcore.cpp \
     basketmodel.cpp \
     customer.cpp \

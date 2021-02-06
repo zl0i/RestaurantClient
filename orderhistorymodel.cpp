@@ -15,10 +15,11 @@ void OrderHistoryModel::parseData(QJsonArray arr)
         QJsonObject itemJson = arr.at(i).toObject();
         QModelIndex index = this->index(i, 0);
         setData(index, itemJson.value("id").toString(), IdRole);
+        setData(index, itemJson.value("status").toString(), StatusRole);
         setData(index, itemJson.value("datetime").toString(), DatetimeRole);
         setData(index, itemJson.value("cost"), CostRole);
     }
-    emit dataChanged(index(0,0), index(arr.size(), 0));
+    emit dataChanged(index(0,0), index(arr.size()-1, 0));
 }
 
 void OrderHistoryModel::clearModel()
@@ -31,6 +32,7 @@ QHash<int, QByteArray> OrderHistoryModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[IdRole] = "id";
+    roles[StatusRole] = "status";
     roles[DatetimeRole] = "datetime";
     roles[CostRole] = "cost";
     return roles;

@@ -20,6 +20,7 @@ public:
     typedef enum {
         IdRole = Qt::UserRole+1,
         DatetimeRole,
+        StatusRole,
         CostRole
     } OrderRoles;
 

@@ -1,6 +1,6 @@
 #include "appcore.h"
 
-AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu)
+AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu), activeOrder(&menu)
 {
 
     timer.setInterval(1000*60*5);
@@ -148,7 +148,7 @@ void AppCore::updateUserInfo()
         if(reply->error() == QNetworkReply::NoError) {
             QByteArray arr = reply->readAll();
             QJsonDocument doc = QJsonDocument::fromJson(arr);
-
+            activeOrder.parseData(doc.object().value("activeOrder").toObject());
             user.parseData(doc.object());
 
         } else {

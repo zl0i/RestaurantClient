@@ -14,6 +14,7 @@
 #include "customer.h"
 #include "menumodel.h"
 #include "basketmodel.h"
+#include "activeorder.h"
 
 class AppCore : public QObject
 {
@@ -26,6 +27,7 @@ public:
     Customer user;
     MenuModel menu;
     BasketModel basket;
+    ActiveOrder activeOrder;
 
 private:   
 

@@ -20,10 +20,9 @@
         <file>qml/Components/AddBasketItem.qml</file>
         <file>qml/Components/OrderDialog.qml</file>
         <file>qml/Components/InputAddressField.qml</file>
-        <file>qml/Components/OrderDelegate.qml</file>
         <file>qml/Components/EventDelegate.qml</file>
         <file>qml/Components/SwipeRefreshPage.qml</file>
-        <file>qml/Components/ActiveOrderDelegate.qml</file>
+        <file>qml/Components/OrderDelegate.qml</file>
         <file>qml/Components/InputCode.qml</file>
         <file>qml/Components/ErrorPopup.qml</file>
         <file>qml/Components/PaymentPage.qml</file>
