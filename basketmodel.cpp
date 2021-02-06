@@ -17,9 +17,7 @@ QJsonArray BasketModel::order()
         item.insert("count", data(index, MenuModel::CountRole).toJsonValue());
         arr.append(item);
     }
-
     return arr;
-
 }
 
 void BasketModel::clearBasket()

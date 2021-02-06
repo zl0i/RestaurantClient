@@ -47,7 +47,7 @@ void AppCore::loginBySMS(QString code)
     reply->ignoreSslErrors();
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if(reply->error() == QNetworkReply::NoError) {
-            emit authenticated();            
+            emit authenticated();
             QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
             user.parseData(doc.object());
             timer.start();
@@ -76,9 +76,9 @@ void AppCore::requestMenu()
             QByteArray arr = reply->readAll();
             QJsonDocument doc = QJsonDocument::fromJson(arr);
             QJsonObject menuObj = doc.object();
-            menu.parseData(menuObj);            
+            menu.parseData(menuObj);
         } else {
-            qDebug() << "error:" << reply->errorString();            
+            qDebug() << "error:" << reply->errorString();
             errorHandler(reply);
         }
         emit menuSended();
@@ -136,12 +136,16 @@ void AppCore::updateUserInfo()
         return;
     }
 
-    QString strUrl = host + "/azia/api/users/%1/info";
-    QUrl url(strUrl.arg(user.getToken()));
+    QUrl url(host + "/azia/api/users/info");
+    QJsonObject obj;
+    obj.insert("phone", user.getPhone());
+    obj.insert("token", user.getToken());
+    QJsonDocument doc(obj);
+
 
     QNetworkRequest req(url);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkReply *reply = manager.get(req);
+    QNetworkReply *reply = manager.post(req, doc.toJson());
     reply->ignoreSslErrors();
 
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
