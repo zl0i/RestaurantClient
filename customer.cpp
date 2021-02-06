@@ -6,6 +6,7 @@ Customer::Customer(QObject *parent) : QObject(parent)
     phone = settings.value("phone", "").toString();
     token = settings.value("token").toString();
     name = settings.value("name", "").toString();
+    paymentToken = settings.value("payment_token", "").toString();
     address = settings.value("address", QJsonObject {
                                  {"street", ""},
                                  {"house", ""},
@@ -54,6 +55,7 @@ void Customer::save()
     settings.setValue("phone", phone);
     settings.setValue("token", token);
     settings.setValue("address", address);
+    settings.setValue("payment_token", paymentToken);
 }
 
 void Customer::clear()
@@ -61,9 +63,10 @@ void Customer::clear()
     phone = "";
     token = "";
     name = "";
+    paymentToken = "";
     orders->clearModel();
     address = QJsonObject();
-    settings.clear();
+    save();
     emit userChanged();
 }
 
