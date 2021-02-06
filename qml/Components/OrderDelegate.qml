@@ -11,7 +11,7 @@ Rectangle {
     property bool enableExpand: false
     property bool expand: false
     property var menu
-    property string status
+    property string statusOrder: ""
     property var datetime
     property var total: 0
 
@@ -19,7 +19,7 @@ Rectangle {
     signal cancelOrder()
 
     function getTextByStatus() {
-        switch (status) {
+        switch (statusOrder) {
         case 'wait_payment':
             return qsTr("Ожидает оплаты")
         case 'accepted':
@@ -37,7 +37,7 @@ Rectangle {
     }
 
     function isCancelldOrder() {
-        switch (status) {
+        switch (statusOrder) {
         case 'wait_payment':
         case 'accepted':
         case 'coocking':
@@ -47,7 +47,7 @@ Rectangle {
     }
 
     function getColorByStatus() {
-        switch (status) {
+        switch (statusOrder) {
         case 'wait_payment':
         case 'accepted':
         case 'coocking':
@@ -85,7 +85,7 @@ Rectangle {
             Label {
                 font.pixelSize: 16
                 color: "#494949"
-                text: _delegate.status == "success" ||  _delegate.status == "canseled" ? new Date(_delegate.datetime).toLocaleString(Qt.locale(), "dd.MM.yyyy") : getTextByStatus()
+                text: _delegate.statusOrder == "success" ||  _delegate.statusOrder == "canseled" ? new Date(_delegate.datetime).toLocaleString(Qt.locale(), "dd.MM.yyyy") : getTextByStatus()
             }
             Label {
                 font.pixelSize: 16
@@ -166,7 +166,7 @@ Rectangle {
             Label {
                 font { pixelSize: 20; weight: Font.Bold }
                 color: "#6FEE6B"
-                visible: _delegate.status == "wait_payment"
+                visible: _delegate.statusOrder == "wait_payment"
                 text: qsTr("Оплатить")
                 MouseArea {
                     width: parent.width

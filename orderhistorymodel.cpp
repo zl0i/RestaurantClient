@@ -7,7 +7,7 @@ OrderHistoryModel::OrderHistoryModel(QObject *parent) : QStandardItemModel(paren
 
 void OrderHistoryModel::parseData(QJsonArray arr)
 {
-    clearModel();
+    clear();
 
     insertColumn(0);
     insertRows(0, arr.size());
@@ -19,7 +19,7 @@ void OrderHistoryModel::parseData(QJsonArray arr)
         setData(index, itemJson.value("datetime").toString(), DatetimeRole);
         setData(index, itemJson.value("cost"), CostRole);
     }
-    emit dataChanged(index(0,0), index(arr.size()-1, 0));
+    emit dataChanged(index(0,0), index(rowCount()-1, 0));
 }
 
 void OrderHistoryModel::clearModel()

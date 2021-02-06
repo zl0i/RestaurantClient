@@ -109,7 +109,7 @@ Item {
                 }
                 OrderDelegate {
                     enableExpand: true
-                    status:  activeOrder.status
+                    statusOrder:  activeOrder.status
                     datetime: activeOrder.datetime
                     total: activeOrder.total
                     menu: activeOrder
@@ -119,20 +119,22 @@ Item {
             Label {
                 color: "#272727"
                 font { pixelSize: 20; bold: true}
-                text: qsTr("Предыдущие заказы:")
                 visible: _repeater.count > 0
+                text: qsTr("Предыдущие заказы:")
             }
-            Repeater {
-                id: _repeater
+            Column {
                 width: parent.width
-                height: parent.height - y
-                model: user.orders
-                visible: count > 0
-                clip: true
-                delegate: OrderDelegate {
-                    status: model.status
-                    datetime: model.datetime
-                    total: model.cost
+                spacing: 10
+                Repeater {
+                    id: _repeater
+                    model: user.orders
+                    visible: count > 0
+                    clip: true
+                    delegate: OrderDelegate {
+                        statusOrder: model.status
+                        datetime: model.datetime
+                        total: model.cost
+                    }
                 }
             }
 
