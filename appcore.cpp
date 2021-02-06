@@ -47,10 +47,10 @@ void AppCore::loginBySMS(QString code)
     reply->ignoreSslErrors();
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         if(reply->error() == QNetworkReply::NoError) {
-            emit authenticated();
-            timer.start();
+            emit authenticated();            
             QJsonDocument doc = QJsonDocument::fromJson(reply->readAll());
             user.parseData(doc.object());
+            timer.start();
         } else {
             qDebug() << "error:" << reply->errorString();
             emit error(reply->errorString());
@@ -89,7 +89,7 @@ void AppCore::requestMenu()
 void AppCore::makeOrder(QJsonObject info)
 {
     if(!user.isAuthenticated()) {
-        emit error(tr("Сначала автризуйтесь"));
+        emit error(tr("Сначала авторизуйтесь"));
         return;
     }
 
@@ -132,7 +132,7 @@ void AppCore::makeOrder(QJsonObject info)
 void AppCore::updateUserInfo()
 {
     if(!user.isAuthenticated()) {
-        emit error(tr("Сначала автризуйтесь"));
+        emit error(tr("Сначала авторизуйтесь"));
         return;
     }
 
