@@ -8,6 +8,7 @@
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_QPA_NO_TEXT_HANDLES", "1");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setOrganizationName("Azia");
     //QCoreApplication::setOrganizationDomain("mysoft.com"); //needed ios

@@ -10,12 +10,12 @@ TextField {
     leftPadding: 10
     bottomPadding: 5
     font.pixelSize: 16
+    placeholderTextColor: "#00000000"
 
     Label {
         font.pixelSize: 12
         text: _field.placeholderText
     }
-    placeholderTextColor: "#00000000"   
 
     onFocusChanged:  {
         if(focus) {

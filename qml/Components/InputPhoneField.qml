@@ -10,31 +10,20 @@ InputText {
     horizontalAlignment: Text.AlignHCenter
     placeholderText: qsTr("Номер телефона")
 
-    Binding {
-        target: _phoneNumber
-        property: "cursorPosition"
-        value: _phoneNumber.cursorPosition < 4 ? 4 : _phoneNumber.cursorPosition
-        restoreMode: Binding.RestoreBindingOrValue
-        delayed: true
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onPressed: {
-            var pos = _phoneNumber.positionAt(mouseX, mouseY, TextInput.CursorBetweenCharacters)
-            var posText = _phoneNumber.getPositionCursorByText()
-            if(_phoneNumber.focus) {
-                if(pos < 4) {
-                    _phoneNumber.cursorPosition = 4
-                } else if(pos > posText) {
-                    _phoneNumber.cursorPosition = posText
-                } else {
-                    _phoneNumber.cursorPosition = pos
-                }
-            } else {
-                _phoneNumber.forceActiveFocus(Qt.MouseFocusReason)
+    onCursorPositionChanged: {
+        var pos = text.length
+        var posText = _phoneNumber.getPositionCursorByText()
+        if(_phoneNumber.focus) {
+            if(pos < 4) {
+                _phoneNumber.cursorPosition = 4
+            } else if(pos > posText) {
                 _phoneNumber.cursorPosition = posText
+            } else {
+                _phoneNumber.cursorPosition = pos
             }
+        } else {
+             _phoneNumber.forceActiveFocus()
+            _phoneNumber.cursorPosition = posText
         }
     }
 
