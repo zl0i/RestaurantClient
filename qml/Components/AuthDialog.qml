@@ -55,11 +55,18 @@ Dialog {
                 width: _swipe.width
                 height: _swipe.height
 
-                function checkAndSendSms() {
+                function verify() {
                     if(_phoneNumber.acceptableInput) {
                         _swipe.currentIndex++
                         _timer.start()
                         _codeInput.forceActiveFocus()
+                        return true
+                    }
+                    return false
+                }
+
+                function nextPage() {
+                    if(_phoneInputPage.verify()) {
                         _dialog.inputPhone(_phoneNumber.getClearPhoneNumber())
                     } else {
                         _errorPopup.show(qsTr("Введите корректный номер телефона"))
@@ -71,13 +78,13 @@ Dialog {
                     y: 20
                     width: parent.width
                     text: _dialog.phone
-                    onAccepted: _phoneInputPage.checkAndSendSms()
+                    onAccepted: _phoneInputPage.nextPage()
                 }
                 CustomButton {
                     x: parent.width/2 - width/2
                     y: parent.height - height - 15
                     text: qsTr("Далее")
-                    onClicked: _phoneInputPage.checkAndSendSms()
+                    onClicked: _phoneInputPage.nextPage()
                 }
             }
             Item {
@@ -91,7 +98,7 @@ Dialog {
                 InputCode {
                     id: _codeInput
                     x: parent.width/2 - width/2
-                    font { pixelSize: 24; bold: true }                    
+                    font { pixelSize: 24; bold: true }
                     onAccepted: _dialog.inputCode(_codeInput.code)
                 }
 
@@ -137,6 +144,5 @@ Dialog {
                 }
             }
         }
-
     }
 }
