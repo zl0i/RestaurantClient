@@ -29,5 +29,6 @@
         <file>qml/Components/LogoutDialog.qml</file>
         <file>qml/Components/CustomBusyIndicator.qml</file>
         <file>qml/Components/InputPhoneField.qml</file>
+        <file>qml/Components/SelectShopPopup.qml</file>
     </qresource>
 </RCC>

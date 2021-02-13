@@ -9,7 +9,7 @@ Item {
     id: _menuPage
 
     Rectangle {
-        width: parent.width; height: 85
+        width: parent.width; height: 75
         layer.enabled: true
         layer.effect: DropShadow {
             radius: 8
@@ -18,10 +18,21 @@ Item {
             verticalOffset: 4
         }
 
-        SearchItem {
-            x: 20; y: 20
-            width: parent.width-40; height: 30
-            onTextChanged: menu.setFilterRegExp(new RegExp(text, 'i'))
+        SelectShopPopup {
+            x: parent.width/2-width/2; y: 10
+            shopName: "Азия (Тикси-1)"
+            shopModel: [
+                {
+                    "id": "546465",
+                    "name": "Азия (Тикси-1)",
+                    "address": "Гагарина 8"
+                },
+                {
+                    "id": "546466",
+                    "name": "Азия (Тикси-3)",
+                    "address": "Гагарина 9"
+                }
+            ]
         }
 
         ListView {
