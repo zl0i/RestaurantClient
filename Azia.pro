@@ -22,7 +22,9 @@ HEADERS += \
     cachnamfactory.h \
     customer.h \
     menumodel.h \
-    orderhistorymodel.h
+    orderhistorymodel.h \
+    shop.h \
+    shopmodel.h
 
 SOURCES += \
     activeorder.cpp \
@@ -31,7 +33,9 @@ SOURCES += \
     customer.cpp \
     main.cpp \
     menumodel.cpp \
-    orderhistorymodel.cpp
+    orderhistorymodel.cpp \
+    shop.cpp \
+    shopmodel.cpp
 
 RESOURCES += qml.qrc \
     icons.qrc
@@ -63,3 +67,5 @@ android {
 
     ANDROID_ABIS = arm64-v8a x86
 }
+
+DISTFILES +=

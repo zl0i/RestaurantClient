@@ -1,9 +1,11 @@
 #include "basketmodel.h"
 
-BasketModel::BasketModel(MenuModel *menus, QObject *parent) : QSortFilterProxyModel(parent)
-{
-    setSourceModel(menus);
-    connect(menus, &MenuModel::countChanged, this, &BasketModel::calcTotal);
+BasketModel::BasketModel(QObject *parent) : QSortFilterProxyModel(parent)
+{   
+    connect(this, &QSortFilterProxyModel::sourceModelChanged, [=]() {
+        if(sourceModel())
+            connect(qobject_cast<MenuModel*>(sourceModel()), &MenuModel::countChanged, this, &BasketModel::calcTotal);
+    });
 }
 
 QJsonArray BasketModel::order()

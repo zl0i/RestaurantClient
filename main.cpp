@@ -23,10 +23,10 @@ int main(int argc, char *argv[])
 
     AppCore core;
     engine.rootContext()->setContextProperty("core", &core);
-    engine.rootContext()->setContextProperty("user", &core.user);
-    engine.rootContext()->setContextProperty("menu", &core.menu);
+    engine.rootContext()->setContextProperty("user", &core.user);    
     engine.rootContext()->setContextProperty("basket", &core.basket);
     engine.rootContext()->setContextProperty("activeOrder", &core.activeOrder);
+    engine.rootContext()->setContextProperty("shopsModel", &core.shopsModel);
 
     const QUrl url(QStringLiteral("qrc:/qml/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

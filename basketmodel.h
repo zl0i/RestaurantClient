@@ -13,7 +13,7 @@ class BasketModel : public QSortFilterProxyModel
     Q_OBJECT
     Q_PROPERTY(int total READ getTotal NOTIFY totalChanged)
 public:
-    explicit BasketModel(MenuModel *menus, QObject *parent = nullptr);
+    explicit BasketModel(QObject *parent = nullptr);
 
     QJsonArray order();
     void clearBasket();

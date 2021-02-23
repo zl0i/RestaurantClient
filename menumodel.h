@@ -53,7 +53,6 @@ public slots:
 signals:
 
     void countChanged();
-
     void categoriesChanged();
 };
 

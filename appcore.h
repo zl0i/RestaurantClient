@@ -15,19 +15,21 @@
 #include "menumodel.h"
 #include "basketmodel.h"
 #include "activeorder.h"
+#include "shopmodel.h"
 
 class AppCore : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString host MEMBER host CONSTANT)    
+    Q_PROPERTY(QString host MEMBER host CONSTANT)
+    Q_PROPERTY(Shop *currentShop MEMBER currentShop NOTIFY currentShopChanged)
 
 public:
     explicit AppCore(QObject *parent = nullptr);
 
-    Customer user;
-    MenuModel menu;
+    Customer user;    
     BasketModel basket;
     ActiveOrder activeOrder;
+    ShopModel shopsModel;
 
 private:   
 
@@ -39,8 +41,10 @@ private:
 
     QNetworkAccessManager manager;
 
+    Shop *currentShop;
+
 signals:
-    void menuSended();
+    void shopsSended();
     void userInfoSended();
     void makeOrderError();
     void error(QString);
@@ -48,12 +52,16 @@ signals:
     void authenticated();
     void payment(QString);
 
+    void shopModelChanged();
+    void currentShopChanged();
+
 public slots:
     void inputByPhone(QString);
     void loginBySMS(QString);    
     void logout();
 
-    void requestMenu();
+    void requestShops();
+    void selectShop(QString id);
     void makeOrder(QJsonObject info);
     void updateUserInfo();
     void openPaymentForm();

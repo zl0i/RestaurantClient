@@ -20,19 +20,9 @@ Item {
 
         SelectShopPopup {
             x: parent.width/2-width/2; y: 10
-            shopName: "Азия (Тикси-1)"
-            shopModel: [
-                {
-                    "id": "546465",
-                    "name": "Азия (Тикси-1)",
-                    "address": "Гагарина 8"
-                },
-                {
-                    "id": "546466",
-                    "name": "Азия (Тикси-3)",
-                    "address": "Гагарина 9"
-                }
-            ]
+            shopName: core.currentShop.name
+            shopModel: shopsModel
+            onSelectShop: core.selectShop(id)
         }
 
         ListView {
@@ -42,7 +32,7 @@ Item {
             clip: true
             orientation: Qt.Horizontal
             spacing: 10
-            model: menu.categories
+            model: core.currentShop.menu.categories
 
             Item {
                 x: _categoriesView.currentItem.x - _categoriesView.contentX
@@ -78,7 +68,7 @@ Item {
                 MouseArea {
                     width: parent.width; height: parent.height
                     onClicked: {
-                        _menuView.positionViewAtIndex(menu.findIndexByCategory(_delegate.text), ListView.Beginning)
+                        _menuView.positionViewAtIndex(core.currentShop.menu.findIndexByCategory(_delegate.text), ListView.Beginning)
                         _categoriesView.currentIndex = index
                         _categoriesView.positionViewAtIndex(index, ListView.Center)
                     }
@@ -93,11 +83,11 @@ Item {
         width: parent.width - 40
         height: parent.height - y
         contentColor: "#5AD166"
-        onStartUpdate: core.requestMenu()
+        onStartUpdate: core.requestShops()
 
         Connections {
             target: core
-            function onMenuSended() {
+            function onShopsSended() {
                 _menuContent.stopRunningUpdate();
             }
         }
@@ -107,7 +97,7 @@ Item {
             width: parent.width
             height: parent.height
             bottomMargin: 20
-            model: menu
+            model: core.currentShop.menu
             spacing: -1
 
             boundsMovement: Flickable.StopAtBounds
@@ -118,8 +108,8 @@ Item {
             section.delegate: Label {
                 width: _menuView.width; height: 60
                 verticalAlignment: Text.AlignVCenter
-                text: section
                 font { pixelSize: 18; bold: true }
+                text: section
             }
 
             delegate: MenuDelegate {
@@ -143,7 +133,7 @@ Item {
                     _menuInfo.info = model.description
                     _menuInfo.open()
                 }
-                onEditedCount: menu.setCountItem(Number(index), count)
+                onEditedCount: core.currentShop.menu.setCountItem(Number(index), count)
             }
             onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
             Item {

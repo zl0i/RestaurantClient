@@ -26,8 +26,9 @@ public:
         TotalRole
     } ActiveOrderRoles;
 
-    explicit ActiveOrder(MenuModel *menus, QObject *parent = nullptr);
+    explicit ActiveOrder(QObject *parent = nullptr);
 
+    void setMenu(MenuModel *menu);
     void parseData(QJsonObject);
     bool isEmpty() { return rowCount() > 0; }
 
@@ -39,7 +40,7 @@ private:
 
     QHash<int, QByteArray> roleNames() const;
 
-    const MenuModel menu;
+    MenuModel *menu;
 
     QModelIndex getIndexMenuItemById(QString);
 

@@ -19,7 +19,7 @@ Item {
             verticalAlignment: Text.AlignVCenter
             font { pixelSize: 20; weight: Font.Bold }
             color: "#393939"
-            text: _shopPopup.shopName
+            text: _shopPopup.shopName ? _shopPopup.shopName : qsTr("Выберите кафе")
         }
         Image {
             y: 11
@@ -37,7 +37,7 @@ Item {
         id: _popup
         x: 30; y: parent.height+5
         width: parent.width-60
-        height: _shopView.height+20
+        height: _shopView.height+30
         modal: true; dim: true
         padding: 0
         topPadding: 7
@@ -76,21 +76,21 @@ Item {
                         x: 25; y: 7
                         font { pixelSize: 20; weight: Font.Bold }
                         color: "#393939"
-                        text: modelData.name
+                        text: model.name
                     }
                     Label {
                         x: 25; y: 30
                         font.pixelSize: 12
                         opacity: 0.5
                         color: "#000000"
-                        text: modelData.address
+                        text: model.address
                     }
 
                     MouseArea {
                         width: parent.width
                         height: parent.height
                         onClicked: {
-                            _shopPopup.selectShop(modelData.id)
+                            _shopPopup.selectShop(model.id)
                             _popup.close()
                         }
                     }

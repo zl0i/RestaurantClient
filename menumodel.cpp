@@ -8,11 +8,11 @@ MenuModel::MenuModel(QObject *parent) : QStandardItemModel(parent)
 void MenuModel::parseData(QJsonObject obj)
 {
     categories.clear();
-    QJsonArray cat = obj.value("categories").toArray();
+    QJsonArray cat = obj.value("category").toArray();
     for(int i = 0; i < cat.size(); i++) {
         categories.append(cat.at(i).toString());
     }
-    emit categoriesChanged();
+    emit categoriesChanged();    
 
     clearModel();
     QJsonArray menu = obj.value("menu").toArray();
@@ -23,7 +23,7 @@ void MenuModel::parseData(QJsonObject obj)
         QModelIndex index = this->index(i, 0);
         setData(index, itemJson.value("_id").toString(), IdRole);
         setData(index, itemJson.value("name").toString(), NameRole);
-        setData(index, itemJson.value("category"), CategoryRole);
+        setData(index, categories.at(itemJson.value("category_index").toInt()), CategoryRole);
         setData(index, itemJson.value("image"), ImageRole);
         setData(index, itemJson.value("description"), DescriptionRole);
         setData(index, itemJson.value("cost"), CostRole);

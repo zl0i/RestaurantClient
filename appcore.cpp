@@ -1,8 +1,8 @@
 #include "appcore.h"
 
-AppCore::AppCore(QObject *parent) : QObject(parent), basket(&menu), activeOrder(&menu)
+AppCore::AppCore(QObject *parent) : QObject(parent)
 {
-
+    requestShops();
     timer.setInterval(1000*60*5);
     connect(&timer, &QTimer::timeout, this, &AppCore::updateUserInfo);
     if(user.isAuthenticated()) {
@@ -64,26 +64,40 @@ void AppCore::logout()
     timer.stop();
 }
 
-void AppCore::requestMenu()
+void AppCore::requestShops()
 {
-    qDebug() << "requestMenu";
+    qDebug() << "requestShops";
 
-    QNetworkRequest req(QUrl(host + "/azia/api/menu"));
+    QUrl url(host + "/azia/api/shops");
+
+    QNetworkRequest req(url);
     QNetworkReply *reply = manager.get(req);
     reply->ignoreSslErrors();
-    QObject::connect(reply, &QNetworkReply::finished, [&]() {
-        if(reply->error() == QNetworkReply::NoError) {
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        if(reply->error() == QNetworkReply::NoError) {            
             QByteArray arr = reply->readAll();
-            QJsonDocument doc = QJsonDocument::fromJson(arr);
-            QJsonObject menuObj = doc.object();
-            menu.parseData(menuObj);
+            QJsonDocument doc = QJsonDocument::fromJson(arr);            
+            QJsonArray shopsArr = doc.array();
+            shopsModel.parseData(shopsArr);
+            currentShop = shopsModel.shopByIndex(0);
+            emit currentShopChanged();
         } else {
             qDebug() << "error:" << reply->errorString();
             errorHandler(reply);
         }
-        emit menuSended();
+        emit shopsSended();
         reply->deleteLater();
     });
+}
+
+void AppCore::selectShop(QString id)
+{
+    Shop *shop = shopsModel.shopById(id);
+    if(shop) {
+        basket.setSourceModel(shop->menu);
+        currentShop = shop;
+        emit currentShopChanged();
+    }
 }
 
 void AppCore::makeOrder(QJsonObject info)
@@ -97,6 +111,7 @@ void AppCore::makeOrder(QJsonObject info)
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     QJsonObject obj;
+    obj.insert("shop_id", currentShop->id);
     obj.insert("token", user.getToken());
     obj.insert("menu", basket.order());
     obj.insert("phoneUser", user.getPhone());
@@ -113,7 +128,6 @@ void AppCore::makeOrder(QJsonObject info)
         if(reply->error() == QNetworkReply::NoError) {
             QByteArray arr = reply->readAll();
             QJsonDocument doc = QJsonDocument::fromJson(arr);
-
             QJsonObject obj = doc.object();
             QString token = obj.value("payment_token").toString();
 

@@ -1,8 +1,13 @@
 #include "activeorder.h"
 
-ActiveOrder::ActiveOrder(MenuModel *menus, QObject *parent) : QStandardItemModel(parent), menu(menus)
+ActiveOrder::ActiveOrder(QObject *parent) : QStandardItemModel(parent)
 {
 
+}
+
+void ActiveOrder::setMenu(MenuModel *menu)
+{
+    this->menu = menu;
 }
 
 void ActiveOrder::parseData(QJsonObject obj)
@@ -22,8 +27,8 @@ void ActiveOrder::parseData(QJsonObject obj)
         QModelIndex menuIndex = getIndexMenuItemById(item.value("id").toString());
         QModelIndex index = this->index(i, 0);
         setData(index, item.value("id"), IdRole);
-        setData(index, menu.data(menuIndex, MenuModel::NameRole), NameRole);
-        setData(index, menu.data(menuIndex, MenuModel::CostRole), CostRole);
+        setData(index, menu->data(menuIndex, MenuModel::NameRole), NameRole);
+        setData(index, menu->data(menuIndex, MenuModel::CostRole), CostRole);
         setData(index, item.value("count"), CountRole);
         setData(index, data(index, CountRole).toInt() * data(index, CostRole).toDouble(), TotalRole);
     }
@@ -44,9 +49,9 @@ QHash<int, QByteArray> ActiveOrder::roleNames() const
 
 QModelIndex ActiveOrder::getIndexMenuItemById(QString id)
 {
-    for(int i = 0; i < menu.rowCount(); i++) {
-        QModelIndex index = menu.index(i, 0);
-        if(menu.data(index, MenuModel::IdRole).toString() == id) {
+    for(int i = 0; i < menu->rowCount(); i++) {
+        QModelIndex index = menu->index(i, 0);
+        if(menu->data(index, MenuModel::IdRole).toString() == id) {
             return index;
         }
     }
