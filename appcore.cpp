@@ -74,13 +74,16 @@ void AppCore::requestShops()
     QNetworkReply *reply = manager.get(req);
     reply->ignoreSslErrors();
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
-        if(reply->error() == QNetworkReply::NoError) {            
+        if(reply->error() == QNetworkReply::NoError) {
             QByteArray arr = reply->readAll();
-            QJsonDocument doc = QJsonDocument::fromJson(arr);            
+            QJsonDocument doc = QJsonDocument::fromJson(arr);
             QJsonArray shopsArr = doc.array();
             shopsModel.parseData(shopsArr);
-            currentShop = shopsModel.shopByIndex(0);
-            emit currentShopChanged();
+            if(!currentShop) {
+                currentShop = shopsModel.shopByIndex(0);
+                basket.setSourceModel(currentShop->menu);
+                emit currentShopChanged();
+            }
         } else {
             qDebug() << "error:" << reply->errorString();
             errorHandler(reply);
