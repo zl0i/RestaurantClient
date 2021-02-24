@@ -47,8 +47,8 @@ void ShopModel::parseData(QJsonArray arr)
         shop->name = obj.value("name").toString();
         shop->address = obj.value("address").toString();
         shop->status = obj.value("status").toString();
-        shop->minCostDelivery = obj.value("minCostDelivery").toInt();
-        shop->deliveryCityCost = obj.value("deliveryCityCost").toObject();
+        shop->minCostDelivery = obj.value("min_cost_delivery").toInt();
+        shop->deliveryCityCost = obj.value("delivery_city_cost").toObject();
         MenuModel *menu = new MenuModel();
         menu->parseData(obj.value("items").toObject());
         shop->menu = menu;
