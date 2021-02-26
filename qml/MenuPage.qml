@@ -20,7 +20,7 @@ Item {
 
         SelectShopPopup {
             x: parent.width/2-width/2; y: 10
-            shopName: core.currentShop.name
+            shopName: core.currentShop ? core.currentShop.name : ""
             shopModel: shopsModel
             onSelectShop: core.selectShop(id)
         }
@@ -32,12 +32,12 @@ Item {
             clip: true
             orientation: Qt.Horizontal
             spacing: 10
-            model: core.currentShop.menu.categories
+            model: core.currentShop ? core.currentShop.menu.categories : []
 
             Item {
-                x: _categoriesView.currentItem.x - _categoriesView.contentX
-                width:  _categoriesView.currentItem.width
-                height: _categoriesView.currentItem.height
+                x: _categoriesView.currentItem ? _categoriesView.currentItem.x - _categoriesView.contentX : 0
+                width: _categoriesView.currentItem ? _categoriesView.currentItem.width : 0
+                height: _categoriesView.currentItem ? _categoriesView.currentItem.height : 0
                 Rectangle {
                     id: _highlightItem
                     y: parent.height
@@ -97,7 +97,7 @@ Item {
             width: parent.width
             height: parent.height
             bottomMargin: 20
-            model: core.currentShop.menu
+            model: core.currentShop ? core.currentShop.menu : []
             spacing: -1
 
             boundsMovement: Flickable.StopAtBounds
