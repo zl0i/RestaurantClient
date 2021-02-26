@@ -46,7 +46,7 @@ Dialog {
                 onClicked: _dialog.close()
             }
             CustomButton {
-                color: "#EF6A6A"
+                color: "#949494"
                 text: qsTr("Выйти")
                 onClicked: {
                     _dialog.close()
