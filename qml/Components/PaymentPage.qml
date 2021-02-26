@@ -3,22 +3,30 @@ import QtQuick.Controls 2.15
 import QtWebView 1.11
 
 Item {
-    id: _page
-    anchors.fill: parent
-    visible: false
+    id: _page    
 
     signal back()
     signal error(var text)
 
     function open(html) {
         _webView.loadHtml(html, "")
-        _page.visible = true
     }
 
     function close() {
         _page.visible = false
     }
 
+    Connections {
+        target: core
+
+        function onPayment(html) {
+            console.log("tut")
+            _webView.loadHtml(html, "")
+            console.log(html)
+            //_stackView.replace(_paymentComponent)
+
+        }
+    }
 
     WebView {
         id: _webView
