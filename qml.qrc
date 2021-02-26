@@ -31,5 +31,6 @@
         <file>qml/Components/InputPhoneField.qml</file>
         <file>qml/Components/SelectShopPopup.qml</file>
         <file>qml/Components/SelectInput.qml</file>
+        <file>qml/Components/NavigationBar.qml</file>
     </qresource>
 </RCC>
