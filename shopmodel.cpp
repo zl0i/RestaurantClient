@@ -78,7 +78,7 @@ Shop *ShopModel::shopByIndex(int index)
 
 void ShopModel::clearModel()
 {
-    for(int i = shops.length()-1; i >= 0; i++) {
+    for(int i = 0; i < shops.length(); i++) {
         shops.at(i)->deleteLater();
     }
     shops.clear();

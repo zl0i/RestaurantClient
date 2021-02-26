@@ -41,7 +41,7 @@ private:
 
     QNetworkAccessManager manager;
 
-    Shop *currentShop;
+    Shop *currentShop = nullptr;
 
 signals:
     void shopsSended();
@@ -50,7 +50,6 @@ signals:
     void error(QString);
 
     void authenticated();
-    void payment(QString);
 
     void shopModelChanged();
     void currentShopChanged();
