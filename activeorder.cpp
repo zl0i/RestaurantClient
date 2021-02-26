@@ -12,11 +12,15 @@ void ActiveOrder::setMenu(MenuModel *menu)
 
 void ActiveOrder::parseData(QJsonObject obj)
 {
+    if(obj.isEmpty())
+        return;
+
     total = obj.value("total").toDouble();
     datetime = obj.value("datetime").toString();
     status = obj.value("status").toString();
 
     QJsonArray jmenu = obj.value("menu").toArray();
+
 
     clear();
 
