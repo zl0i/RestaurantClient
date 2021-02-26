@@ -82,6 +82,7 @@ void AppCore::requestShops()
             if(!currentShop) {
                 currentShop = shopsModel.shopByIndex(0);
                 basket.setSourceModel(currentShop->menu);
+                activeOrder.setMenu(currentShop->menu);
                 emit currentShopChanged();
             }
         } else {
@@ -98,6 +99,7 @@ void AppCore::selectShop(QString id)
     Shop *shop = shopsModel.shopById(id);
     if(shop) {
         basket.setSourceModel(shop->menu);
+        activeOrder.setMenu(shop->menu);
         currentShop = shop;
         emit currentShopChanged();
     }

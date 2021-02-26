@@ -21,7 +21,7 @@ void MenuModel::parseData(QJsonObject obj)
     for(int i = 0; i < menu.size(); i++) {
         QJsonObject itemJson = menu.at(i).toObject();
         QModelIndex index = this->index(i, 0);
-        setData(index, itemJson.value("id"), IdRole);
+        setData(index, itemJson.value("id").toInt(), IdRole);
         setData(index, itemJson.value("name").toString(), NameRole);
         setData(index, categories.at(itemJson.value("category_index").toInt()), CategoryRole);
         setData(index, itemJson.value("image"), ImageRole);

@@ -42,7 +42,7 @@ private:
 
     MenuModel *menu;
 
-    QModelIndex getIndexMenuItemById(QString);
+    QModelIndex getIndexMenuItemById(int);
 
 signals:
     void activeOrderChanged();

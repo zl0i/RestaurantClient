@@ -50,6 +50,7 @@ signals:
     void error(QString);
 
     void authenticated();
+    void payment(QString html);
 
     void shopModelChanged();
     void currentShopChanged();
