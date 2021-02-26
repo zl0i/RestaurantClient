@@ -11,6 +11,8 @@ Item {
 
     property bool makingOrder: false
 
+    signal checkout()
+
     Rectangle {
         width: parent.width; height: 50
         layer.enabled: true
@@ -78,11 +80,12 @@ Item {
         width: parent.width - 40; height: 40
         visible: _basketView.count > 0
         enableShadow: true
-        text: qsTr("Оформить заказ")
-        extractText: qsTr("%1 р.").arg(basket.total)
+        enabled: basket.total >= core.currentShop.minCostDelivery
+        text: enabled ? qsTr("Оформить заказ") : qsTr("Минимальная стоимость заказа %1 р.").arg(core.currentShop.minCostDelivery)
+        color: enabled ? "#5AD166" : "#949494"
         onClicked: {
             if(user.isAuthenticated) {
-                _orderDialog.open()
+                _basketPage.checkout()
             } else {
                 _authDialog.open()
                 makingOrder = true
@@ -94,35 +97,9 @@ Item {
         target: core
         function onAuthenticated() {
             if(_basketPage.makingOrder) {
-                _orderDialog.open()
+               _basketPage.checkout()
                 _basketPage.makingOrder = false
             }
-        }
-    }
-
-    OrderDialog {
-        id: _orderDialog
-        phone: user.phone
-        address {
-            street: user.address.street
-            house: user.address.house
-            flat: user.address.flat
-        }
-        onPayment: {
-            core.makeOrder(obj)
-            showBusyIndicator = true
-        }
-    }
-
-    Connections {
-        target: core
-
-        function onPayment(html) {
-            _orderDialog.close()
-        }
-
-        function onMakeOrderError() {
-            _orderDialog.showBusyIndicator = false
         }
     }
 }

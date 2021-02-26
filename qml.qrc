@@ -18,7 +18,7 @@
         <file>qml/Components/SwipeRefreshListView.qml</file>
         <file>qml/Components/SwipeRefreshLayout.qml</file>
         <file>qml/Components/AddBasketItem.qml</file>
-        <file>qml/Components/OrderDialog.qml</file>
+        <file>qml/Components/OrderPage.qml</file>
         <file>qml/Components/InputAddressField.qml</file>
         <file>qml/Components/EventDelegate.qml</file>
         <file>qml/Components/SwipeRefreshPage.qml</file>
@@ -30,5 +30,6 @@
         <file>qml/Components/CustomBusyIndicator.qml</file>
         <file>qml/Components/InputPhoneField.qml</file>
         <file>qml/Components/SelectShopPopup.qml</file>
+        <file>qml/Components/SelectInput.qml</file>
     </qresource>
 </RCC>
