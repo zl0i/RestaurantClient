@@ -4,7 +4,7 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     id: _button
-    width: _label.contentWidth + 60; height: 40; radius: 10
+    width: _label.contentWidth + 60; height: 35; radius: 10
     color: _mouseArea.pressed ? pressedColor : releasedColor
 
     property string text
@@ -16,38 +16,11 @@ Rectangle {
     signal clicked()
 
     property color pressedColor: "#25D500"
-    property color releasedColor: "#4FD65C"
+    property color releasedColor: "#5AD166"
     property color disableColor: "#D3D3D3"
 
     property color pressedTextColor: "#FFFFFF"
     property color releasedTextColor: "#FFFFFF"
-
-    states: [
-        State {
-            name: "green"
-            PropertyChanges {
-                target: _button
-                pressedColor: "#25D500"
-                releasedColor: "#4FD65C"
-                disableColor: "#D3D3D3"
-                pressedTextColor: "#FFFFFF"
-                releasedTextColor: "#FFFFFF"
-                height: 35
-            }
-        },
-        State {
-            name: "opacity"
-            PropertyChanges {
-                target: _button
-                pressedTextColor: "#4FD65C"
-                releasedTextColor: "#25D500"
-                pressedColor: "#00000000"
-                releasedColor: "#00000000"
-                height: 20
-            }
-        }
-    ]
-    state: "green"
 
     layer.enabled: enableShadow
     layer.effect: DropShadow {
@@ -86,5 +59,4 @@ Rectangle {
             _button.clicked()
         }
     }
-
 }
