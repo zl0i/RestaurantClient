@@ -52,12 +52,8 @@ Item {
                 property: "count"
                 value: model.count
             }
-            onIncrement: {
-                menu.setCountItem(String(model.id), count)
-            }
-            onDecrement: {
-                menu.setCountItem(String(model.id), count)
-            }
+            onIncrement: core.currentShop.menu.setCountItem(String(model.id), count)
+            onDecrement: core.currentShop.menu.setCountItem(String(model.id), count)
         }
         Item {
             width: parent.width
@@ -80,7 +76,7 @@ Item {
         width: parent.width - 40; height: 40
         visible: _basketView.count > 0
         enableShadow: true
-        enabled: basket.total >= core.currentShop
+        enabled: basket.total >= core.currentShop.minCostDelivery
         text: enabled ? qsTr("Оформить заказ") : qsTr("Минимальная стоимость заказа %1 р.").arg(core.currentShop ? core.currentShop.minCostDelivery : "")
         color: enabled ? "#5AD166" : "#949494"
         onClicked: {
@@ -97,7 +93,7 @@ Item {
         target: core
         function onAuthenticated() {
             if(_basketPage.makingOrder) {
-               _basketPage.checkout()
+                _basketPage.checkout()
                 _basketPage.makingOrder = false
             }
         }

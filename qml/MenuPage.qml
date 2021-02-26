@@ -133,7 +133,7 @@ Item {
                     _menuInfo.info = model.description
                     _menuInfo.open()
                 }
-                onEditedCount: core.currentShop.menu.setCountItem(Number(index), count)
+                onEditedCount: core.currentShop.menu.setCountItem(model.id, count)
             }
             onCurrentSectionChanged: _categoriesView.currentIndex = _categoriesView.model.indexOf(currentSection)
             Item {

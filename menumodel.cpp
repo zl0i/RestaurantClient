@@ -91,14 +91,8 @@ void MenuModel::clearSetting()
     settings.remove("categories");
 }
 
-void MenuModel::setCountItem(int row, int num)
-{    
-    QModelIndex index = this->index(row, 0);
-    setData(index, num, MenuModel::CountRole);
-    emit countChanged();
-}
 
-void MenuModel::setCountItem(QString id, int num)
+void MenuModel::setCountItem(int id, int num)
 {   
     QModelIndex index = indexById(id);
     setData(index, num, MenuModel::CountRole);
@@ -116,11 +110,11 @@ int MenuModel::findIndexByCategory(QString cat)
     return 0;
 }
 
-QModelIndex MenuModel::indexById(QString id)
+QModelIndex MenuModel::indexById(int id)
 {
     for(int i = 0; i < rowCount(); i++) {
         QModelIndex index = this->index(i, 0);
-        if(data(index, MenuRoles::IdRole).toString() == id) {
+        if(data(index, MenuRoles::IdRole).toInt() == id) {
             return index;
         }
     }

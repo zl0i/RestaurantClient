@@ -39,14 +39,13 @@ private:
     QSettings settings;
     QStringList categories;
 
-    QModelIndex indexById(QString id);
+    QModelIndex indexById(int id);
 
     QHash<int, QByteArray> roleNames() const;
 
 public slots:
 
-    void setCountItem(int row, int num);
-    void setCountItem(QString id, int num);
+    void setCountItem(int id, int num);
 
     int findIndexByCategory(QString cat);
 
