@@ -76,7 +76,7 @@ Item {
         width: parent.width - 40; height: 40
         visible: _basketView.count > 0
         enableShadow: true
-        enabled: basket.total >= core.currentShop.minCostDelivery
+        enabled: basket.total >= (core.currentShop ? core.currentShop.minCostDelivery : 0)
         text: enabled ? qsTr("Оформить заказ") : qsTr("Минимальная стоимость заказа %1 р.").arg(core.currentShop ? core.currentShop.minCostDelivery : "")
         color: enabled ? "#5AD166" : "#949494"
         onClicked: {
