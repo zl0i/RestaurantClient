@@ -22,7 +22,6 @@ InputText {
                 _phoneNumber.cursorPosition = pos
             }
         } else {
-             _phoneNumber.forceActiveFocus()
             _phoneNumber.cursorPosition = posText
         }
     }
