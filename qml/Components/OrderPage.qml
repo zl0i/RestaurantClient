@@ -10,7 +10,6 @@ Rectangle {
     property alias address: _address
     property alias comment: _comment.text
     property alias phone: _phone.text
-    property bool showBusyIndicator: false
 
     property real costOrder
     property var cityCostDeliveryModel
@@ -20,11 +19,17 @@ Rectangle {
 
     function reset() {
         _comment.text = ""
-        showBusyIndicator = false
+        _paymentButton.enabled = true
+        _busyPopup.close()
     }
 
     function verificate() {
         return _phone.text && _address.filled && _city.text
+    }
+
+    function close() {
+        _busyPopup.close()
+        visible = false
     }
 
     Rectangle {
@@ -47,6 +52,7 @@ Rectangle {
                 y: 10
                 width: 20; height: 20
                 antialiasing: true
+                smooth: true
                 source: "qrc:icons/arrowBack-black.svg"
                 MouseArea {
                     anchors.fill: parent
@@ -170,6 +176,7 @@ Rectangle {
     }
 
     CustomButton {
+        id: _paymentButton
         x: 20
         y: parent.height - height - 20
         width: parent.width-40
@@ -189,23 +196,34 @@ Rectangle {
                     "phone": _phone.getClearPhoneNumber()
                 }
                 _page.payment(obj)
+                _busyPopup.open()
+                _paymentButton.enabled = false
             } else {
                 _errorPopup.show(qsTr("Заполните поля телефона и адреса"))
             }
         }
     }
 
-    /*Rectangle {
+    Popup {
+        id: _busyPopup
+        parent: Overlay.overlay
         width: parent.width
         height: parent.height
-        radius: 10
-        visible: _page.showBusyIndicator
-        color: "#C0000000"
 
-        CustomBusyIndicator {
-            anchors.centerIn: parent
-            width: 100; height: 100
-            running: _dialog.showBusyIndicator
+        background: Rectangle {
+            width: parent.width
+            height: parent.height
+            color: "#C0000000"
         }
-    }*/
+
+        contentItem: Item {
+            CustomBusyIndicator {
+                anchors.centerIn: parent
+                width: 100; height: 100
+                running: true
+            }
+        }
+    }
+
+
 }

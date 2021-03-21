@@ -28,7 +28,10 @@ ApplicationWindow {
             }
 
             BasketPage {
-                onCheckout: _orderPage.visible = true
+                onCheckout: {
+                    _orderPage.reset()
+                    _orderPage.visible = true
+                }
             }
 
             ProfilePage {
@@ -56,7 +59,6 @@ ApplicationWindow {
         }
     }
 
-
     OrderPage {
         id: _orderPage
         width: parent.width
@@ -70,11 +72,8 @@ ApplicationWindow {
             house: user.address.house;
             flat: user.address.flat;
         }
-        onPayment: {
-            core.makeOrder(obj)
-            showBusyIndicator = true
-        }
-        onBack:  _orderPage.visible = false
+        onPayment: core.makeOrder(obj)
+        onBack: _orderPage.visible = false
     }
 
     Connections {
@@ -101,10 +100,9 @@ ApplicationWindow {
         Connections {
             target: core
 
-            function onPayment(html) {
-                console.log("tut")
+            function onPayment(html) {               
                 _paymentPage.open(html)
-                 _orderPage.visible = false
+                _orderPage.close()
             }
         }
     }
