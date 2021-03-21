@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtWebView 1.11
 
 Item {
-    id: _page    
+    id: _page
     width: parent.width
     height: parent.height
 
@@ -23,16 +23,25 @@ Item {
         width: parent.width
         height: 60
         color: "#FFFFFF"
-        Image {
+        Row {
             x: 20
-            anchors.verticalCenter: parent.verticalCenter
-            width: 40
-            height: 40
-            source: "qrc:icons/arrowBack-black.svg"
-            antialiasing: true
-            MouseArea {
-                anchors.fill: parent
-                onClicked: _page.back()
+            height: parent.height
+            spacing: 20
+            Image {
+                anchors.verticalCenter: parent.verticalCenter
+                width: 20; height: 20
+                antialiasing: true
+                smooth: true
+                source: "qrc:icons/arrowBack-black.svg"
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: _page.back()
+                }
+            }
+            Label {
+                anchors.verticalCenter: parent.verticalCenter
+                font { pixelSize: 20; bold: true }
+                text: qsTr("Оплата")
             }
         }
     }
@@ -43,7 +52,7 @@ Item {
         running: false
         repeat: false
         onTriggered: {
-             _page.visible = false
+            _page.visible = false
         }
     }
 
@@ -53,7 +62,7 @@ Item {
         width: parent.width
         height: parent.height - 60
 
-        onUrlChanged: {            
+        onUrlChanged: {
             if(url == core.host + "/azia/html/paymentSuccess.html") {
                 _closeTimer.start()
             }
@@ -66,4 +75,3 @@ Item {
         }
     }
 }
-
