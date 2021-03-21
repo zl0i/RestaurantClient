@@ -191,6 +191,7 @@ void AppCore::openPaymentForm()
     QString html = file.readAll();
 
     html.replace("%1", user.getPaymentToken());
+    html.replace("%2", host + "/azia/html/paymentSuccess.html");
     emit payment(html);
 }
 

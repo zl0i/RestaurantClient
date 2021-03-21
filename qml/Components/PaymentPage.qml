@@ -37,16 +37,25 @@ Item {
         }
     }
 
+    Timer {
+        id: _closeTimer
+        interval: 5000
+        running: false
+        repeat: false
+        onTriggered: {
+             _page.visible = false
+        }
+    }
+
     WebView {
         id: _webView
         y: 60
         width: parent.width
         height: parent.height - 60
 
-        onUrlChanged: {
-            if(url == 'https://yandex.ru/') {
-                _page.visible = false
-                _webView.stop()
+        onUrlChanged: {            
+            if(url == core.host + "/azia/html/paymentSuccess.html") {
+                _closeTimer.start()
             }
         }
         onLoadingChanged: {
