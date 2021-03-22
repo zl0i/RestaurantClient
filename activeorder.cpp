@@ -12,6 +12,8 @@ void ActiveOrder::setMenu(MenuModel *menu)
 
 void ActiveOrder::parseData(QJsonObject obj)
 {
+    clearOrder();
+
     if(obj.isEmpty())
         return;
 
@@ -20,9 +22,6 @@ void ActiveOrder::parseData(QJsonObject obj)
     status = obj.value("status").toString();
 
     QJsonArray jmenu = obj.value("menu").toArray();
-
-    clear();
-
     insertColumn(0);
     insertRows(0, jmenu.size());
     for(int i = 0; i < jmenu.size(); i++) {
@@ -35,6 +34,15 @@ void ActiveOrder::parseData(QJsonObject obj)
         setData(index, item.value("count"), CountRole);
         setData(index, data(index, CountRole).toInt() * data(index, CostRole).toDouble(), TotalRole);
     }
+    emit activeOrderChanged();
+}
+
+void ActiveOrder::clearOrder()
+{
+    datetime = "";
+    status = "";
+    total = 0;
+    clear();
     emit activeOrderChanged();
 }
 

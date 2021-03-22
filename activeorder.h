@@ -32,6 +32,8 @@ public:
     void parseData(QJsonObject);
     bool isEmpty() { return rowCount() > 0; }
 
+    void clearOrder();
+
 private:
     QString datetime;
     qreal total = 0;

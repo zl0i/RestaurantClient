@@ -161,7 +161,6 @@ void AppCore::updateUserInfo()
     obj.insert("token", user.getToken());
     QJsonDocument doc(obj);
 
-
     QNetworkRequest req(url);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkReply *reply = manager.post(req, doc.toJson());
@@ -173,7 +172,6 @@ void AppCore::updateUserInfo()
             QJsonDocument doc = QJsonDocument::fromJson(arr);
             activeOrder.parseData(doc.object().value("activeOrder").toObject());
             user.parseData(doc.object());
-
         } else {
             qDebug() << "error:" << reply->errorString();
             errorHandler(reply);
