@@ -17,6 +17,7 @@ void ActiveOrder::parseData(QJsonObject obj)
     if(obj.isEmpty())
         return;
 
+    id = obj.value("id").toString();
     total = obj.value("total").toDouble();
     datetime = obj.value("datetime").toString();
     status = obj.value("status").toString();
@@ -39,6 +40,7 @@ void ActiveOrder::parseData(QJsonObject obj)
 
 void ActiveOrder::clearOrder()
 {
+    id = "";
     datetime = "";
     status = "";
     total = 0;

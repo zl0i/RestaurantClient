@@ -148,6 +148,32 @@ void AppCore::makeOrder(QJsonObject info)
     });
 }
 
+void AppCore::cancelOrder()
+{
+    if(activeOrder.getId().isEmpty())
+        return;
+
+    QUrl url(host + "/azia/api/orders/" + activeOrder.getId());
+
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QNetworkReply *reply = manager.deleteResource(req);
+    reply->ignoreSslErrors();
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        if(reply->error() == QNetworkReply::NoError) {
+            QByteArray arr = reply->readAll();
+            QJsonDocument doc = QJsonDocument::fromJson(arr);
+            QJsonObject obj = doc.object();
+            activeOrder.clearOrder();
+        } else {
+            qDebug() << "error:" << reply->errorString();
+            errorHandler(reply);
+        }
+        reply->deleteLater();
+    });
+}
+
 void AppCore::updateUserInfo()
 {
     if(!user.isAuthenticated()) {

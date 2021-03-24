@@ -63,6 +63,7 @@ public slots:
     void requestShops();
     void selectShop(QString id);
     void makeOrder(QJsonObject info);
+    void cancelOrder();
     void updateUserInfo();
     void openPaymentForm();
 

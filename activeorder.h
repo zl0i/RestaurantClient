@@ -28,6 +28,7 @@ public:
 
     explicit ActiveOrder(QObject *parent = nullptr);
 
+    QString getId() { return id;  }
     void setMenu(MenuModel *menu);
     void parseData(QJsonObject);
     bool isEmpty() { return rowCount() > 0; }
@@ -35,6 +36,7 @@ public:
     void clearOrder();
 
 private:
+    QString id;
     QString datetime;
     qreal total = 0;
     QString status;

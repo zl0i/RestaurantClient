@@ -114,6 +114,7 @@ Item {
                     total: activeOrder.total
                     menu: activeOrder
                     onPayment: core.openPaymentForm()
+                    onCancelOrder: core.cancelOrder()
                 }
             }
             Label {
