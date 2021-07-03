@@ -189,9 +189,9 @@ Rectangle {
                     "comment": _comment.text,
                     "address": {
                         "city": _city.text,
-                        "street": _address.street,
-                        "house": _address.house,
-                        "flat": _address.flat
+                        "street": _address.street.trim(),
+                        "house": _address.house.trim(),
+                        "flat": _address.flat.trim()
                     },
                     "phone": _phone.getClearPhoneNumber()
                 }

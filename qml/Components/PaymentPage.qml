@@ -63,7 +63,7 @@ Item {
         height: parent.height - 60
 
         onUrlChanged: {
-            if(url == core.host + "/azia/html/paymentSuccess.html") {
+            if(url == core.host + "/restaurant/html/paymentSuccess.html") {
                 _closeTimer.start()
             }
         }

@@ -9,7 +9,7 @@ ApplicationWindow {
     visible: true
     width: 420
     height: 720
-    title: "Azia"
+    title: "MyRestaurant"
 
     font.family: "Roboto"
 

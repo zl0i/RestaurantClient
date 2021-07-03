@@ -42,7 +42,7 @@ Item {
         delegate: BasketDelegate {
             id: _basketDelegate
             width: _basketView.width; height: 100
-            image: core.host + "/" + model.image
+            image: core.host + "/images/" + model.image
             name: model.name
             cost: model.cost
             count: model.count

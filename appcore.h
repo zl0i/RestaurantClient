@@ -33,8 +33,8 @@ public:
 
 private:   
 
-    const QString host = "https://192.168.1.101";
-    //const QString host = "https://62.109.28.233";
+    const QString host = "https://192.168.1.102/restaurant";
+    //const QString host = "https://zloi.space/restaurant";
 
     QString tempPhone;
     QTimer timer;

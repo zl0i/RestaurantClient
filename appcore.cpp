@@ -16,7 +16,7 @@ void AppCore::inputByPhone(QString phone)
     qDebug() << "inputByPhone:" << phone;
     tempPhone = phone;
 
-    QNetworkRequest req(QUrl(host + "/azia/api/users/input"));
+    QNetworkRequest req(QUrl(host + "/api/users/input"));
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj {
         {"phone", tempPhone}
@@ -37,7 +37,7 @@ void AppCore::loginBySMS(QString code)
 {
     qDebug() << "loginBySMS:" << tempPhone << "code:" << code;
 
-    QNetworkRequest req(QUrl(host + "/azia/api/users/login"));
+    QNetworkRequest req(QUrl(host + "/api/users/login"));
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QJsonObject obj {
         {"phone", tempPhone},
@@ -68,7 +68,7 @@ void AppCore::requestShops()
 {
     qDebug() << "requestShops";
 
-    QUrl url(host + "/azia/api/shops");
+    QUrl url(host + "/api/shops");
 
     QNetworkRequest req(url);
     QNetworkReply *reply = manager.get(req);
@@ -79,12 +79,12 @@ void AppCore::requestShops()
             QJsonDocument doc = QJsonDocument::fromJson(arr);
             QJsonArray shopsArr = doc.array();
             shopsModel.parseData(shopsArr);
-            if(!currentShop) {
+            //if(currentShop) {
                 currentShop = shopsModel.shopByIndex(0);
                 basket.setSourceModel(currentShop->menu);
                 activeOrder.setMenu(currentShop->menu);
                 emit currentShopChanged();
-            }
+            //}
         } else {
             qDebug() << "error:" << reply->errorString();
             errorHandler(reply);
@@ -112,7 +112,7 @@ void AppCore::makeOrder(QJsonObject info)
         return;
     }
 
-    QNetworkRequest req(QUrl(host + "/azia/api/orders"));
+    QNetworkRequest req(QUrl(host + "/api/orders"));
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
     QJsonObject obj;
@@ -153,7 +153,7 @@ void AppCore::cancelOrder()
     if(activeOrder.getId().isEmpty())
         return;
 
-    QUrl url(host + "/azia/api/orders/" + activeOrder.getId());
+    QUrl url(host + "/api/orders/" + activeOrder.getId());
 
     QNetworkRequest req(url);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -181,7 +181,7 @@ void AppCore::updateUserInfo()
         return;
     }
 
-    QUrl url(host + "/azia/api/users/info");
+    QUrl url(host + "/api/users/info");
     QJsonObject obj;
     obj.insert("phone", user.getPhone());
     obj.insert("token", user.getToken());
@@ -215,7 +215,7 @@ void AppCore::openPaymentForm()
     QString html = file.readAll();
 
     html.replace("%1", user.getPaymentToken());
-    html.replace("%2", host + "/azia/html/paymentSuccess.html");
+    html.replace("%2", host + "/restaurant/html/paymentSuccess.html");
     emit payment(html);
 }
 
